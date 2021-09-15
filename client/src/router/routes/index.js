@@ -17,6 +17,10 @@ const Routes = [
     component: lazy(() => import('../../views/SecondPage'))
   },
   {
+    path: '/add-word',
+    component: lazy(() => import('../../views/AddWord'))
+  },
+  {
     path: '/login',
     component: lazy(() => import('../../views/Login')),
     layout: 'BlankLayout',
