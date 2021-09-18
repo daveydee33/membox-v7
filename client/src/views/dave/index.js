@@ -1,14 +1,12 @@
 import { Fragment, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getItems } from './store/actions'
-import {
-  CardColumns,
-  Card,
-  CardImg,
-  CardBody,
-  CardTitle,
-  CardText
-} from 'reactstrap'
+
+// Page Components
+import Items from './Items'
+
+// ** Styles
+// import '@styles/base/pages/app-ecommerce.scss'
 
 const ItemsPage = () => {
   // ** Vars
@@ -26,16 +24,12 @@ const ItemsPage = () => {
 
   return (
     <Fragment>
-      <div>blah</div>
-
-      {store.items.map((item) => (
-        <Card>
-          <CardBody>
-            <CardTitle tag="h4">{item.word}</CardTitle>
-            <CardText>{item.meaning}</CardText>
-          </CardBody>
-        </Card>
-      ))}
+      <Items
+        dispatch={dispatch}
+        store={store}
+        getItems={getItems}
+        //
+      ></Items>
     </Fragment>
   )
 }
