@@ -29,14 +29,12 @@ const ItemsPage = (props) => {
         {/* Items List */}
         {store.items.length ? (
           store.items.map((item) => (
-            <Fragment>
-              <Card>
-                <CardBody>
-                  <CardTitle tag="h4">{item.word}</CardTitle>
-                  <CardText>{item.meaning}</CardText>
-                </CardBody>
-              </Card>
-            </Fragment>
+            <Card>
+              <CardBody>
+                <CardTitle tag="h4">{item.word}</CardTitle>
+                <CardText>{item.meaning}</CardText>
+              </CardBody>
+            </Card>
           ))
         ) : (
           <div className="d-flex justify-content-center mt-2">

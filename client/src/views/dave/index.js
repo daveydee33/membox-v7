@@ -6,7 +6,7 @@ import { getItems } from './store/actions'
 import Items from './Items'
 
 // ** Styles
-// import '@styles/base/pages/app-ecommerce.scss'
+import '@styles/base/pages/app-ecommerce.scss'
 
 const ItemsPage = () => {
   // ** Vars

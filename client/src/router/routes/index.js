@@ -22,6 +22,7 @@ const Routes = [
   },
   {
     path: '/dave',
+    className: 'ecommerce-application',
     component: lazy(() => import('../../views/dave'))
   },
   {
