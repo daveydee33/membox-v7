@@ -5,11 +5,13 @@ import { combineReducers } from 'redux'
 import auth from './auth'
 import navbar from './navbar'
 import layout from './layout'
+import items from '@src/views/dave/store/reducer'
 
 const rootReducer = combineReducers({
   auth,
   navbar,
-  layout
+  layout,
+  items
 })
 
 export default rootReducer
