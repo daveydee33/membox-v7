@@ -1,17 +1,10 @@
 // ** React Imports
 import { useState } from 'react'
-import {
-  CardColumns,
-  Card,
-  CardImg,
-  CardBody,
-  CardTitle,
-  CardText
-} from 'reactstrap'
 
 // import ItemCards from './ItemCards'
 import ItemsHeader from './ItemsHeader'
 import ItemsSearchbar from './ItemsSearchbar'
+import ItemCards from './ItemCards'
 
 import classnames from 'classnames'
 
@@ -58,14 +51,7 @@ const ItemsList = (props) => {
 
         {/* Items List */}
         {store.items.length ? (
-          store.items.map((item) => (
-            <Card>
-              <CardBody>
-                <CardTitle tag="h4">{item.word}</CardTitle>
-                <CardText>{item.meaning}</CardText>
-              </CardBody>
-            </Card>
-          ))
+          <ItemCards items={store.items} />
         ) : (
           <div className="d-flex justify-content-center mt-2">
             <p>No Results</p>

@@ -7302,7 +7302,7 @@ mock.onGet('/dave/items').reply((config) => {
     200,
     {
       items: filteredData,
-      total: data.items.length
+      total: filteredData.length
     }
   ]
 })

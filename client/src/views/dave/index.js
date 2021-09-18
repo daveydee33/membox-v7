@@ -34,11 +34,13 @@ const ItemsPage = () => {
 
   return (
     <Fragment>
+      {/* 
       <Breadcrumbs
         breadCrumbTitle="Word List"
         breadCrumbParent="Search & Browse"
         breadCrumbActive="All"
-      />
+      /> 
+      */}
 
       <ItemsList
         dispatch={dispatch}
