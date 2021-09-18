@@ -1,5 +1,5 @@
 // ** React Imports
-import { Fragment } from 'react'
+import { useState } from 'react'
 import {
   CardColumns,
   Card,
@@ -9,15 +9,45 @@ import {
   CardText
 } from 'reactstrap'
 
+// import ItemCards from './ItemCards'
+import ItemsHeader from './ItemsHeader'
 import ItemsSearchbar from './ItemsSearchbar'
 
-const ItemsPage = (props) => {
+import classnames from 'classnames'
+
+const ItemsList = (props) => {
   // ** Props
-  const { store, getItems, dispatch } = props
+  const {
+    store,
+    getItems,
+    dispatch,
+    activeView,
+    setActiveView,
+    sidebarOpen,
+    setSidebarOpen
+  } = props
 
   return (
     <div className="content-detached content-right">
       <div className="content-body">
+        {/* Header - view grid toggle */}
+        <ItemsHeader
+          store={store}
+          dispatch={dispatch}
+          getItems={getItems}
+          activeView={activeView}
+          setActiveView={setActiveView}
+          setSidebarOpen={setSidebarOpen}
+        />
+
+        {/* Hamburger menu on small screens */}
+        <div
+          className={classnames('body-content-overlay', {
+            show: sidebarOpen
+          })}
+          onClick={() => setSidebarOpen(false)}
+        ></div>
+
         {/* Searchbar */}
         <ItemsSearchbar
           dispatch={dispatch}
@@ -46,4 +76,4 @@ const ItemsPage = (props) => {
   )
 }
 
-export default ItemsPage
+export default ItemsList

@@ -1,19 +1,22 @@
 import { Fragment, useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { getItems } from './store/actions'
 
 // Page Components
-import Items from './Items'
+import ItemsList from './ItemsList'
 import Sidebar from './Sidebar'
 
 // ** Custom Components
 import Breadcrumbs from '@components/breadcrumbs'
+
+// ** Store & Actions
+import { useDispatch, useSelector } from 'react-redux'
+import { getItems } from './store/actions'
 
 // ** Styles
 import '@styles/base/pages/app-ecommerce.scss'
 
 const ItemsPage = () => {
   // States
+  const [activeView, setActiveView] = useState('grid')
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   // ** Vars
@@ -37,12 +40,16 @@ const ItemsPage = () => {
         breadCrumbActive="All"
       />
 
-      <Items
+      <ItemsList
         dispatch={dispatch}
         store={store}
         getItems={getItems}
+        activeView={activeView}
+        setActiveView={setActiveView}
+        sidebarOpen={sidebarOpen}
+        setSidebarOpen={setSidebarOpen}
         //
-      ></Items>
+      ></ItemsList>
 
       <Sidebar sidebarOpen={sidebarOpen} />
     </Fragment>
