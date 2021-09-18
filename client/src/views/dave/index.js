@@ -1,6 +1,14 @@
 import { Fragment, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getItems } from './store/actions'
+import {
+  CardColumns,
+  Card,
+  CardImg,
+  CardBody,
+  CardTitle,
+  CardText
+} from 'reactstrap'
 
 const ItemsPage = () => {
   // ** Vars
@@ -15,11 +23,14 @@ const ItemsPage = () => {
   return (
     <Fragment>
       <div>blah</div>
+
       {store.items.map((item) => (
-        <div>
-          <h2>{item.word}</h2>
-          <h4>{item.meaning}</h4>
-        </div>
+        <Card className="position-static">
+          <CardBody>
+            <CardTitle tag="h4">{item.word}</CardTitle>
+            <CardText>{item.meaning}</CardText>
+          </CardBody>
+        </Card>
       ))}
     </Fragment>
   )
