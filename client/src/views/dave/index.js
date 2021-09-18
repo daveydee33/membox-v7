@@ -6,6 +6,9 @@ import { getItems } from './store/actions'
 import Items from './Items'
 import Sidebar from './Sidebar'
 
+// ** Custom Components
+import Breadcrumbs from '@components/breadcrumbs'
+
 // ** Styles
 import '@styles/base/pages/app-ecommerce.scss'
 
@@ -28,6 +31,12 @@ const ItemsPage = () => {
 
   return (
     <Fragment>
+      <Breadcrumbs
+        breadCrumbTitle="Word List"
+        breadCrumbParent="Search & Browse"
+        breadCrumbActive="All"
+      />
+
       <Items
         dispatch={dispatch}
         store={store}
