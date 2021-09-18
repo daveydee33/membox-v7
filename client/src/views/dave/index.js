@@ -1,14 +1,18 @@
-import { Fragment, useEffect } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getItems } from './store/actions'
 
 // Page Components
 import Items from './Items'
+import Sidebar from './Sidebar'
 
 // ** Styles
 import '@styles/base/pages/app-ecommerce.scss'
 
 const ItemsPage = () => {
+  // States
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+
   // ** Vars
   const dispatch = useDispatch()
   const store = useSelector((state) => state.items)
@@ -30,6 +34,8 @@ const ItemsPage = () => {
         getItems={getItems}
         //
       ></Items>
+
+      <Sidebar sidebarOpen={sidebarOpen} />
     </Fragment>
   )
 }
