@@ -1,5 +1,7 @@
 const initialState = {
-  items: []
+  items: [],
+  params: {},
+  totalItems: 0
 }
 
 const itemsReducer = (state = initialState, action) => {
@@ -7,7 +9,9 @@ const itemsReducer = (state = initialState, action) => {
     case 'GET_ITEMS':
       return {
         ...state,
-        items: action.data.items
+        items: action.data.items,
+        params: action.params,
+        totalItems: action.data.total
       }
 
     default:

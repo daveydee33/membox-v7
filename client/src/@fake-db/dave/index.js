@@ -7293,4 +7293,17 @@ const data = {
   ]
 }
 
-mock.onGet('/dave/items').reply(() => [200, data])
+mock.onGet('/dave/items').reply((config) => {
+  const { q = '' } = config.params
+  const queryLowered = q.toLowerCase()
+  console.log('dave', data.items)
+  const filteredData = data.items.filter((item) => item.word.toLowerCase().includes(queryLowered))
+
+  return [
+    200,
+    {
+      items: filteredData,
+      total: data.items.length
+    }
+  ]
+})

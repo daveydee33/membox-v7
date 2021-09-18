@@ -17,7 +17,11 @@ const ItemsPage = () => {
 
   // ** Get items
   useEffect(() => {
-    dispatch(getItems())
+    dispatch(
+      getItems({
+        q: ''
+      })
+    )
   }, [dispatch])
 
   return (
@@ -25,7 +29,7 @@ const ItemsPage = () => {
       <div>blah</div>
 
       {store.items.map((item) => (
-        <Card className="position-static">
+        <Card>
           <CardBody>
             <CardTitle tag="h4">{item.word}</CardTitle>
             <CardText>{item.meaning}</CardText>
