@@ -18,5 +18,11 @@ export default [
     title: 'Add a Word',
     icon: <Plus size={20} />,
     navLink: '/add-word'
+  },
+  {
+    id: 'dave',
+    title: 'dave',
+    icon: <Home size={20} />,
+    navLink: '/dave'
   }
 ]

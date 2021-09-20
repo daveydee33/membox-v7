@@ -21,6 +21,11 @@ const Routes = [
     component: lazy(() => import('../../views/AddWord'))
   },
   {
+    path: '/dave',
+    className: 'ecommerce-application',
+    component: lazy(() => import('../../views/dave'))
+  },
+  {
     path: '/login',
     component: lazy(() => import('../../views/Login')),
     layout: 'BlankLayout',
