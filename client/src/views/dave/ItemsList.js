@@ -51,7 +51,7 @@ const ItemsList = (props) => {
 
         {/* Items List */}
         {store.items.length ? (
-          <ItemCards items={store.items} />
+          <ItemCards items={store.items} activeView={activeView} />
         ) : (
           <div className="d-flex justify-content-center mt-2">
             <p>No Results</p>

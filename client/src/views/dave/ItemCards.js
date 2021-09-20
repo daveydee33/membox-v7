@@ -15,7 +15,7 @@ const ItemCards = (props) => {
     if (items.length) {
       return items.map((item) => {
         return (
-          <Card>
+          <Card className="ecommerce-card">
             <CardBody>
               <CardTitle tag="h4">{item.word}</CardTitle>
               <CardText>{item.meaning}</CardText>
