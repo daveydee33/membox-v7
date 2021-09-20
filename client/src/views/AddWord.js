@@ -94,27 +94,29 @@ const AddWord = () => {
           </FormGroup>
         </Col>
 
-        <Col md="6">
-          <FormGroup className="mb-2">
-            <Label for="category" size="lg">
+        <Col md="12">
+          <FormGroup row>
+            <Label sm="3" size="lg" for="category">
               Category
             </Label>
-            <Select
-              id="category"
-              isClearable={false}
-              theme={selectThemeColors}
-              isMulti
-              name="colors"
-              options={[
-                { value: 'fashion', label: 'Fashion' },
-                { value: 'gaming', label: 'Gaming' },
-                { value: 'quote', label: 'Quote' },
-                { value: 'video', label: 'Video' },
-                { value: 'food', label: 'Food' }
-              ]}
-              className="react-select"
-              classNamePrefix="select"
-            />
+            <Col sm="9">
+              <Select
+                id="category"
+                isClearable={false}
+                theme={selectThemeColors}
+                isMulti
+                name="colors"
+                options={[
+                  { value: 'fashion', label: 'Fashion' },
+                  { value: 'gaming', label: 'Gaming' },
+                  { value: 'quote', label: 'Quote' },
+                  { value: 'video', label: 'Video' },
+                  { value: 'food', label: 'Food' }
+                ]}
+                className="react-select"
+                classNamePrefix="select"
+              />
+            </Col>
           </FormGroup>
         </Col>
 
