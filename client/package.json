@@ -116,5 +116,6 @@
     "not dead",
     "not op_mini all"
   ],
-  "homepage": ""
+  "homepage": "",
+  "proxy": "http://localhost:4001"
 }
