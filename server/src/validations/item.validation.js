@@ -21,32 +21,35 @@ const getItems = {
   }),
 };
 
-// const getUser = {
-//   params: Joi.object().keys({
-//     userId: Joi.string().custom(objectId),
-//   }),
-// };
+const getItem = {
+  params: Joi.object().keys({
+    itemId: Joi.string().custom(objectId),
+  }),
+};
 
-// const updateUser = {
-//   params: Joi.object().keys({
-//     userId: Joi.required().custom(objectId),
-//   }),
-//   body: Joi.object()
-//     .keys({
-//       email: Joi.string().email(),
-//       password: Joi.string().custom(password),
-//       name: Joi.string(),
-//     })
-//     .min(1),
-// };
+const updateItem = {
+  params: Joi.object().keys({
+    itemId: Joi.required().custom(objectId),
+  }),
+  body: Joi.object()
+    .keys({
+      title: Joi.string(),
+      description: Joi.string().allow(''),
+      details: Joi.string().allow(''),
+    })
+    .min(1),
+};
 
-// const deleteUser = {
-//   params: Joi.object().keys({
-//     userId: Joi.string().custom(objectId),
-//   }),
-// };
+const deleteItem = {
+  params: Joi.object().keys({
+    itemId: Joi.string().custom(objectId),
+  }),
+};
 
 module.exports = {
   createItem,
   getItems,
+  getItem,
+  updateItem,
+  deleteItem,
 };

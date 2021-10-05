@@ -28,14 +28,14 @@ const queryItems = async (filter, options) => {
   return items;
 };
 
-// /**
-//  * Get user by id
-//  * @param {ObjectId} id
-//  * @returns {Promise<User>}
-//  */
-// const getUserById = async (id) => {
-//   return User.findById(id);
-// };
+/**
+ * Get item by id
+ * @param {ObjectId} id
+ * @returns {Promise<Item>}
+ */
+const getItemById = async (id) => {
+  return Item.findById(id);
+};
 
 // /**
 //  * Get user by email
@@ -46,44 +46,44 @@ const queryItems = async (filter, options) => {
 //   return User.findOne({ email });
 // };
 
-// /**
-//  * Update user by id
-//  * @param {ObjectId} userId
-//  * @param {Object} updateBody
-//  * @returns {Promise<User>}
-//  */
-// const updateUserById = async (userId, updateBody) => {
-//   const user = await getUserById(userId);
-//   if (!user) {
-//     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
-//   }
-//   if (updateBody.email && (await User.isEmailTaken(updateBody.email, userId))) {
-//     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
-//   }
-//   Object.assign(user, updateBody);
-//   await user.save();
-//   return user;
-// };
+/**
+ * Update item by id
+ * @param {ObjectId} itemId
+ * @param {Object} updateBody
+ * @returns {Promise<Item>}
+ */
+const updateItemById = async (itemId, updateBody) => {
+  const item = await getItemById(itemId);
+  if (!item) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Item not found');
+  }
+  // if (updateBody.email && (await Item.isEmailTaken(updateBody.email, itemId))) {
+  //   throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
+  // }
+  Object.assign(item, updateBody);
+  await item.save();
+  return item;
+};
 
-// /**
-//  * Delete user by id
-//  * @param {ObjectId} userId
-//  * @returns {Promise<User>}
-//  */
-// const deleteUserById = async (userId) => {
-//   const user = await getUserById(userId);
-//   if (!user) {
-//     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
-//   }
-//   await user.remove();
-//   return user;
-// };
+/**
+ * Delete item by id
+ * @param {ObjectId} itemId
+ * @returns {Promise<Item>}
+ */
+const deleteItemById = async (itemId) => {
+  const item = await getItemById(itemId);
+  if (!item) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Item not found');
+  }
+  await item.remove();
+  return item;
+};
 
 module.exports = {
   createItem,
   queryItems,
-  // getUserById,
+  getItemById,
   // getUserByEmail,
-  // updateUserById,
-  // deleteUserById,
+  updateItemById,
+  deleteItemById,
 };

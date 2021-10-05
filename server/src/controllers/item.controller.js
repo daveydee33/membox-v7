@@ -17,28 +17,28 @@ const getItems = catchAsync(async (req, res) => {
   res.send(result);
 });
 
-// const getUser = catchAsync(async (req, res) => {
-//   const user = await userService.getUserById(req.params.userId);
-//   if (!user) {
-//     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
-//   }
-//   res.send(user);
-// });
+const getItem = catchAsync(async (req, res) => {
+  const item = await itemService.getItemById(req.params.itemId);
+  if (!item) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Item not found');
+  }
+  res.send(item);
+});
 
-// const updateUser = catchAsync(async (req, res) => {
-//   const user = await userService.updateUserById(req.params.userId, req.body);
-//   res.send(user);
-// });
+const updateItem = catchAsync(async (req, res) => {
+  const item = await itemService.updateItemById(req.params.itemId, req.body);
+  res.send(item);
+});
 
-// const deleteUser = catchAsync(async (req, res) => {
-//   await userService.deleteUserById(req.params.userId);
-//   res.status(httpStatus.NO_CONTENT).send();
-// });
+const deleteItem = catchAsync(async (req, res) => {
+  await itemService.deleteItemById(req.params.itemId);
+  res.status(httpStatus.NO_CONTENT).send();
+});
 
 module.exports = {
   createItem,
   getItems,
-  // getUser,
-  // updateUser,
-  // deleteUser,
+  getItem,
+  updateItem,
+  deleteItem,
 };

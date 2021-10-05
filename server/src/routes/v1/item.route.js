@@ -11,11 +11,12 @@ router
   .post(auth('manageItems'), validate(itemValidation.createItem), itemController.createItem)
   .get(validate(itemValidation.getItems), itemController.getItems);
 
-// router
-//   .route('/:userId')
-//   .get(auth('getUsers'), validate(userValidation.getUser), userController.getUser)
-//   .patch(auth('manageUsers'), validate(userValidation.updateUser), userController.updateUser)
-//   .delete(auth('manageUsers'), validate(userValidation.deleteUser), userController.deleteUser);
+// TODO: re-add the auth() to each of these routes
+router
+  .route('/:itemId')
+  .get(validate(itemValidation.getItem), itemController.getItem)
+  .patch(auth('manageItems'), validate(itemValidation.updateItem), itemController.updateItem)
+  .delete(auth('manageItems'), validate(itemValidation.deleteItem), itemController.deleteItem);
 
 module.exports = router;
 
