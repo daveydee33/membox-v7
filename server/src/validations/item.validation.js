@@ -15,6 +15,7 @@ const getItems = {
     description: Joi.string(),
     details: Joi.string(),
     sortBy: Joi.string(),
+    q: Joi.string().allow(''),
     limit: Joi.number().integer(),
     page: Joi.number().integer(),
   }),

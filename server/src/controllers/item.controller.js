@@ -10,7 +10,8 @@ const createItem = catchAsync(async (req, res) => {
 });
 
 const getItems = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['title', 'descripiton', 'details']);
+  // const filter = pick(req.query, ['title', 'description', 'details']);
+  const filter = pick(req.query, ['q']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
   const result = await itemService.queryItems(filter, options);
   res.send(result);

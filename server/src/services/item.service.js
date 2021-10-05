@@ -12,16 +12,19 @@ const createItem = async (itemBody) => {
 };
 
 /**
- * Query for users
+ * Query for items
  * @param {Object} filter - Mongo filter
  * @param {Object} options - Query options
  * @param {string} [options.sortBy] - Sort option in the format: sortField:(desc|asc)
  * @param {number} [options.limit] - Maximum number of results per page (default = 10)
  * @param {number} [options.page] - Current page (default = 1)
+ * @param {string} [filter.q] - For general string seaching of multiple DB fields
  * @returns {Promise<QueryResult>}
  */
 const queryItems = async (filter, options) => {
-  const items = await Item.paginate(filter, options);
+  const regex = new RegExp(filter.q, 'g');
+  const regexFilter = { $or: [{ title: regex }, { description: regex }, { details: regex }] };
+  const items = await Item.paginate(regexFilter, options);
   return items;
 };
 
