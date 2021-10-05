@@ -9,9 +9,9 @@ const itemsReducer = (state = initialState, action) => {
     case 'GET_ITEMS':
       return {
         ...state,
-        items: action.data.items,
+        items: action.data.results,
         params: action.params,
-        totalItems: action.data.total
+        totalItems: action.data.totalResults
       }
 
     default:

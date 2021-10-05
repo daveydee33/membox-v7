@@ -17,8 +17,8 @@ const ItemCards = (props) => {
         return (
           <Card className="ecommerce-card">
             <CardBody>
-              <CardTitle tag="h4">{item.word}</CardTitle>
-              <CardText>{item.meaning}</CardText>
+              <CardTitle tag="h4">{item.title}</CardTitle>
+              <CardText>{item.description}</CardText>
             </CardBody>
           </Card>
         )
