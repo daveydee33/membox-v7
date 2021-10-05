@@ -4,15 +4,15 @@ const { objectId } = require('./custom.validation');
 const createItem = {
   body: Joi.object().keys({
     title: Joi.string().required(),
-    description: Joi.string(),
-    details: Joi.string(),
+    description: Joi.string().allow(''),
+    details: Joi.string().allow(''),
   }),
 };
 
 const getItems = {
   query: Joi.object().keys({
     title: Joi.string(),
-    descripiton: Joi.string(),
+    description: Joi.string(),
     details: Joi.string(),
     sortBy: Joi.string(),
     limit: Joi.number().integer(),
