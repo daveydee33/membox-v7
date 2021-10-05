@@ -22,7 +22,7 @@ const createItem = async (itemBody) => {
  * @returns {Promise<QueryResult>}
  */
 const queryItems = async (filter, options) => {
-  const regex = new RegExp(filter.q, 'g');
+  const regex = new RegExp(filter.q, 'gi');
   const regexFilter = { $or: [{ title: regex }, { description: regex }, { details: regex }] };
   const items = await Item.paginate(regexFilter, options);
   return items;
