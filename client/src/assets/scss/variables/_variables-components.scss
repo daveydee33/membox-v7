@@ -1,3 +1,17 @@
 //  ================================================================================================
 //  ? TIP:  It is recommended to use this file for overriding component variables.
 //  ================================================================================================
+
+// It seems like it wasn't picking up my styles in style.scss so I moved these here
+
+// override _react-select.scss component colors when in dark mode.
+// These colors were missing in the _react-select.scss styles, so I want to override them here, otherwise it's hard to see the cursor and the text on the react select element for the tags input.
+// Dark Layout
+.dark-layout {
+  .select__control {
+    caret-color: yellow;
+  }
+  .select__input {
+    color: yellowgreen;
+  }
+}
