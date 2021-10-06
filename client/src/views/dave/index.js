@@ -12,7 +12,8 @@ import Breadcrumbs from '@components/breadcrumbs'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   getItems,
-  updateItems,
+  updateSingleItem,
+  updateMultipleItems,
   selectItem,
   addItem,
   deleteItem,
@@ -75,7 +76,7 @@ const ItemsPage = () => {
         // addItem={addItem}
         dispatch={dispatch}
         open={openFormSidebar}
-        // updateItem={updateItem}
+        updateSingleItem={updateSingleItem}
         // deleteItem={deleteItem}
         selectItem={selectItem}
         handleFormSidebar={handleFormSidebar}

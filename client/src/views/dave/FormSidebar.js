@@ -93,7 +93,7 @@ const FormSidebar = (props) => {
     handleFormSidebar,
     store,
     dispatch,
-    updateItem,
+    updateSingleItem,
     selectItem,
     addItem,
     deleteItem
@@ -233,56 +233,65 @@ const FormSidebar = (props) => {
     //   fullName: assignee.label,
     //   avatar: assignee.img
     // }
-    // const state = {
-    //   title,
-    //   dueDate,
-    //   tags: newItemTag,
-    //   description: desc,
-    //   isCompleted: completed,
-    //   isDeleted: deleted,
-    //   isImportant: important,
-    //   assignee:
-    //     doesInclude || assignee.label === undefined ? store.selectedItem.assignee : newAssignee
-    // }
-    // if (store && !isObjEmpty(store.selectedItem)) {
-    //   return (
-    //     <Fragment>
-    //       <Button
-    //         color="primary"
-    //         disabled={!title.length}
-    //         className="update-btn update-todo-item mr-1"
-    //         onClick={() => {
-    //           dispatch(updateItem({ ...state, id: store.selectedItem.id }))
-    //           handleFormSidebar()
-    //         }}
-    //       >
-    //         Update
-    //       </Button>
-    //       <Button color="secondary" onClick={handleResetFields} outline>
-    //         Reset
-    //       </Button>
-    //     </Fragment>
-    //   )
-    // } else {
-    //   return (
-    //     <Fragment>
-    //       <Button
-    //         color="primary"
-    //         disabled={!title.length}
-    //         className="add-todo-item mr-1"
-    //         onClick={() => {
-    //           dispatch(addItem(state))
-    //           handleFormSidebar()
-    //         }}
-    //       >
-    //         Add
-    //       </Button>
-    //       <Button color="secondary" onClick={handleFormSidebar} outline>
-    //         Cancel
-    //       </Button>
-    //     </Fragment>
-    //   )
-    // }
+    const state = {
+      title,
+      description,
+      details
+      // tags: newItemTag,
+      // description: desc,
+      // isCompleted: completed,
+      // isDeleted: deleted,
+      // isImportant: important,
+      // assignee:
+      // doesInclude || assignee.label === undefined ? store.selectedItem.assignee : newAssignee
+    }
+    if (store && !isObjEmpty(store.selectedItem)) {
+      return (
+        <Fragment>
+          <Button
+            color="primary"
+            disabled={!title.length} // TODO (form validation)
+            className="update-btn update-todo-item mr-1"
+            onClick={() => {
+              dispatch(updateSingleItem(store.selectedItem.id, state))
+              handleFormSidebar()
+            }}
+          >
+            Update
+          </Button>
+          {/* <Button
+            color="secondary"
+            onClick={handleResetFields}
+            outline
+          >
+            Reset
+          </Button> */}
+        </Fragment>
+      )
+    } else {
+      return (
+        <Fragment>
+          <Button
+            color="primary"
+            disabled={!title.length} // TODO (form validation)
+            className="add-todo-item mr-1"
+            // onClick={() => {
+            //   dispatch(addItem(state))
+            //   handleFormSidebar()
+            // }}
+          >
+            Add
+          </Button>
+          {/* <Button
+            color="secondary"
+            onClick={handleFormSidebar}
+            outline
+          >
+            Cancel
+          </Button> */}
+        </Fragment>
+      )
+    }
   }
 
   return (
@@ -364,10 +373,15 @@ const FormSidebar = (props) => {
           </FormGroup> 
           */}
           <FormGroup>
-            <Label for="desc" className="form-label">
+            <Label for="description" className="form-label">
               Description
             </Label>
-            <Input id="desc" value={description} placeholder="Description" />
+            <Input
+              id="description"
+              value={description}
+              placeholder="Description"
+              onChange={(e) => setDescription(e.target.value)}
+            />
           </FormGroup>
           <FormGroup>
             <Label for="details" className="form-label">
@@ -379,6 +393,7 @@ const FormSidebar = (props) => {
               placeholder="Details"
               type="textarea"
               rows={6}
+              onChange={(e) => setDetails(e.target.value)}
             />
           </FormGroup>
 

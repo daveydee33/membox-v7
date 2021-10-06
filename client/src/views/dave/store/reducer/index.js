@@ -14,6 +14,8 @@ const itemsReducer = (state = initialState, action) => {
         params: action.params,
         totalItems: action.data.totalResults
       }
+    case 'UPDATE_SINGLE_ITEM':
+      return { ...state }
     case 'SELECT_ITEM':
       return { ...state, selectedItem: action.item }
     default:
