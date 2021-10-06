@@ -9,6 +9,21 @@ export const getItems = (params) => {
   }
 }
 
+// ** Add Item
+export const addItem = (item) => {
+  return (dispatch, getState) => {
+    axios
+      .post('/v1/items', item)
+      .then((res) => {
+        dispatch({
+          type: 'ADD_ITEM',
+          item: res.data
+        })
+      })
+      .then(dispatch(getItems(getState().items.params)))
+  }
+}
+
 // ** Update single Item
 export const updateSingleItem = (id, item) => {
   return (dispatch, getState) => {
@@ -55,4 +70,6 @@ export const deleteItem = (id) => {
 }
 
 // Select Item
-export const selectItem = (item) => (dispatch) => dispatch({ type: 'SELECT_ITEM', item })
+
+export const selectItem = (item) => (dispatch) =>
+  dispatch({ type: 'SELECT_ITEM', item }) // eslint-disable-line implicit-arrow-linebreak

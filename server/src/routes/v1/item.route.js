@@ -8,7 +8,8 @@ const router = express.Router();
 
 router
   .route('/')
-  .post(auth('manageItems'), validate(itemValidation.createItem), itemController.createItem)
+  // .post(auth('manageItems'), validate(itemValidation.createItem), itemController.createItem)
+  .post(validate(itemValidation.createItem), itemController.createItem)
   .get(validate(itemValidation.getItems), itemController.getItems);
 
 // TODO: re-add the auth() to each of these routes

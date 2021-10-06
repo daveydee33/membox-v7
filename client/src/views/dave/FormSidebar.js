@@ -48,13 +48,6 @@ const ModalHeader = (props) => {
     dispatch
   } = props
 
-  // ** Function to delete item
-  const handleDeleteItem = () => {
-    // setDeleted(!deleted)
-    dispatch(deleteItem(store.selectedItem.id))
-    handleFormSidebar()
-  }
-
   return (
     <div className="modal-header d-flex align-items-center justify-content-between mb-1">
       <h5 className="modal-title">{children}</h5>
@@ -259,7 +252,10 @@ const FormSidebar = (props) => {
             <Button.Ripple
               color="danger"
               className="ml-1"
-              onClick={() => handleDeleteItem}
+              onClick={() => {
+                dispatch(deleteItem(store.selectedItem.id))
+                handleFormSidebar()
+              }}
               outline
             >
               {/* <Trash className="mr-1" size={16} /> */}
@@ -271,24 +267,20 @@ const FormSidebar = (props) => {
     } else {
       return (
         <Fragment>
-          {/* <Button
+          <Button
             color="primary"
             disabled={!title.length} // TODO (form validation)
             className="add-todo-item mr-1"
-            // onClick={() => {
-            //   dispatch(addItem(state))
-            //   handleFormSidebar()
-            // }}
+            onClick={() => {
+              dispatch(addItem(state))
+              handleFormSidebar()
+            }}
           >
             Add
           </Button>
-          <Button
-            color="secondary"
-            onClick={handleFormSidebar}
-            outline
-          >
+          <Button color="secondary" onClick={handleFormSidebar} outline>
             Cancel
-          </Button> */}
+          </Button>
         </Fragment>
       )
     }

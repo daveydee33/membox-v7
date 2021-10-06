@@ -68,12 +68,15 @@ const ItemsPage = () => {
         //
       ></ItemsList>
 
-      <Sidebar sidebarOpen={sidebarOpen} />
+      <Sidebar
+        sidebarOpen={sidebarOpen}
+        handleFormSidebar={handleFormSidebar}
+      />
 
       <FormSidebar
         store={store}
         // params={params}
-        // addItem={addItem}
+        addItem={addItem}
         dispatch={dispatch}
         open={openFormSidebar}
         updateSingleItem={updateSingleItem}
