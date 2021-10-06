@@ -42,8 +42,8 @@ const ModalHeader = (props) => {
     handleFormSidebar,
     setDeleted,
     // deleted,
-    important,
-    setImportant,
+    // important,
+    // setImportant,
     deleteItem,
     dispatch
   } = props
@@ -51,8 +51,8 @@ const ModalHeader = (props) => {
   // ** Function to delete item
   const handleDeleteItem = () => {
     // setDeleted(!deleted)
-    // dispatch(deleteItem(store.selectedItem.id))
-    // handleFormSidebar()
+    dispatch(deleteItem(store.selectedItem.id))
+    handleFormSidebar()
   }
 
   return (
@@ -67,7 +67,7 @@ const ModalHeader = (props) => {
           />
         ) : null}
 
-        <span className="todo-item-favorite cursor-pointer mx-75">
+        {/* <span className="todo-item-favorite cursor-pointer mx-75">
           <Star
             size={16}
             onClick={() => setImportant(!important)}
@@ -75,7 +75,7 @@ const ModalHeader = (props) => {
               'text-warning': important === true
             })}
           />
-        </span>
+        </span> */}
         <X
           className="font-weight-normal mt-25"
           size={16}
@@ -310,7 +310,7 @@ const FormSidebar = (props) => {
           // deleted={deleted}
           dispatch={dispatch}
           // important={important}
-          // deleteItem={deleteItem}
+          deleteItem={deleteItem}
           // setDeleted={setDeleted}
           // setImportant={setImportant}
           handleFormSidebar={handleFormSidebar}

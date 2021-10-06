@@ -17,7 +17,8 @@ router
   .get(validate(itemValidation.getItem), itemController.getItem)
   // .patch(auth('manageItems'), validate(itemValidation.updateItem), itemController.updateItem)
   .patch(validate(itemValidation.updateItem), itemController.updateItem)
-  .delete(auth('manageItems'), validate(itemValidation.deleteItem), itemController.deleteItem);
+  // .delete(auth('manageItems'), validate(itemValidation.deleteItem), itemController.deleteItem);
+  .delete(validate(itemValidation.deleteItem), itemController.deleteItem);
 
 module.exports = router;
 

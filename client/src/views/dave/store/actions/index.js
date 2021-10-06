@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-// Get Items
+// ** Get Items
 export const getItems = (params) => {
   return (dispatch) => {
     return axios.get('/v1/items', { params }).then((res) => {
@@ -35,24 +35,24 @@ export const updateSingleItem = (id, item) => {
 //           item: res.data
 //         })
 //       })
-//       // .then(() => dispatch(getItems(getState().todo.params)))
+//       // .then(() => dispatch(getItems(getState().items.params)))
 //   }
 // }
 
 // ** Delete Item
-// export const deleteItem = (itemId) => {
-//   return (dispatch, getState) => {
-//     axios
-//       .delete('/apps/todo/delete-item', { itemId })
-//       .then((res) => {
-//         dispatch({
-//           type: 'DELETE_ITEM',
-//           item: res.data
-//         })
-//       })
-//       .then(() => dispatch(getItems(getState().todo.params)))
-//   }
-// }
+export const deleteItem = (id) => {
+  return (dispatch, getState) => {
+    axios
+      .delete(`/v1/items/${id}`)
+      .then((res) => {
+        dispatch({
+          type: 'DELETE_ITEM',
+          item: res.data
+        })
+      })
+      .then(() => dispatch(getItems(getState().items.params)))
+  }
+}
 
 // Select Item
 export const selectItem = (item) => (dispatch) => dispatch({ type: 'SELECT_ITEM', item })

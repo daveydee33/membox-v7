@@ -77,7 +77,7 @@ const ItemsPage = () => {
         dispatch={dispatch}
         open={openFormSidebar}
         updateSingleItem={updateSingleItem}
-        // deleteItem={deleteItem}
+        deleteItem={deleteItem}
         selectItem={selectItem}
         handleFormSidebar={handleFormSidebar}
       />
