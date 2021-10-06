@@ -169,7 +169,7 @@ const Sidebar = (props) => {
             </CardBody>
           </Card>
           <Button.Ripple color="primary" onClick={handleFormSidebar} block>
-            Add Item
+            Add New Item
           </Button.Ripple>
         </div>
       </div>

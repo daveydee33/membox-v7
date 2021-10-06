@@ -99,7 +99,7 @@ const FormSidebar = (props) => {
     if (store && !isObjEmpty(store.selectedItem)) {
       return 'Edit Item'
     } else {
-      return 'Add Item'
+      return 'Add New Item'
     }
   }
 
