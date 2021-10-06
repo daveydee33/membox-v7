@@ -59,14 +59,6 @@ const ModalHeader = (props) => {
     <div className="modal-header d-flex align-items-center justify-content-between mb-1">
       <h5 className="modal-title">{children}</h5>
       <div className="todo-item-action d-flex align-items-center">
-        {store && !isObjEmpty(store.selectedItem) ? (
-          <Trash
-            className="cursor-pointer mt-25"
-            size={16}
-            onClick={() => handleDeleteItem()}
-          />
-        ) : null}
-
         {/* <span className="todo-item-favorite cursor-pointer mx-75">
           <Star
             size={16}
@@ -248,7 +240,7 @@ const FormSidebar = (props) => {
     if (store && !isObjEmpty(store.selectedItem)) {
       return (
         <Fragment>
-          <Button
+          <Button.Ripple
             color="primary"
             disabled={!title.length} // TODO (form validation)
             className="update-btn update-todo-item mr-1"
@@ -258,10 +250,22 @@ const FormSidebar = (props) => {
             }}
           >
             Update
-          </Button>
-          <Button color="secondary" onClick={handleResetFields} outline>
+          </Button.Ripple>
+          <Button.Ripple color="secondary" onClick={handleResetFields} outline>
             Reset
-          </Button>
+          </Button.Ripple>
+
+          {store && !isObjEmpty(store.selectedItem) ? (
+            <Button.Ripple
+              color="danger"
+              className="ml-1"
+              onClick={() => handleDeleteItem}
+              outline
+            >
+              {/* <Trash className="mr-1" size={16} /> */}
+              Delete
+            </Button.Ripple>
+          ) : null}
         </Fragment>
       )
     } else {
