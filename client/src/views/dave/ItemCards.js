@@ -38,6 +38,11 @@ const ItemCards = (props) => {
               <CardTitle tag="h4">{item.title}</CardTitle>
               <CardText>{item.description}</CardText>
               <CardText>{item.details}</CardText>
+              {item.tags.map((tag) => (
+                <Badge color="light-secondary" className="mr-1" pill key={tag}>
+                  {tag}
+                </Badge>
+              ))}
             </CardBody>
           </Card>
         )
