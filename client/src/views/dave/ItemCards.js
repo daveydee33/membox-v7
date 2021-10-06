@@ -11,7 +11,8 @@ import {
   CardTitle,
   CardSubtitle,
   Button,
-  Badge
+  Badge,
+  CardColumns
 } from 'reactstrap'
 
 const ItemCards = (props) => {
@@ -69,7 +70,8 @@ const ItemCards = (props) => {
     <div
       className={classnames({
         'grid-view': activeView === 'grid',
-        'list-view': activeView === 'list'
+        'list-view': activeView === 'list',
+        'card-columns': activeView === 'columns'
       })}
     >
       {renderItems()}
