@@ -17,7 +17,9 @@ const ItemsList = (props) => {
     activeView,
     setActiveView,
     sidebarOpen,
-    setSidebarOpen
+    setSidebarOpen,
+    selectItem,
+    handleFormSidebar
   } = props
 
   return (
@@ -51,7 +53,13 @@ const ItemsList = (props) => {
 
         {/* Items List */}
         {store.items.length ? (
-          <ItemCards items={store.items} activeView={activeView} />
+          <ItemCards
+            items={store.items}
+            activeView={activeView}
+            selectItem={selectItem}
+            dispatch={dispatch}
+            handleFormSidebar={handleFormSidebar}
+          />
         ) : (
           <div className="d-flex justify-content-center mt-2">
             <p>No Results</p>

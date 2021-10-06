@@ -18,6 +18,10 @@ const itemSchema = mongoose.Schema(
       required: false,
       trim: true,
     },
+    tags: {
+      type: [String],
+      required: false,
+    },
   },
   {
     timestamps: true,
