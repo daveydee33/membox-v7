@@ -70,7 +70,6 @@ const AddWord = () => {
             </Label>
             <Col sm="9">
               <Input
-                type="text"
                 id="description"
                 bsSize="lg"
                 placeholder="Description"
