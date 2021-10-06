@@ -3,13 +3,21 @@ import { Fragment, useEffect, useState } from 'react'
 // Page Components
 import ItemsList from './ItemsList'
 import Sidebar from './Sidebar'
+import FormSidebar from './FormSidebar'
 
 // ** Custom Components
 import Breadcrumbs from '@components/breadcrumbs'
 
 // ** Store & Actions
 import { useDispatch, useSelector } from 'react-redux'
-import { getItems } from './store/actions'
+import {
+  getItems,
+  updateItems,
+  selectItem,
+  addItem,
+  deleteItem,
+  reOrderItems
+} from './store/actions'
 
 // ** Styles
 import '@styles/base/pages/app-ecommerce.scss'
@@ -18,19 +26,23 @@ const ItemsPage = () => {
   // States
   const [activeView, setActiveView] = useState('grid')
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [openFormSidebar, setOpenFormSidebar] = useState(false)
 
-  // ** Vars
+  // ** Store Vars
   const dispatch = useDispatch()
   const store = useSelector((state) => state.items)
 
-  // ** Get items
+  // ** Function to handle Left sidebar & Form sidebar
+  const handleFormSidebar = () => setOpenFormSidebar(!openFormSidebar)
+
+  // ** Get items on mount & based on dependency change
   useEffect(() => {
     dispatch(
       getItems({
         limit: 9999
       })
     )
-  }, [dispatch])
+  }, [dispatch, store.items.length])
 
   return (
     <Fragment>
@@ -50,10 +62,23 @@ const ItemsPage = () => {
         setActiveView={setActiveView}
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
+        selectItem={selectItem}
+        handleFormSidebar={handleFormSidebar}
         //
       ></ItemsList>
 
       <Sidebar sidebarOpen={sidebarOpen} />
+
+      <FormSidebar
+        store={store}
+        // params={params}
+        // addItem={addItem}
+        dispatch={dispatch}
+        open={openFormSidebar}
+        // updateItem={updateItem}
+        // deleteItem={deleteItem}
+        handleFormSidebar={handleFormSidebar}
+      />
     </Fragment>
   )
 }

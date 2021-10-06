@@ -8,14 +8,32 @@ import { Card, CardBody, CardText, CardTitle, Button, Badge } from 'reactstrap'
 
 const ItemCards = (props) => {
   // ** Props
-  const { store, items, activeView, dispatch, getItems } = props
+  const {
+    // store,
+    items,
+    activeView,
+    dispatch,
+    // getItems,
+    selectItem,
+    handleFormSidebar
+  } = props
+
+  // ** Function to selectItem on click
+  const handleItemClick = (obj) => {
+    dispatch(selectItem(obj))
+    handleFormSidebar()
+  }
 
   // ** Renders items
   const renderItems = () => {
     if (items.length) {
       return items.map((item) => {
         return (
-          <Card className="ecommerce-card" key={item.id}>
+          <Card
+            className="ecommerce-card"
+            key={item.id}
+            onClick={() => handleItemClick(item)}
+          >
             <CardBody>
               <CardTitle tag="h4">{item.title}</CardTitle>
               <CardText>{item.description}</CardText>

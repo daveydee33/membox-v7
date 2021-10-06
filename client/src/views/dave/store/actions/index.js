@@ -8,3 +8,6 @@ export const getItems = (params) => {
     })
   }
 }
+
+// Select Item
+export const selectItem = item => dispatch => dispatch({ type: 'SELECT_ITEM', item })
