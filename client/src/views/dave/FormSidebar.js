@@ -30,14 +30,14 @@ const ModalHeader = (props) => {
   // ** Props
   const {
     children,
-    store,
-    handleFormSidebar,
-    setDeleted,
+    // store,
+    handleFormSidebar
+    // setDeleted,
     // deleted,
     // important,
     // setImportant,
-    deleteItem,
-    dispatch
+    // deleteItem,
+    // dispatch
   } = props
 
   return (
@@ -79,20 +79,27 @@ const FormSidebar = (props) => {
   // ** Item data
   const [title, setTitle] = useState(''),
     [description, setDescription] = useState(''),
-    [details, setDetails] = useState('')
-  // [tags, setTags] = useState([]),
+    [details, setDetails] = useState(''),
+    [tags, setTags] = useState([])
   // [completed, setCompleted] = useState(false),
   // [important, setImportant] = useState(false),
   // [deleted, setDeleted] = useState(false),
 
   // ** Tag Select Options
-  // const tagOptions = [
-  //   { value: 'team', label: 'Team' },
-  //   { value: 'low', label: 'Low' },
-  //   { value: 'medium', label: 'Medium' },
-  //   { value: 'high', label: 'High' },
-  //   { value: 'update', label: 'Update' }
-  // ]
+  const tagOptions = [
+    { value: 'aaa', label: 'aaa' },
+    { value: 'bbb', label: 'bbb' },
+    { value: 'ccc', label: 'ccc' },
+    { value: 'ddd', label: 'ddd' },
+    { value: 'eee', label: 'eee' },
+    { value: 'fff', label: 'fff' },
+    { value: 'ggg', label: 'ggg' },
+    { value: 'hhh', label: 'hhh' },
+    { value: 'iii', label: 'iiii' },
+    { value: 'j', label: 'JJJJJ' },
+    { value: 'k', label: 'kkkkkk' },
+    { value: 'l', label: 'LLLLLLL' }
+  ]
 
   // ** Returns sidebar title
   const handleSidebarTitle = () => {
@@ -110,13 +117,13 @@ const FormSidebar = (props) => {
       setTitle(selectedItem.title)
       setDescription(selectedItem.description)
       setDetails(selectedItem.details)
-      // if (selectedItem.tags.length) {
-      //   const tags = []
-      //   selectedItem.tags.map((tag) => {
-      //     tags.push({ value: tag, label: capitalize(tag) })
-      //   })
-      //   setTags(tags)
-      // }
+      if (selectedItem.tags && selectedItem.tags.length) {
+        const tags = []
+        selectedItem.tags.map((tag) => {
+          tags.push({ value: tag, label: tag })
+        })
+        setTags(tags)
+      }
     }
   }
 
@@ -125,7 +132,7 @@ const FormSidebar = (props) => {
     setTitle('')
     setDescription('')
     setDetails('')
-    // setTags([])
+    setTags([])
     // setCompleted(false)
     // setImportant(false)
     dispatch(selectItem({}))
@@ -136,30 +143,29 @@ const FormSidebar = (props) => {
     setTitle(store.selectedItem.title)
     setDescription(store.selectedItem.description)
     setDetails(store.selectedItem.details)
+    if (store.selectedItem.tags.length) {
+      const tags = []
+      store.selectedItem.tags.map((tag) => {
+        tags.push({ value: tag, label: tag })
+      })
+      setTags(tags)
+    }
     // setCompleted(store.selectedItem.isCompleted)
     // setImportant(store.selectedItem.isImportant)
     // setDeleted(store.selectedItem.isDeleted)
-    // if (store.selectedItem.tags.length) {
-    //   const tags = []
-    //   store.selectedItem.tags.map((tag) => {
-    //     tags.push({ value: tag, label: capitalize(tag) })
-    //   })
-    //   setTags(tags)
-    // }
   }
 
   // ** Renders Footer Buttons
   const renderFooterButtons = () => {
-    // const newItemTag = []
-    // if (tags.length) {
-    //   tags.map((tag) => newItemTag.push(tag.value))
-    // }
+    const newItemTag = []
+    if (tags.length) {
+      tags.map((tag) => newItemTag.push(tag.value))
+    }
     const state = {
       title,
       description,
-      details
-      // tags: newItemTag,
-      // description: desc,
+      details,
+      tags: newItemTag
       // isCompleted: completed,
       // isDeleted: deleted,
       // isImportant: important,
@@ -237,10 +243,9 @@ const FormSidebar = (props) => {
       >
         <ModalHeader
           store={store}
-          // deleted={deleted}
           dispatch={dispatch}
+          // deleted={deleted}
           // important={important}
-          deleteItem={deleteItem}
           // setDeleted={setDeleted}
           // setImportant={setImportant}
           handleFormSidebar={handleFormSidebar}
@@ -249,7 +254,7 @@ const FormSidebar = (props) => {
         </ModalHeader>
         <ModalBody className="flex-grow-1 pb-sm-0 pb-3">
           <FormGroup>
-            <Label className="form-label" for="title">
+            <Label for="title" className="form-label">
               Title <span className="text-danger">*</span>
             </Label>
             <Input
@@ -287,9 +292,8 @@ const FormSidebar = (props) => {
             />
           </FormGroup>
 
-          {/* 
           <FormGroup>
-            <Label className="form-label" for="tags">
+            <Label for="tags" className="form-label">
               Tags
             </Label>
             <Select
@@ -305,8 +309,7 @@ const FormSidebar = (props) => {
                 setTags(data !== null ? [...data] : [])
               }}
             />
-          </FormGroup> 
-          */}
+          </FormGroup>
 
           <FormGroup className="my-1">{renderFooterButtons()}</FormGroup>
         </ModalBody>
