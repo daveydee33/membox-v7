@@ -1,3 +1,8 @@
 //  ================================================================================================
 //  ? TIP:  It is recommended to use this file for overriding bootstrap variables.
 //  ================================================================================================
+
+// increase the card hover animation from .3s to .1s
+.card {
+  transition: all 0.1s ease-in-out, background 0s, color 0s, border-color 0s;
+}
