@@ -259,19 +259,15 @@ const FormSidebar = (props) => {
           >
             Update
           </Button>
-          {/* <Button
-            color="secondary"
-            onClick={handleResetFields}
-            outline
-          >
+          <Button color="secondary" onClick={handleResetFields} outline>
             Reset
-          </Button> */}
+          </Button>
         </Fragment>
       )
     } else {
       return (
         <Fragment>
-          <Button
+          {/* <Button
             color="primary"
             disabled={!title.length} // TODO (form validation)
             className="add-todo-item mr-1"
@@ -282,7 +278,7 @@ const FormSidebar = (props) => {
           >
             Add
           </Button>
-          {/* <Button
+          <Button
             color="secondary"
             onClick={handleFormSidebar}
             outline
@@ -334,6 +330,33 @@ const FormSidebar = (props) => {
               onChange={(e) => setTitle(e.target.value)}
             />
           </FormGroup>
+
+          <FormGroup>
+            <Label for="description" className="form-label">
+              Description
+            </Label>
+            <Input
+              id="description"
+              value={description}
+              placeholder="Description"
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </FormGroup>
+
+          <FormGroup>
+            <Label for="details" className="form-label">
+              Details
+            </Label>
+            <Input
+              id="details"
+              value={details}
+              placeholder="Details"
+              type="textarea"
+              rows={6}
+              onChange={(e) => setDetails(e.target.value)}
+            />
+          </FormGroup>
+
           {/*
           <FormGroup>
             <Label className="form-label" for="assignee">
@@ -352,6 +375,7 @@ const FormSidebar = (props) => {
             /> 
           </FormGroup>
           */}
+
           {/* 
           <FormGroup>
             <Label className="form-label" for="tags">
@@ -372,30 +396,6 @@ const FormSidebar = (props) => {
             />
           </FormGroup> 
           */}
-          <FormGroup>
-            <Label for="description" className="form-label">
-              Description
-            </Label>
-            <Input
-              id="description"
-              value={description}
-              placeholder="Description"
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label for="details" className="form-label">
-              Details
-            </Label>
-            <Input
-              id="details"
-              value={details}
-              placeholder="Details"
-              type="textarea"
-              rows={6}
-              onChange={(e) => setDetails(e.target.value)}
-            />
-          </FormGroup>
 
           <FormGroup className="my-1">{renderFooterButtons()}</FormGroup>
         </ModalBody>
