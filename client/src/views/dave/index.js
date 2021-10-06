@@ -42,7 +42,7 @@ const ItemsPage = () => {
         limit: 9999
       })
     )
-  }, [dispatch, store.items.length])
+  }, [dispatch])
 
   return (
     <Fragment>
@@ -77,6 +77,7 @@ const ItemsPage = () => {
         open={openFormSidebar}
         // updateItem={updateItem}
         // deleteItem={deleteItem}
+        selectItem={selectItem}
         handleFormSidebar={handleFormSidebar}
       />
     </Fragment>
