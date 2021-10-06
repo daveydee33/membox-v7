@@ -19,14 +19,6 @@ import {
 // ** Utils
 import { isObjEmpty, selectThemeColors } from '@utils'
 
-// ** Assignee Avatars
-// import img1 from '@src/assets/images/portrait/small/avatar-s-3.jpg'
-// import img2 from '@src/assets/images/portrait/small/avatar-s-1.jpg'
-// import img3 from '@src/assets/images/portrait/small/avatar-s-4.jpg'
-// import img4 from '@src/assets/images/portrait/small/avatar-s-6.jpg'
-// import img5 from '@src/assets/images/portrait/small/avatar-s-2.jpg'
-// import img6 from '@src/assets/images/portrait/small/avatar-s-11.jpg'
-
 // ** Styles Imports
 import '@styles/react/libs/react-select/_react-select.scss'
 
@@ -88,24 +80,10 @@ const FormSidebar = (props) => {
   const [title, setTitle] = useState(''),
     [description, setDescription] = useState(''),
     [details, setDetails] = useState('')
-  // [assignee, setAssignee] = useState({
-  //   value: 'pheobe',
-  //   label: 'Pheobe Buffay'
-  // }),
   // [tags, setTags] = useState([]),
   // [completed, setCompleted] = useState(false),
   // [important, setImportant] = useState(false),
   // [deleted, setDeleted] = useState(false),
-
-  // ** Assignee Select Options
-  // const assigneeOptions = [
-  //   { value: 'pheobe', label: 'Pheobe Buffay' },
-  //   { value: 'chandler', label: 'Chandler Bing' },
-  //   { value: 'ross', label: 'Ross Geller' },
-  //   { value: 'monica', label: 'Monica Geller' },
-  //   { value: 'joey', label: 'Joey Tribbiani' },
-  //   { value: 'Rachel', label: 'Rachel Green' }
-  // ]
 
   // ** Tag Select Options
   // const tagOptions = [
@@ -115,26 +93,6 @@ const FormSidebar = (props) => {
   //   { value: 'high', label: 'High' },
   //   { value: 'update', label: 'Update' }
   // ]
-
-  // ** Custom Assignee Component
-  // const AssigneeComponent = ({ data, ...props }) => {
-  //   return (
-  //     <components.Option {...props}>
-  //       <Media className="align-items-center">
-  //         <img
-  //           className="d-block rounded-circle mr-50"
-  //           src={data.img}
-  //           height="26"
-  //           width="26"
-  //           alt={data.label}
-  //         />
-  //         <Media body>
-  //           <p className="mb-0">{data.label}</p>
-  //         </Media>
-  //       </Media>
-  //     </components.Option>
-  //   )
-  // }
 
   // ** Returns sidebar title
   const handleSidebarTitle = () => {
@@ -152,13 +110,6 @@ const FormSidebar = (props) => {
       setTitle(selectedItem.title)
       setDescription(selectedItem.description)
       setDetails(selectedItem.details)
-      // setAssignee([
-      //   {
-      //     value: selectedItem.assignee.fullName,
-      //     label: selectedItem.assignee.fullName,
-      //     img: selectedItem.assignee.avatar
-      //   }
-      // ])
       // if (selectedItem.tags.length) {
       //   const tags = []
       //   selectedItem.tags.map((tag) => {
@@ -175,7 +126,6 @@ const FormSidebar = (props) => {
     setDescription('')
     setDetails('')
     // setTags([])
-    // setAssignee({ value: 'pheobe', label: 'Pheobe Buffay' })
     // setCompleted(false)
     // setImportant(false)
     dispatch(selectItem({}))
@@ -189,13 +139,6 @@ const FormSidebar = (props) => {
     // setCompleted(store.selectedItem.isCompleted)
     // setImportant(store.selectedItem.isImportant)
     // setDeleted(store.selectedItem.isDeleted)
-    // if (store.selectedItem.assignee.fullName !== assignee.label) {
-    //   setAssignee({
-    //     value: store.selectedItem.assignee.fullName,
-    //     label: store.selectedItem.assignee.fullName,
-    //     img: store.selectedItem.assignee.avatar
-    //   })
-    // }
     // if (store.selectedItem.tags.length) {
     //   const tags = []
     //   store.selectedItem.tags.map((tag) => {
@@ -208,15 +151,8 @@ const FormSidebar = (props) => {
   // ** Renders Footer Buttons
   const renderFooterButtons = () => {
     // const newItemTag = []
-    // const doesInclude =
-    //   !isObjEmpty(store.selectedItem) &&
-    //   assignee.label === store.selectedItem.assignee.fullName
     // if (tags.length) {
     //   tags.map((tag) => newItemTag.push(tag.value))
-    // }
-    // const newAssignee = {
-    //   fullName: assignee.label,
-    //   avatar: assignee.img
     // }
     const state = {
       title,
@@ -227,8 +163,6 @@ const FormSidebar = (props) => {
       // isCompleted: completed,
       // isDeleted: deleted,
       // isImportant: important,
-      // assignee:
-      // doesInclude || assignee.label === undefined ? store.selectedItem.assignee : newAssignee
     }
     if (store && !isObjEmpty(store.selectedItem)) {
       return (
@@ -352,25 +286,6 @@ const FormSidebar = (props) => {
               onChange={(e) => setDetails(e.target.value)}
             />
           </FormGroup>
-
-          {/*
-          <FormGroup>
-            <Label className="form-label" for="assignee">
-              Assignee
-            </Label>
-            <Select
-              id="assignee"
-              className="react-select"
-              classNamePrefix="select"
-              isClearable={false}
-              options={assigneeOptions}
-              theme={selectThemeColors}
-              value={assignee}
-              onChange={(data) => setAssignee(data)}
-              components={{ Option: AssigneeComponent }}
-            /> 
-          </FormGroup>
-          */}
 
           {/* 
           <FormGroup>
