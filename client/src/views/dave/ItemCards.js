@@ -4,7 +4,15 @@ import { Link } from 'react-router-dom'
 // ** Third Party Components
 import classnames from 'classnames'
 import { Star, ShoppingCart, Heart } from 'react-feather'
-import { Card, CardBody, CardText, CardTitle, Button, Badge } from 'reactstrap'
+import {
+  Card,
+  CardBody,
+  CardText,
+  CardTitle,
+  CardSubtitle,
+  Button,
+  Badge
+} from 'reactstrap'
 
 const ItemCards = (props) => {
   // ** Props
@@ -37,9 +45,16 @@ const ItemCards = (props) => {
             <CardBody>
               <CardTitle tag="h4">{item.title}</CardTitle>
               <CardText>{item.description}</CardText>
-              <CardText>{item.details}</CardText>
+              <CardSubtitle className="text-muted mt-2">
+                {item.details}
+              </CardSubtitle>
               {item.tags.map((tag) => (
-                <Badge color="light-secondary" className="mr-1" pill key={tag}>
+                <Badge
+                  color="light-secondary"
+                  className="mr-1 mt-1"
+                  pill
+                  key={tag}
+                >
                   {tag}
                 </Badge>
               ))}
