@@ -15,10 +15,11 @@ const ItemCards = (props) => {
     if (items.length) {
       return items.map((item) => {
         return (
-          <Card className="ecommerce-card">
+          <Card className="ecommerce-card" key={item.id}>
             <CardBody>
-              <CardTitle tag="h4">{item.word}</CardTitle>
-              <CardText>{item.meaning}</CardText>
+              <CardTitle tag="h4">{item.title}</CardTitle>
+              <CardText>{item.description}</CardText>
+              <CardText>{item.details}</CardText>
             </CardBody>
           </Card>
         )

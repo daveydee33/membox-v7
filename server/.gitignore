@@ -12,11 +12,13 @@
 /build
 
 # misc
-.DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+#.DS_Store
+#.env.local
+#.env.development.local
+#.env.test.local
+#.env.production.local
+.env*
+!.env*.example
 
 npm-debug.log*
 yarn-debug.log*
@@ -27,3 +29,8 @@ yarn-error.log*
 .vscode
 
 /react-shell-scripts
+
+# Code coverage
+coverage
+
+

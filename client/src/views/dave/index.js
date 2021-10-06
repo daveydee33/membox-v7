@@ -27,7 +27,7 @@ const ItemsPage = () => {
   useEffect(() => {
     dispatch(
       getItems({
-        q: ''
+        limit: 9999
       })
     )
   }, [dispatch])
