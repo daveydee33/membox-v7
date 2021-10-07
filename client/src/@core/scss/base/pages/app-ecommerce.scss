@@ -224,8 +224,10 @@ $search-bar-height: 48px;
   }
 
   // margin for both views
+  // I'm adding the line for .card-columns which might get overwritten in a later version
   .grid-view,
-  .list-view {
+  .list-view,
+  .card-columns {
     &:not(.wishlist-items) {
       margin-top: 2rem;
     }

@@ -11,7 +11,8 @@ import {
   CardTitle,
   CardImg,
   Button,
-  Badge
+  Badge,
+  CardColumns
 } from 'reactstrap'
 
 import img1 from '@src/assets/images/pages/content-img-3.jpg'
@@ -71,7 +72,8 @@ const ItemCards = (props) => {
     <div
       className={classnames({
         'grid-view': activeView === 'grid',
-        'list-view': activeView === 'list'
+        'list-view': activeView === 'list',
+        'card-columns': activeView === 'columns'
       })}
     >
       {renderItems()}

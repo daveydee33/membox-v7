@@ -1,6 +1,6 @@
 // ** Third Party Components
 import classnames from 'classnames'
-import { Menu, Grid, List } from 'react-feather'
+import { Menu, Grid, List, Columns } from 'react-feather'
 import {
   Row,
   Col,
@@ -84,6 +84,17 @@ const ItemsHeader = props => {
                   onClick={() => setActiveView('list')}
                 >
                   <List size={18} />
+                </Button>
+                <Button
+                  tag='label'
+                  className={classnames('btn-icon view-btn columns-view-btn', {
+                    active: activeView === 'columns'
+                  })}
+                  color='primary'
+                  outline
+                  onClick={() => setActiveView('columns')}
+                >
+                  <Columns size={18} />
                 </Button>
               </ButtonGroup>
             </div>
