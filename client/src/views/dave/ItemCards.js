@@ -9,10 +9,13 @@ import {
   CardBody,
   CardText,
   CardTitle,
-  CardSubtitle,
+  CardImg,
   Button,
   Badge
 } from 'reactstrap'
+
+import img1 from '@src/assets/images/pages/content-img-3.jpg'
+import img2 from '@src/assets/images/pages/content-img-2.jpg'
 
 const ItemCards = (props) => {
   // ** Props
@@ -42,12 +45,11 @@ const ItemCards = (props) => {
             key={item.id}
             onClick={() => handleItemClick(item)}
           >
+            <CardImg src={img1} />
             <CardBody>
               <CardTitle tag="h4">{item.title}</CardTitle>
               <CardText>{item.description}</CardText>
-              <CardSubtitle className="text-muted mt-2">
-                {item.details}
-              </CardSubtitle>
+              <CardText className="text-muted">{item.details}</CardText>
               {item.tags.map((tag) => (
                 <Badge
                   color="light-secondary"
