@@ -1,11 +1,23 @@
 import axios from 'axios'
 
+// ** Get Tags
+export const getTags = (params) => {
+  return (dispatch) => {
+    return axios.get('/v1/tags').then((res) => {
+      dispatch({ type: 'GET_TAGS', data: res.data, params })
+    })
+  }
+}
+
 // ** Get Items
 export const getItems = (params) => {
   return (dispatch) => {
-    return axios.get('/v1/items', { params }).then((res) => {
-      dispatch({ type: 'GET_ITEMS', data: res.data, params })
-    })
+    return axios
+      .get('/v1/items', { params })
+      .then((res) => {
+        dispatch({ type: 'GET_ITEMS', data: res.data, params })
+      })
+      .then(() => dispatch(getTags()))
   }
 }
 
