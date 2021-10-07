@@ -4,7 +4,7 @@ import { useState, Fragment } from 'react'
 // ** Third Party Components
 import classnames from 'classnames'
 import { X, Star, Trash } from 'react-feather'
-import Select, { components } from 'react-select'
+import CreatableSelect from 'react-select/creatable'
 import {
   Modal,
   ModalBody,
@@ -296,7 +296,7 @@ const FormSidebar = (props) => {
             <Label for="tags" className="form-label">
               Tags
             </Label>
-            <Select
+            <CreatableSelect
               isMulti
               value={tags}
               id="tags"
@@ -305,7 +305,7 @@ const FormSidebar = (props) => {
               className="react-select"
               classNamePrefix="select"
               theme={selectThemeColors}
-              onChange={(data) => {
+              onChange={(data, actionMeta) => {
                 setTags(data !== null ? [...data] : [])
               }}
             />
