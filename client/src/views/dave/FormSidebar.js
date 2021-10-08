@@ -4,7 +4,7 @@ import { useState, Fragment } from 'react'
 // ** Third Party Components
 import classnames from 'classnames'
 import { X, Star, Trash } from 'react-feather'
-import Select, { components } from 'react-select'
+import CreatableSelect from 'react-select/creatable'
 import {
   Modal,
   ModalBody,
@@ -80,26 +80,16 @@ const FormSidebar = (props) => {
   const [title, setTitle] = useState(''),
     [description, setDescription] = useState(''),
     [details, setDetails] = useState(''),
-    [tags, setTags] = useState([])
+    [tags, setTags] = useState([]),
+    [tagOptions, setTagOptions] = useState([])
   // [completed, setCompleted] = useState(false),
   // [important, setImportant] = useState(false),
   // [deleted, setDeleted] = useState(false),
 
-  // ** Tag Select Options
-  const tagOptions = [
-    { value: 'aaa', label: 'aaa' },
-    { value: 'bbb', label: 'bbb' },
-    { value: 'ccc', label: 'ccc' },
-    { value: 'ddd', label: 'ddd' },
-    { value: 'eee', label: 'eee' },
-    { value: 'fff', label: 'fff' },
-    { value: 'ggg', label: 'ggg' },
-    { value: 'hhh', label: 'hhh' },
-    { value: 'iii', label: 'iiii' },
-    { value: 'j', label: 'JJJJJ' },
-    { value: 'k', label: 'kkkkkk' },
-    { value: 'l', label: 'LLLLLLL' }
-  ]
+  const getTagOptions = () => {
+    const tagOptions = store.tags.map((tag) => ({ value: tag, label: tag }))
+    return tagOptions
+  }
 
   // ** Returns sidebar title
   const handleSidebarTitle = () => {
@@ -125,6 +115,7 @@ const FormSidebar = (props) => {
         setTags(tags)
       }
     }
+    setTagOptions(getTagOptions())
   }
 
   // ** Function to run when sidebar closes
@@ -296,7 +287,7 @@ const FormSidebar = (props) => {
             <Label for="tags" className="form-label">
               Tags
             </Label>
-            <Select
+            <CreatableSelect
               isMulti
               value={tags}
               id="tags"
@@ -305,7 +296,7 @@ const FormSidebar = (props) => {
               className="react-select"
               classNamePrefix="select"
               theme={selectThemeColors}
-              onChange={(data) => {
+              onChange={(data, actionMeta) => {
                 setTags(data !== null ? [...data] : [])
               }}
             />

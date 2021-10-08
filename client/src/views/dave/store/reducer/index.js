@@ -2,7 +2,8 @@ const initialState = {
   items: [],
   params: {},
   totalItems: 0,
-  selectedItem: {}
+  selectedItem: {},
+  tags: []
 }
 
 const itemsReducer = (state = initialState, action) => {
@@ -20,6 +21,8 @@ const itemsReducer = (state = initialState, action) => {
       return { ...state }
     case 'SELECT_ITEM':
       return { ...state, selectedItem: action.item }
+    case 'GET_TAGS':
+      return { ...state, tags: action.data }
     default:
       return state
   }
