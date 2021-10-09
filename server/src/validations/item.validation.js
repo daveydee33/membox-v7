@@ -38,6 +38,12 @@ const updateItem = {
       description: Joi.string().allow(''),
       details: Joi.string().allow(''),
       tags: Joi.array().items(Joi.string()),
+      examples: Joi.array().items(
+        Joi.object().keys({
+          title: Joi.string().allow(''),
+          description: Joi.string().allow(''),
+        })
+      ),
     })
     .min(1),
 };
