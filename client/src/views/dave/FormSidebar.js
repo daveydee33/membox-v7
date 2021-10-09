@@ -200,6 +200,28 @@ const FormSidebar = (props) => {
     }
   }
 
+  const handleOnChangeExampleTitle = (event, i) => {
+    const newExamples = [...examples]
+    if (!newExamples[i]) {
+      for (let a = examples.length; a <= i; a++) {
+        newExamples.push({ title: '', description: '' })
+      }
+    }
+    newExamples[i].title = event.target.value
+    setExamples(newExamples)
+  }
+
+  const handleOnChangeExampleDescription = (event, i) => {
+    const newExamples = [...examples]
+    if (!newExamples[i]) {
+      for (let a = examples.length; a <= i; a++) {
+        newExamples.push({ title: '', description: '' })
+      }
+    }
+    newExamples[i].description = event.target.value
+    setExamples(newExamples)
+  }
+
   return (
     <Modal
       isOpen={open}
@@ -293,12 +315,8 @@ const FormSidebar = (props) => {
                   <Input
                     id="example"
                     placeholder="Example"
-                    value={examples.length && examples[i].title}
-                    onChange={(e) => {
-                      const newExamples = [...examples]
-                      newExamples[i].title = e.target.value
-                      setExamples(newExamples)
-                    }}
+                    value={examples[i] ? examples[i].title : ''}
+                    onChange={(e) => handleOnChangeExampleTitle(e, i)}
                   />
                 </FormGroup>
 
@@ -309,12 +327,8 @@ const FormSidebar = (props) => {
                   <Input
                     id="meaning"
                     placeholder="Meaning"
-                    value={examples.length && examples[i].description}
-                    onChange={(e) => {
-                      const newExamples = [...examples]
-                      newExamples[i].description = e.target.value
-                      setExamples(newExamples)
-                    }}
+                    value={examples[i] ? examples[i].description : ''}
+                    onChange={(e) => handleOnChangeExampleDescription(e, i)}
                   />
                 </FormGroup>
 
