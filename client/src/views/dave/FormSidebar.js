@@ -85,19 +85,24 @@ const FormSidebar = (props) => {
     }
   }
 
+  // ** Function to reset fileds with selectedItem values
+  const handleResetFields = () => {
+    const { title, description, details, examples, tags } = store.selectedItem
+    setTitle(title)
+    setDescription(description)
+    setDetails(details)
+    setExamples(_cloneDeep(examples))
+    setRepeaterCount(examples.length || 1)
+    if (tags && tags.length) {
+      const tagObjects = tags.map((tag) => ({ value: tag, label: tag }))
+      setTags(tagObjects)
+    }
+  }
+
   // ** Function to run when sidebar opens
   const handleSidebarOpened = () => {
-    const { title, description, details, examples, tags } = store.selectedItem
     if (!isObjEmpty(store.selectedItem)) {
-      setTitle(title)
-      setDescription(description)
-      setDetails(details)
-      setExamples(_cloneDeep(examples))
-      setRepeaterCount(examples.length || 1)
-      if (tags && tags.length) {
-        const tagObjects = tags.map((tag) => ({ value: tag, label: tag }))
-        setTags(tagObjects)
-      }
+      handleResetFields()
     }
     setTagOptions(getTagObjects())
   }
@@ -111,22 +116,6 @@ const FormSidebar = (props) => {
     setTags([])
     dispatch(selectItem({}))
     setRepeaterCount(1)
-  }
-
-  // ** Function to reset fileds
-  // ? could we just call the function on open the Sidebar again?
-  const handleResetFields = () => {
-    setTitle(store.selectedItem.title)
-    setDescription(store.selectedItem.description)
-    setDetails(store.selectedItem.details)
-    setExamples(store.selectedItem.examples)
-    if (store.selectedItem.tags) {
-      const tags = []
-      store.selectedItem.tags.map((tag) => {
-        tags.push({ value: tag, label: tag })
-      })
-      setTags(tags)
-    }
   }
 
   // ** Renders Footer Buttons
