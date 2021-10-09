@@ -120,7 +120,7 @@ const FormSidebar = (props) => {
     setTitle(store.selectedItem.title)
     setDescription(store.selectedItem.description)
     setDetails(store.selectedItem.details)
-    if (store.selectedItem.tags.length) {
+    if (store.selectedItem.tags) {
       const tags = []
       store.selectedItem.tags.map((tag) => {
         tags.push({ value: tag, label: tag })
