@@ -71,7 +71,7 @@ const FormSidebar = (props) => {
     e.target.closest('.repeater-form').remove()
   }
 
-  const getTagOptions = () => {
+  const getTagObjects = () => {
     const tagOptions = store.tags.map((tag) => ({ value: tag, label: tag }))
     return tagOptions
   }
@@ -87,22 +87,19 @@ const FormSidebar = (props) => {
 
   // ** Function to run when sidebar opens
   const handleSidebarOpened = () => {
-    const { selectedItem } = store
-    if (!isObjEmpty(selectedItem)) {
-      setTitle(selectedItem.title)
-      setDescription(selectedItem.description)
-      setDetails(selectedItem.details)
-      setExamples(_cloneDeep(selectedItem.examples))
-      setRepeaterCount(selectedItem.examples.length || 1)
-      if (selectedItem.tags && selectedItem.tags.length) {
-        const tags = []
-        selectedItem.tags.map((tag) => {
-          tags.push({ value: tag, label: tag })
-        })
-        setTags(tags)
+    const { title, description, details, examples, tags } = store.selectedItem
+    if (!isObjEmpty(store.selectedItem)) {
+      setTitle(title)
+      setDescription(description)
+      setDetails(details)
+      setExamples(_cloneDeep(examples))
+      setRepeaterCount(examples.length || 1)
+      if (tags && tags.length) {
+        const tagObjects = tags.map((tag) => ({ value: tag, label: tag }))
+        setTags(tagObjects)
       }
     }
-    setTagOptions(getTagOptions())
+    setTagOptions(getTagObjects())
   }
 
   // ** Function to run when sidebar closes
