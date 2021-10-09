@@ -169,6 +169,9 @@ const FormSidebar = (props) => {
               Delete
             </Button.Ripple>
           ) : null}
+          <Button color="secondary" onClick={handleFormSidebar} outline>
+            Cancel
+          </Button>
         </Fragment>
       )
     } else {
