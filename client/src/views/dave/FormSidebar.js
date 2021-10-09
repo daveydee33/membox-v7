@@ -92,6 +92,7 @@ const FormSidebar = (props) => {
       setDescription(selectedItem.description)
       setDetails(selectedItem.details)
       setExamples(selectItem.examples)
+      setRepeaterCount(selectedItem.examples.length || 1)
       if (selectedItem.tags && selectedItem.tags.length) {
         const tags = []
         selectedItem.tags.map((tag) => {
