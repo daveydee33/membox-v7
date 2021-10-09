@@ -2,8 +2,9 @@
 import { useState, Fragment } from 'react'
 
 // ** Third Party Components
-import { X } from 'react-feather'
+import { X, Plus, Trash } from 'react-feather'
 import CreatableSelect from 'react-select/creatable'
+import Repeater from '@components/repeater'
 import {
   Modal,
   ModalBody,
@@ -58,6 +59,17 @@ const FormSidebar = (props) => {
     [details, setDetails] = useState(''),
     [tags, setTags] = useState([]),
     [tagOptions, setTagOptions] = useState([])
+
+  const [repeaterCount, setRepeaterCount] = useState(1)
+
+  const increaseRepeaterCount = () => {
+    setRepeaterCount(repeaterCount + 1)
+  }
+
+  const deleteRepeaterForm = (e) => {
+    e.preventDefault()
+    e.target.closest('.repeater-form').remove()
+  }
 
   const getTagOptions = () => {
     const tagOptions = store.tags.map((tag) => ({ value: tag, label: tag }))
@@ -262,6 +274,54 @@ const FormSidebar = (props) => {
             />
           </FormGroup>
 
+          {/* Examples */}
+          <h6 className="mt-3">Examples</h6>
+          <Repeater count={repeaterCount}>
+            {(i) => (
+              <div className="repeater-form" key={i}>
+                <FormGroup>
+                  <Label for="example" className="form-label">
+                    Example
+                  </Label>
+                  <Input
+                    id="example"
+                    placeholder="Example"
+                    value={''}
+                    onChange={() => {}}
+                  />
+                </FormGroup>
+
+                <FormGroup>
+                  <Label for="meaning" className="form-label">
+                    Meaning
+                  </Label>
+                  <Input
+                    id="meaning"
+                    placeholder="Meaning"
+                    value={''}
+                    onChange={() => {}}
+                  />
+                </FormGroup>
+
+                <Button.Ripple
+                  color="flat-danger"
+                  className="btn-icon rounded-circle"
+                  onClick={deleteRepeaterForm}
+                >
+                  <Trash size={14} />
+                </Button.Ripple>
+                <hr />
+              </div>
+            )}
+          </Repeater>
+          <Button.Ripple
+            className="btn-icon"
+            color="bg-gradient-info"
+            onClick={increaseRepeaterCount}
+          >
+            <Plus size={14} />
+            <span className="align-middle ml-25">More</span>
+          </Button.Ripple>
           <FormGroup className="my-1">{renderFooterButtons()}</FormGroup>
         </ModalBody>
       </Form>
