@@ -25,7 +25,6 @@ import '@styles/react/libs/react-select/_react-select.scss'
 const ModalHeader = (props) => {
   // ** Props
   const { children, handleFormSidebar } = props
-
   return (
     <div className="modal-header d-flex align-items-center justify-content-between mb-1">
       <h5 className="modal-title">{children}</h5>
@@ -54,12 +53,12 @@ const FormSidebar = (props) => {
   } = props
 
   // ** Item data
-  const [title, setTitle] = useState(''),
-    [description, setDescription] = useState(''),
-    [details, setDetails] = useState(''),
-    [tags, setTags] = useState([]),
-    [tagOptions, setTagOptions] = useState([])
-
+  const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
+  const [details, setDetails] = useState('')
+  const [tags, setTags] = useState([])
+  const [examples, setExamples] = useState()
+  const [tagOptions, setTagOptions] = useState([])
   const [repeaterCount, setRepeaterCount] = useState(1)
 
   const increaseRepeaterCount = () => {
@@ -92,6 +91,7 @@ const FormSidebar = (props) => {
       setTitle(selectedItem.title)
       setDescription(selectedItem.description)
       setDetails(selectedItem.details)
+      setExamples(selectItem.examples)
       if (selectedItem.tags && selectedItem.tags.length) {
         const tags = []
         selectedItem.tags.map((tag) => {

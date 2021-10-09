@@ -35,6 +35,7 @@ const itemSchema = mongoose.Schema(
             required: false,
             trim: true,
           },
+          _id: false,
         },
       ],
     },
