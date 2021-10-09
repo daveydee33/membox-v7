@@ -57,7 +57,7 @@ const FormSidebar = (props) => {
   const [description, setDescription] = useState('')
   const [details, setDetails] = useState('')
   const [tags, setTags] = useState([])
-  const [examples, setExamples] = useState()
+  const [examples, setExamples] = useState([])
   const [tagOptions, setTagOptions] = useState([])
   const [repeaterCount, setRepeaterCount] = useState(1)
 
@@ -91,7 +91,7 @@ const FormSidebar = (props) => {
       setTitle(selectedItem.title)
       setDescription(selectedItem.description)
       setDetails(selectedItem.details)
-      setExamples(selectItem.examples)
+      setExamples(selectedItem.examples)
       setRepeaterCount(selectedItem.examples.length || 1)
       if (selectedItem.tags && selectedItem.tags.length) {
         const tags = []
@@ -109,6 +109,7 @@ const FormSidebar = (props) => {
     setTitle('')
     setDescription('')
     setDetails('')
+    setExamples([])
     setTags([])
     dispatch(selectItem({}))
     setRepeaterCount(1)
@@ -138,6 +139,7 @@ const FormSidebar = (props) => {
       title,
       description,
       details,
+      examples,
       tags: newItemTag
     }
     if (store && !isObjEmpty(store.selectedItem)) {
@@ -291,8 +293,12 @@ const FormSidebar = (props) => {
                   <Input
                     id="example"
                     placeholder="Example"
-                    value={''}
-                    onChange={() => {}}
+                    value={examples.length && examples[i].title}
+                    onChange={(e) => {
+                      const newExamples = [...examples]
+                      newExamples[i].title = e.target.value
+                      setExamples(newExamples)
+                    }}
                   />
                 </FormGroup>
 
@@ -303,8 +309,12 @@ const FormSidebar = (props) => {
                   <Input
                     id="meaning"
                     placeholder="Meaning"
-                    value={''}
-                    onChange={() => {}}
+                    value={examples.length && examples[i].description}
+                    onChange={(e) => {
+                      const newExamples = [...examples]
+                      newExamples[i].description = e.target.value
+                      setExamples(newExamples)
+                    }}
                   />
                 </FormGroup>
 
