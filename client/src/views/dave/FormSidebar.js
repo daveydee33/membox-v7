@@ -1,3 +1,4 @@
+import _cloneDeep from 'lodash/cloneDeep'
 // ** React Imports
 import { useState, Fragment } from 'react'
 
@@ -91,7 +92,7 @@ const FormSidebar = (props) => {
       setTitle(selectedItem.title)
       setDescription(selectedItem.description)
       setDetails(selectedItem.details)
-      setExamples(selectedItem.examples)
+      setExamples(_cloneDeep(selectedItem.examples))
       setRepeaterCount(selectedItem.examples.length || 1)
       if (selectedItem.tags && selectedItem.tags.length) {
         const tags = []
@@ -116,10 +117,12 @@ const FormSidebar = (props) => {
   }
 
   // ** Function to reset fileds
+  // ? could we just call the function on open the Sidebar again?
   const handleResetFields = () => {
     setTitle(store.selectedItem.title)
     setDescription(store.selectedItem.description)
     setDetails(store.selectedItem.details)
+    setExamples(store.selectedItem.examples)
     if (store.selectedItem.tags) {
       const tags = []
       store.selectedItem.tags.map((tag) => {
