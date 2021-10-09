@@ -135,13 +135,19 @@ const FormSidebar = (props) => {
     if (tags.length) {
       tags.map((tag) => newItemTag.push(tag.value))
     }
-    const state = {
+
+    const examplesWithEmptyObjectsRemoved = examples.filter(
+      (example) => example.title || example.description
+    )
+
+    const payload = {
       title,
       description,
       details,
-      examples,
+      examples: examplesWithEmptyObjectsRemoved,
       tags: newItemTag
     }
+
     if (store && !isObjEmpty(store.selectedItem)) {
       return (
         <Fragment>
@@ -150,7 +156,7 @@ const FormSidebar = (props) => {
             disabled={!title.length}
             className="update-btn update-todo-item mr-1"
             onClick={() => {
-              dispatch(updateSingleItem(store.selectedItem.id, state))
+              dispatch(updateSingleItem(store.selectedItem.id, payload))
               handleFormSidebar()
             }}
           >
@@ -186,7 +192,7 @@ const FormSidebar = (props) => {
             disabled={!title.length}
             className="add-todo-item mr-1"
             onClick={() => {
-              dispatch(addItem(state))
+              dispatch(addItem(payload))
               handleFormSidebar()
             }}
           >
