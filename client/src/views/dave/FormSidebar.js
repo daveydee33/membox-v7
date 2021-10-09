@@ -110,6 +110,7 @@ const FormSidebar = (props) => {
     setDetails('')
     setTags([])
     dispatch(selectItem({}))
+    setRepeaterCount(1)
   }
 
   // ** Function to reset fileds
