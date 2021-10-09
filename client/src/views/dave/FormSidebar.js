@@ -2,8 +2,7 @@
 import { useState, Fragment } from 'react'
 
 // ** Third Party Components
-import classnames from 'classnames'
-import { X, Star, Trash } from 'react-feather'
+import { X } from 'react-feather'
 import CreatableSelect from 'react-select/creatable'
 import {
   Modal,
@@ -12,8 +11,7 @@ import {
   Form,
   FormGroup,
   Input,
-  Label,
-  Media
+  Label
 } from 'reactstrap'
 
 // ** Utils
@@ -22,37 +20,15 @@ import { isObjEmpty, selectThemeColors } from '@utils'
 // ** Styles Imports
 import '@styles/react/libs/react-select/_react-select.scss'
 
-// ** Function to capitalize the first letter of string
-// const capitalize = (string) => string.charAt(0).toUpperCase() + string.slice(1)
-
 // ** Modal Header
 const ModalHeader = (props) => {
   // ** Props
-  const {
-    children,
-    // store,
-    handleFormSidebar
-    // setDeleted,
-    // deleted,
-    // important,
-    // setImportant,
-    // deleteItem,
-    // dispatch
-  } = props
+  const { children, handleFormSidebar } = props
 
   return (
     <div className="modal-header d-flex align-items-center justify-content-between mb-1">
       <h5 className="modal-title">{children}</h5>
       <div className="todo-item-action d-flex align-items-center">
-        {/* <span className="todo-item-favorite cursor-pointer mx-75">
-          <Star
-            size={16}
-            onClick={() => setImportant(!important)}
-            className={classnames({
-              'text-warning': important === true
-            })}
-          />
-        </span> */}
         <X
           className="font-weight-normal mt-25"
           size={16}
@@ -82,9 +58,6 @@ const FormSidebar = (props) => {
     [details, setDetails] = useState(''),
     [tags, setTags] = useState([]),
     [tagOptions, setTagOptions] = useState([])
-  // [completed, setCompleted] = useState(false),
-  // [important, setImportant] = useState(false),
-  // [deleted, setDeleted] = useState(false),
 
   const getTagOptions = () => {
     const tagOptions = store.tags.map((tag) => ({ value: tag, label: tag }))
@@ -124,8 +97,6 @@ const FormSidebar = (props) => {
     setDescription('')
     setDetails('')
     setTags([])
-    // setCompleted(false)
-    // setImportant(false)
     dispatch(selectItem({}))
   }
 
@@ -141,9 +112,6 @@ const FormSidebar = (props) => {
       })
       setTags(tags)
     }
-    // setCompleted(store.selectedItem.isCompleted)
-    // setImportant(store.selectedItem.isImportant)
-    // setDeleted(store.selectedItem.isDeleted)
   }
 
   // ** Renders Footer Buttons
@@ -157,16 +125,13 @@ const FormSidebar = (props) => {
       description,
       details,
       tags: newItemTag
-      // isCompleted: completed,
-      // isDeleted: deleted,
-      // isImportant: important,
     }
     if (store && !isObjEmpty(store.selectedItem)) {
       return (
         <Fragment>
           <Button.Ripple
             color="primary"
-            disabled={!title.length} // TODO (form validation)
+            disabled={!title.length}
             className="update-btn update-todo-item mr-1"
             onClick={() => {
               dispatch(updateSingleItem(store.selectedItem.id, state))
@@ -189,7 +154,6 @@ const FormSidebar = (props) => {
               }}
               outline
             >
-              {/* <Trash className="mr-1" size={16} /> */}
               Delete
             </Button.Ripple>
           ) : null}
@@ -200,7 +164,7 @@ const FormSidebar = (props) => {
         <Fragment>
           <Button
             color="primary"
-            disabled={!title.length} // TODO (form validation)
+            disabled={!title.length}
             className="add-todo-item mr-1"
             onClick={() => {
               dispatch(addItem(state))
@@ -235,10 +199,6 @@ const FormSidebar = (props) => {
         <ModalHeader
           store={store}
           dispatch={dispatch}
-          // deleted={deleted}
-          // important={important}
-          // setDeleted={setDeleted}
-          // setImportant={setImportant}
           handleFormSidebar={handleFormSidebar}
         >
           {handleSidebarTitle()}
