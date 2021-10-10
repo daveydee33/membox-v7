@@ -296,7 +296,7 @@ const FormSidebar = (props) => {
               classNamePrefix="select"
               theme={selectThemeColors}
               onChange={(data, actionMeta) => {
-                setTags(data !== null ? [...data] : [])
+                setTags(data !== null ? [...data.trim()] : [])
               }}
             />
           </FormGroup>

@@ -39,11 +39,12 @@ const queryTags = async (filter, options) => {
 
   const items = await Item.paginate(myFilter, myOptions);
   const tags = items.results.map((item) => item.tags);
-  const allTags = tags.reduce(function (accumulator, currentValue, currentIndex, array) {
+  const allTags = tags.reduce((accumulator, currentValue) => {
     accumulator.push(...currentValue);
     return accumulator;
   });
-  const allTagsUniq = [...new Set(allTags)].sort();
+  const allTagsTrimmed = allTags.map((tag) => tag.trim());
+  const allTagsUniq = [...new Set(allTagsTrimmed)].sort();
 
   return allTagsUniq;
 };
