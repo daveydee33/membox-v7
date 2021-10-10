@@ -1,6 +1,6 @@
 import _cloneDeep from 'lodash/cloneDeep'
 // ** React Imports
-import { useState, Fragment } from 'react'
+import { useState, Fragment, useEffect } from 'react'
 
 // ** Third Party Components
 import { X, Plus, Trash } from 'react-feather'
@@ -66,9 +66,11 @@ const FormSidebar = (props) => {
     setRepeaterCount(repeaterCount + 1)
   }
 
-  const deleteRepeaterForm = (e) => {
+  const deleteRepeaterForm = (e, index) => {
     e.preventDefault()
-    e.target.closest('.repeater-form').remove()
+    // e.target.closest('.repeater-form').remove()
+    // setRepeaterCount(repeaterCount - 1)
+    setExamples(examples.filter((k, i) => i !== index))
   }
 
   const getTagObjects = () => {
@@ -85,6 +87,10 @@ const FormSidebar = (props) => {
     }
   }
 
+  useEffect(() => {
+    setRepeaterCount(examples.length || 1)
+  }, [examples])
+
   // ** Function to reset fileds with selectedItem values
   const handleResetFields = () => {
     const { title, description, details, examples, tags } = store.selectedItem
@@ -92,7 +98,7 @@ const FormSidebar = (props) => {
     setDescription(description)
     setDetails(details)
     setExamples(_cloneDeep(examples))
-    setRepeaterCount(examples.length || 1)
+    // setRepeaterCount(examples.length || 1) // don't need this if i'm setting it in the useEffect instead
     if (tags && tags.length) {
       const tagObjects = tags.map((tag) => ({ value: tag, label: tag }))
       setTags(tagObjects)
@@ -330,7 +336,7 @@ const FormSidebar = (props) => {
                 <Button.Ripple
                   color="flat-danger"
                   className="btn-icon rounded-circle"
-                  onClick={deleteRepeaterForm}
+                  onClick={(e) => deleteRepeaterForm(e, i)}
                 >
                   <Trash size={14} />
                 </Button.Ripple>
