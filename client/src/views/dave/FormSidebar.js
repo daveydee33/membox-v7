@@ -97,7 +97,13 @@ const FormSidebar = (props) => {
     setDetails(details)
     setExamples(_cloneDeep(examples))
     if (tags && tags.length) {
-      const tagObjects = tags.map((tag) => ({ value: tag, label: tag }))
+      const tagsTrimmed = tags.map((tag) => tag.trim())
+      const tagsUnique = [...new Set(tagsTrimmed)]
+      const tagObjects = tagsUnique.map((tag) => ({
+        value: tag,
+        label: tag
+      }))
+      console.log(`tagObjects`, tagObjects)
       setTags(tagObjects)
     }
   }
@@ -296,7 +302,8 @@ const FormSidebar = (props) => {
               classNamePrefix="select"
               theme={selectThemeColors}
               onChange={(data, actionMeta) => {
-                setTags(data !== null ? [...data.trim()] : [])
+                console.log(data)
+                setTags(data !== null ? [...data] : [])
               }}
             />
           </FormGroup>
