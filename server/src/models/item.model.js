@@ -22,6 +22,23 @@ const itemSchema = mongoose.Schema(
       type: [String],
       required: false,
     },
+    examples: {
+      type: [
+        {
+          title: {
+            type: String,
+            required: false,
+            trim: true,
+          },
+          description: {
+            type: String,
+            required: false,
+            trim: true,
+          },
+          _id: false,
+        },
+      ],
+    },
   },
   {
     timestamps: true,

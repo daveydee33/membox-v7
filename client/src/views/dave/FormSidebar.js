@@ -1,10 +1,11 @@
+import _cloneDeep from 'lodash/cloneDeep'
 // ** React Imports
-import { useState, Fragment } from 'react'
+import { useState, Fragment, useEffect } from 'react'
 
 // ** Third Party Components
-import classnames from 'classnames'
-import { X, Star, Trash } from 'react-feather'
+import { X, Plus, Trash } from 'react-feather'
 import CreatableSelect from 'react-select/creatable'
+import Repeater from '@components/repeater'
 import {
   Modal,
   ModalBody,
@@ -12,8 +13,7 @@ import {
   Form,
   FormGroup,
   Input,
-  Label,
-  Media
+  Label
 } from 'reactstrap'
 
 // ** Utils
@@ -22,37 +22,14 @@ import { isObjEmpty, selectThemeColors } from '@utils'
 // ** Styles Imports
 import '@styles/react/libs/react-select/_react-select.scss'
 
-// ** Function to capitalize the first letter of string
-// const capitalize = (string) => string.charAt(0).toUpperCase() + string.slice(1)
-
 // ** Modal Header
 const ModalHeader = (props) => {
   // ** Props
-  const {
-    children,
-    // store,
-    handleFormSidebar
-    // setDeleted,
-    // deleted,
-    // important,
-    // setImportant,
-    // deleteItem,
-    // dispatch
-  } = props
-
+  const { children, handleFormSidebar } = props
   return (
     <div className="modal-header d-flex align-items-center justify-content-between mb-1">
       <h5 className="modal-title">{children}</h5>
       <div className="todo-item-action d-flex align-items-center">
-        {/* <span className="todo-item-favorite cursor-pointer mx-75">
-          <Star
-            size={16}
-            onClick={() => setImportant(!important)}
-            className={classnames({
-              'text-warning': important === true
-            })}
-          />
-        </span> */}
         <X
           className="font-weight-normal mt-25"
           size={16}
@@ -77,16 +54,24 @@ const FormSidebar = (props) => {
   } = props
 
   // ** Item data
-  const [title, setTitle] = useState(''),
-    [description, setDescription] = useState(''),
-    [details, setDetails] = useState(''),
-    [tags, setTags] = useState([]),
-    [tagOptions, setTagOptions] = useState([])
-  // [completed, setCompleted] = useState(false),
-  // [important, setImportant] = useState(false),
-  // [deleted, setDeleted] = useState(false),
+  const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
+  const [details, setDetails] = useState('')
+  const [tags, setTags] = useState([])
+  const [examples, setExamples] = useState([])
+  const [tagOptions, setTagOptions] = useState([])
+  const [repeaterCount, setRepeaterCount] = useState(1)
 
-  const getTagOptions = () => {
+  const increaseRepeaterCount = () => {
+    setRepeaterCount(repeaterCount + 1)
+  }
+
+  const deleteRepeaterForm = (e, index) => {
+    e.preventDefault()
+    setExamples(examples.filter((k, i) => i !== index))
+  }
+
+  const getTagObjects = () => {
     const tagOptions = store.tags.map((tag) => ({ value: tag, label: tag }))
     return tagOptions
   }
@@ -100,22 +85,29 @@ const FormSidebar = (props) => {
     }
   }
 
+  useEffect(() => {
+    setRepeaterCount(examples.length || 1)
+  }, [examples])
+
+  // ** Function to reset fileds with selectedItem values
+  const handleResetFields = () => {
+    const { title, description, details, examples, tags } = store.selectedItem
+    setTitle(title)
+    setDescription(description)
+    setDetails(details)
+    setExamples(_cloneDeep(examples))
+    if (tags && tags.length) {
+      const tagObjects = tags.map((tag) => ({ value: tag, label: tag }))
+      setTags(tagObjects)
+    }
+  }
+
   // ** Function to run when sidebar opens
   const handleSidebarOpened = () => {
-    const { selectedItem } = store
-    if (!isObjEmpty(selectedItem)) {
-      setTitle(selectedItem.title)
-      setDescription(selectedItem.description)
-      setDetails(selectedItem.details)
-      if (selectedItem.tags && selectedItem.tags.length) {
-        const tags = []
-        selectedItem.tags.map((tag) => {
-          tags.push({ value: tag, label: tag })
-        })
-        setTags(tags)
-      }
+    if (!isObjEmpty(store.selectedItem)) {
+      handleResetFields()
     }
-    setTagOptions(getTagOptions())
+    setTagOptions(getTagObjects())
   }
 
   // ** Function to run when sidebar closes
@@ -123,27 +115,10 @@ const FormSidebar = (props) => {
     setTitle('')
     setDescription('')
     setDetails('')
+    setExamples([])
     setTags([])
-    // setCompleted(false)
-    // setImportant(false)
     dispatch(selectItem({}))
-  }
-
-  // ** Function to reset fileds
-  const handleResetFields = () => {
-    setTitle(store.selectedItem.title)
-    setDescription(store.selectedItem.description)
-    setDetails(store.selectedItem.details)
-    if (store.selectedItem.tags.length) {
-      const tags = []
-      store.selectedItem.tags.map((tag) => {
-        tags.push({ value: tag, label: tag })
-      })
-      setTags(tags)
-    }
-    // setCompleted(store.selectedItem.isCompleted)
-    // setImportant(store.selectedItem.isImportant)
-    // setDeleted(store.selectedItem.isDeleted)
+    setRepeaterCount(1)
   }
 
   // ** Renders Footer Buttons
@@ -152,24 +127,28 @@ const FormSidebar = (props) => {
     if (tags.length) {
       tags.map((tag) => newItemTag.push(tag.value))
     }
-    const state = {
+
+    const examplesWithEmptyObjectsRemoved = examples.filter(
+      (example) => example.title || example.description
+    )
+
+    const payload = {
       title,
       description,
       details,
+      examples: examplesWithEmptyObjectsRemoved,
       tags: newItemTag
-      // isCompleted: completed,
-      // isDeleted: deleted,
-      // isImportant: important,
     }
+
     if (store && !isObjEmpty(store.selectedItem)) {
       return (
         <Fragment>
           <Button.Ripple
             color="primary"
-            disabled={!title.length} // TODO (form validation)
+            disabled={!title.length}
             className="update-btn update-todo-item mr-1"
             onClick={() => {
-              dispatch(updateSingleItem(store.selectedItem.id, state))
+              dispatch(updateSingleItem(store.selectedItem.id, payload))
               handleFormSidebar()
             }}
           >
@@ -189,10 +168,12 @@ const FormSidebar = (props) => {
               }}
               outline
             >
-              {/* <Trash className="mr-1" size={16} /> */}
               Delete
             </Button.Ripple>
           ) : null}
+          <Button color="secondary" onClick={handleFormSidebar} outline>
+            Cancel
+          </Button>
         </Fragment>
       )
     } else {
@@ -200,10 +181,10 @@ const FormSidebar = (props) => {
         <Fragment>
           <Button
             color="primary"
-            disabled={!title.length} // TODO (form validation)
+            disabled={!title.length}
             className="add-todo-item mr-1"
             onClick={() => {
-              dispatch(addItem(state))
+              dispatch(addItem(payload))
               handleFormSidebar()
             }}
           >
@@ -215,6 +196,28 @@ const FormSidebar = (props) => {
         </Fragment>
       )
     }
+  }
+
+  const handleOnChangeExampleTitle = (event, i) => {
+    const newExamples = [...examples]
+    if (!newExamples[i]) {
+      for (let a = examples.length; a <= i; a++) {
+        newExamples.push({ title: '', description: '' })
+      }
+    }
+    newExamples[i].title = event.target.value
+    setExamples(newExamples)
+  }
+
+  const handleOnChangeExampleDescription = (event, i) => {
+    const newExamples = [...examples]
+    if (!newExamples[i]) {
+      for (let a = examples.length; a <= i; a++) {
+        newExamples.push({ title: '', description: '' })
+      }
+    }
+    newExamples[i].description = event.target.value
+    setExamples(newExamples)
   }
 
   return (
@@ -235,10 +238,6 @@ const FormSidebar = (props) => {
         <ModalHeader
           store={store}
           dispatch={dispatch}
-          // deleted={deleted}
-          // important={important}
-          // setDeleted={setDeleted}
-          // setImportant={setImportant}
           handleFormSidebar={handleFormSidebar}
         >
           {handleSidebarTitle()}
@@ -302,6 +301,54 @@ const FormSidebar = (props) => {
             />
           </FormGroup>
 
+          {/* Examples */}
+          <h6 className="mt-3">Examples</h6>
+          <Repeater count={repeaterCount}>
+            {(i) => (
+              <div className="repeater-form" key={i}>
+                <FormGroup>
+                  <Label for="example" className="form-label">
+                    Example
+                  </Label>
+                  <Input
+                    id="example"
+                    placeholder="Example"
+                    value={examples[i] ? examples[i].title : ''}
+                    onChange={(e) => handleOnChangeExampleTitle(e, i)}
+                  />
+                </FormGroup>
+
+                <FormGroup>
+                  <Label for="meaning" className="form-label">
+                    Meaning
+                  </Label>
+                  <Input
+                    id="meaning"
+                    placeholder="Meaning"
+                    value={examples[i] ? examples[i].description : ''}
+                    onChange={(e) => handleOnChangeExampleDescription(e, i)}
+                  />
+                </FormGroup>
+
+                <Button.Ripple
+                  color="flat-danger"
+                  className="btn-icon rounded-circle"
+                  onClick={(e) => deleteRepeaterForm(e, i)}
+                >
+                  <Trash size={14} />
+                </Button.Ripple>
+                <hr />
+              </div>
+            )}
+          </Repeater>
+          <Button.Ripple
+            className="btn-icon"
+            color="bg-gradient-info"
+            onClick={increaseRepeaterCount}
+          >
+            <Plus size={14} />
+            <span className="align-middle ml-25">More</span>
+          </Button.Ripple>
           <FormGroup className="my-1">{renderFooterButtons()}</FormGroup>
         </ModalBody>
       </Form>
