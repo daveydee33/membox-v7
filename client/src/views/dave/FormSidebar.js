@@ -68,8 +68,6 @@ const FormSidebar = (props) => {
 
   const deleteRepeaterForm = (e, index) => {
     e.preventDefault()
-    // e.target.closest('.repeater-form').remove()
-    // setRepeaterCount(repeaterCount - 1)
     setExamples(examples.filter((k, i) => i !== index))
   }
 
@@ -98,7 +96,6 @@ const FormSidebar = (props) => {
     setDescription(description)
     setDetails(details)
     setExamples(_cloneDeep(examples))
-    // setRepeaterCount(examples.length || 1) // don't need this if i'm setting it in the useEffect instead
     if (tags && tags.length) {
       const tagObjects = tags.map((tag) => ({ value: tag, label: tag }))
       setTags(tagObjects)
