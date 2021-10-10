@@ -103,7 +103,6 @@ const FormSidebar = (props) => {
         value: tag,
         label: tag
       }))
-      console.log(`tagObjects`, tagObjects)
       setTags(tagObjects)
     }
   }
@@ -302,7 +301,6 @@ const FormSidebar = (props) => {
               classNamePrefix="select"
               theme={selectThemeColors}
               onChange={(data, actionMeta) => {
-                console.log(data)
                 setTags(data !== null ? [...data] : [])
               }}
             />
