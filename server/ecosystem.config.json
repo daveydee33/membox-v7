@@ -3,7 +3,7 @@
     {
       "name": "app",
       "script": "src/index.js",
-      "node_args": "-r dotenv/config",
+      "node_args": "--require dotenv/config",
       "instances": 1,
       "autorestart": true,
       "watch": false,
