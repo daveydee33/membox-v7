@@ -16,10 +16,10 @@
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
+  "devDependencies": {},
+  "dependencies": {
     "concurrently": "^6.2.1"
   },
-  "dependencies": {},
   "engines": {
     "node": "14.x"
   }
