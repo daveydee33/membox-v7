@@ -3,7 +3,6 @@ const path = require('path');
 const Joi = require('joi');
 
 dotenv.config({ path: path.join(__dirname, '../../.env') });
-console.log(`zzz`, MONGODB_URL);
 
 const envVarsSchema = Joi.object()
   .keys({
