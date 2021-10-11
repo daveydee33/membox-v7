@@ -9,8 +9,9 @@
     "dev": "concurrently -n 'server,client' -c 'yellow,blue' \"npm run dev:server\" \"npm run dev:client\"",
     "install-client": "npm install --prefix client",
     "install-server": "npm install --prefix server",
-    "start": "node -r dotenv/config server/index.js",
-    "server": "nodemon -r dotenv/config server/index.js",
+    "start": "concurrently -n 'server,client' -c 'yellow,blue' \"npm run start:server\" node -r dotenv/config server/index.js",
+    "start:server": "npm run start --prefix server",
+    "start:dev": "react-app-rewired start --prefix client",
     "build": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "author": "",
