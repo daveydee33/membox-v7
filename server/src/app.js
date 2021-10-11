@@ -6,6 +6,7 @@ const compression = require('compression');
 const cors = require('cors');
 const passport = require('passport');
 const httpStatus = require('http-status');
+const path = require('path');
 const config = require('./config/config');
 const morgan = require('./config/morgan');
 const { jwtStrategy } = require('./config/passport');
@@ -52,6 +53,14 @@ if (config.env === 'production') {
 
 // v1 api routes
 app.use('/v1', routes);
+
+// React App
+// Serve static assets in production
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  app.use(express.static('../client/build'));
+  app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'client', 'build')));
+}
 
 // send back a 404 error for any unknown api request
 app.use((req, res, next) => {
