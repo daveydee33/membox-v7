@@ -5,3 +5,4 @@ module.exports.userService = require('./user.service');
 module.exports.itemService = require('./item.service');
 module.exports.exampleService = require('./example.service');
 module.exports.tagService = require('./tag.service');
+module.exports.collectionService = require('./collection.service');

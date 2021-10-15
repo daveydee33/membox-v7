@@ -3,8 +3,9 @@
 //Template config options
 const themeConfig = {
   app: {
-    appName: 'Vuexy',
-    appLogoImage: require('@src/assets/images/logo/logo.svg').default
+    appName: 'MemBox',
+    appLogoImage: require('@src/assets/images/logo/membox-logo-memories.gif')
+      .default
   },
   layout: {
     isRTL: false,
@@ -22,7 +23,7 @@ const themeConfig = {
       backgroundColor: 'white' // BS color options [primary, success, etc]
     },
     footer: {
-      type: 'static' // static, sticky, hidden
+      type: 'hidden' // static, sticky, hidden
     },
     customizer: false,
     scrollTop: true // Enable scroll to top button

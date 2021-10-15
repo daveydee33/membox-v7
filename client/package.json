@@ -1,6 +1,6 @@
 {
-  "name": "vuexy-react-admin-dashboard",
-  "version": "1.0.0",
+  "name": "membox-v7-client",
+  "version": "7.0.0",
   "private": true,
   "dependencies": {
     "@casl/ability": "5.2.2",
