@@ -3,6 +3,7 @@ const authRoute = require('./auth.route');
 const userRoute = require('./user.route');
 const itemRoute = require('./item.route');
 const tagRoute = require('./tag.route');
+const exampleRoute = require('./example.route');
 const collectionRoute = require('./collection.route');
 const docsRoute = require('./docs.route');
 const config = require('../../config/config');
@@ -25,6 +26,10 @@ const defaultRoutes = [
   {
     path: '/tags',
     route: tagRoute,
+  },
+  {
+    path: '/examples',
+    route: exampleRoute,
   },
   {
     path: '/collections',
