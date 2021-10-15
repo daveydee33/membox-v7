@@ -2,7 +2,7 @@
   <defs>
     <style>
       .cls-1 {
-        fill: #79addd;
+        fill: #000000;
         filter: url(#filter);
       }
 
@@ -12,16 +12,16 @@
 
       .cls-2 {
         fill: #161616;
-        opacity: 0.06;
+        opacity: 0.96;
       }
 
       .cls-3 {
-        fill: #d8eaf8;
+        fill: #000000;
         filter: url(#filter-2);
       }
 
       .cls-4 {
-        opacity: 0.4;
+        opacity: 0.94;
       }
     </style>
     <filter id="filter" x="0" y="0" width="253.312" height="289" filterUnits="userSpaceOnUse">
