@@ -1,4 +1,4 @@
-import { Mail, Home, Plus } from 'react-feather'
+import { Mail, Home, Plus, Package, Book, BookOpen } from 'react-feather'
 
 export default [
   {
@@ -20,9 +20,21 @@ export default [
     navLink: '/add-word'
   },
   {
-    id: 'dave',
-    title: 'dave',
-    icon: <Home size={20} />,
+    id: 'wordsAndPhrases',
+    title: 'Words and Phrases',
+    icon: <Book size={20} />,
     navLink: '/dave'
+  },
+  // {
+  //   id: 'examples',
+  //   title: 'Example Uses',
+  //   icon: <BookOpen size={20} />,
+  //   navLink: '/examples'
+  // },
+  {
+    id: 'collections',
+    title: 'Collections',
+    icon: <Package size={20} />,
+    navLink: '/collections'
   }
 ]
