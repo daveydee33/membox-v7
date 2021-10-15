@@ -3,7 +3,7 @@ import { Fragment, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 // ** Third Party Components
-import { Card, CardBody, CardText, Alert } from 'reactstrap'
+import { Card, CardBody, CardText, CardTitle } from 'reactstrap'
 
 // ** Store & Actions
 import { useDispatch, useSelector } from 'react-redux'
@@ -27,43 +27,20 @@ const Collection = () => {
     return store.collections.map((collection) => {
       const CartBtnTag = collection.isInCart ? Link : 'button'
       return (
-        <Card className="ecommerce-card" key={collection.name}>
+        <Card className="ecommerce-card" key={collection.title}>
           <div className="item-img text-center mx-auto">
-            <Link to={`/apps/ecommerce/product-detail/${collection.slug}`}>
+            {/* <Link to={`/apps/ecommerce/product-detail/${collection.slug}`}>
               <img
                 className="img-fluid"
                 src={collection.image}
                 alt={collection.name}
               />
-            </Link>
+            </Link> */}
           </div>
           <CardBody>
-            <div className="item-wrapper">
-              <div className="item-rating">
-                <ul className="unstyled-list list-inline">
-                  {new Array(5).fill().map((listItem, index) => {
-                    return (
-                      <li key={index} className="ratings-list-item mr-25"></li>
-                    )
-                  })}
-                </ul>
-              </div>
-              <div className="item-cost">
-                <h6 className="item-price">$ {collection.price}</h6>
-              </div>
-            </div>
-            <div className="item-name">
-              <Link to={`/apps/ecommerce/product/${collection.slug}`}>
-                {collection.name}
-              </Link>
-            </div>
-            <CardText className="item-description">
-              {collection.description}
-            </CardText>
+            <CardTitle>{collection.title}</CardTitle>
+            <CardText>{collection.description}</CardText>
           </CardBody>
-          <div className="item-options text-center">
-            {/* Buttons go here */}
-          </div>
         </Card>
       )
     })
