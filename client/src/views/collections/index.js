@@ -3,11 +3,11 @@ import { Fragment, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 // ** Third Party Components
-import { Card, CardBody, CardText, Button, Alert } from 'reactstrap'
+import { Card, CardBody, CardText, Alert } from 'reactstrap'
 
 // ** Store & Actions
 import { useDispatch, useSelector } from 'react-redux'
-import { getCollections } from '../store/actions'
+import { getCollections } from './store/actions'
 
 // ** Styles
 import '@styles/base/pages/app-ecommerce.scss'
@@ -15,7 +15,7 @@ import '@styles/base/pages/app-ecommerce.scss'
 const Collection = () => {
   // ** Store Vars
   const dispatch = useDispatch()
-  const store = useSelector((state) => state.ecommerce)
+  const store = useSelector((state) => state.collections)
 
   //** on mount
   useEffect(() => {
@@ -24,13 +24,17 @@ const Collection = () => {
 
   // ** Renders wishlist products
   const renderCollections = () => {
-    return store.wishlist.map((item) => {
-      const CartBtnTag = item.isInCart ? Link : 'button'
+    return store.collections.map((collection) => {
+      const CartBtnTag = collection.isInCart ? Link : 'button'
       return (
-        <Card className="ecommerce-card" key={item.name}>
+        <Card className="ecommerce-card" key={collection.name}>
           <div className="item-img text-center mx-auto">
-            <Link to={`/apps/ecommerce/product-detail/${item.slug}`}>
-              <img className="img-fluid" src={item.image} alt={item.name} />
+            <Link to={`/apps/ecommerce/product-detail/${collection.slug}`}>
+              <img
+                className="img-fluid"
+                src={collection.image}
+                alt={collection.name}
+              />
             </Link>
           </div>
           <CardBody>
@@ -45,15 +49,17 @@ const Collection = () => {
                 </ul>
               </div>
               <div className="item-cost">
-                <h6 className="item-price">$ {item.price}</h6>
+                <h6 className="item-price">$ {collection.price}</h6>
               </div>
             </div>
             <div className="item-name">
-              <Link to={`/apps/ecommerce/product/${item.slug}`}>
-                {item.name}
+              <Link to={`/apps/ecommerce/product/${collection.slug}`}>
+                {collection.name}
               </Link>
             </div>
-            <CardText className="item-description">{item.description}</CardText>
+            <CardText className="item-description">
+              {collection.description}
+            </CardText>
           </CardBody>
           <div className="item-options text-center">
             {/* Buttons go here */}
@@ -70,12 +76,8 @@ const Collection = () => {
           {renderCollections()}
         </section>
       ) : (
-        <Alert color="info">
-          <div className="alert-body">
-            <Info size={14} />
-            <span className="align-middle ml-50">Your Wishlist is empty</span>
-          </div>
-        </Alert>
+        // TODO - display Loading or Empty
+        <Fragment>Loading...</Fragment>
       )}
     </Fragment>
   )
