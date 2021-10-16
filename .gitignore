@@ -2,6 +2,9 @@
 
 # to store Google service account keys (GCP
 secrets
+# more of my stuff specific to this project
+data_and_scripts/audio
+data_and_scripts/node_modules
 
 # dependencies
 /node_modules
