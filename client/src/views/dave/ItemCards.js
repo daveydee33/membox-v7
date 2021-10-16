@@ -1,6 +1,8 @@
 // ** React Imports
 import { Link } from 'react-router-dom'
 
+import AudioPlayer from '../../components/AudioPlayer'
+
 // ** Third Party Components
 import classnames from 'classnames'
 import { Star, ShoppingCart, Heart } from 'react-feather'
@@ -36,6 +38,13 @@ const ItemCards = (props) => {
     handleFormSidebar()
   }
 
+  const getItemUrls = (title) => [
+    `https://lla-audio.s3.amazonaws.com/A/${title}.mp3`,
+    `https://lla-audio.s3.amazonaws.com/B/${title}.mp3`,
+    `https://lla-audio.s3.amazonaws.com/C/${title}.mp3`,
+    `https://lla-audio.s3.amazonaws.com/D/${title}.mp3`
+  ]
+
   // ** Renders items
   const renderItems = () => {
     if (items.length) {
@@ -47,6 +56,7 @@ const ItemCards = (props) => {
             onClick={() => handleItemClick(item)}
           >
             <CardImg src={img1} />
+            <AudioPlayer urls={getItemUrls(item.title)} />
             <CardBody>
               <CardTitle tag="h4">{item.title}</CardTitle>
               <CardText>{item.description}</CardText>

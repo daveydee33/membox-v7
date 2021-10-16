@@ -40,7 +40,7 @@ const ItemsPage = () => {
   useEffect(() => {
     dispatch(
       getItems({
-        limit: 9999
+        limit: 99
       })
     )
   }, [dispatch])
