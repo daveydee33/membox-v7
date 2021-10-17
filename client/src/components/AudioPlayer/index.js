@@ -22,7 +22,6 @@ function AudioPlayer(props) {
   const [playIndex, setPlayIndex] = useState(0)
 
   const nextAudio = () => {
-    console.log(`zzz playIndex urls.length`, playIndex, urls.length)
     const lastIndex = urls.length - 1
     if (playIndex !== lastIndex) {
       setPlayIndex(playIndex + 1)
@@ -51,7 +50,12 @@ function AudioPlayer(props) {
       </button> 
       */}
 
-      <div onClick={() => setPlaying(!playing)}>
+      <div
+        onClick={(e) => {
+          setPlaying(!playing)
+          e.stopPropagation()
+        }}
+      >
         <ReactPlayer
           url={urls[playIndex]}
           onEnded={nextAudio}
