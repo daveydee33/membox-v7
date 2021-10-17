@@ -1,12 +1,7 @@
 import ReactPlayer from 'react-player/file'
 import { useState, Fragment } from 'react'
 
-// const urls = [
-//   'https://lla-audio.s3.amazonaws.com/A/selamat.mp3',
-//   'https://lla-audio.s3.amazonaws.com/B/selamat.mp3',
-//   'https://lla-audio.s3.amazonaws.com/C/selamat.mp3',
-//   'https://lla-audio.s3.amazonaws.com/D/selamat.mp3'
-// ]
+import buttonImg from '@src/assets/images/dave/1486564396-audio_81506.png'
 
 function AudioPlayer(props) {
   const { urls } = props
@@ -37,19 +32,6 @@ function AudioPlayer(props) {
 
   return (
     <Fragment>
-      {/* 
-      <button onClick={() => setPlaying(!playing)}>
-        playing: {playing.toString()}
-      </button>
-      <button onClick={() => setLoop(!loop)}>loop: {loop.toString()}</button>
-      <button onClick={() => setControls(!controls)}>
-        controls: {controls.toString()}
-      </button>
-      <button onClick={() => setLight(!light)}>
-        light: {light.toString()}
-      </button> 
-      */}
-
       <div
         onClick={(e) => {
           setPlaying(!playing)
@@ -74,9 +56,7 @@ function AudioPlayer(props) {
           // width
           // height
           style={{
-            // backgroundColor: 'yellow',
-            backgroundImage:
-              "url('https://cdn.icon-icons.com/icons2/1154/PNG/512/1486564396-audio_81506.png')",
+            backgroundImage: `url("${buttonImg}")`,
             backgroundSize: 'cover'
           }}
           width="50px"
