@@ -17,8 +17,15 @@ import {
   CardColumns
 } from 'reactstrap'
 
-import img1 from '@src/assets/images/pages/content-img-3.jpg'
+import img1 from '@src/assets/images/pages/content-img-1.jpg'
 import img2 from '@src/assets/images/pages/content-img-2.jpg'
+import img3 from '@src/assets/images/pages/content-img-3.jpg'
+import img4 from '@src/assets/images/pages/content-img-4.jpg'
+
+const randomImg = (images = [img1, img2, img3, img4]) => {
+  const index = Math.floor(Math.random() * images.length)
+  return images[index]
+}
 
 const ItemCards = (props) => {
   // ** Props
@@ -55,7 +62,7 @@ const ItemCards = (props) => {
             key={item.id}
             onClick={() => handleItemClick(item)}
           >
-            <CardImg src={img1} />
+            <CardImg src={randomImg()} />
             <AudioPlayer urls={getItemUrls(item.title)} />
             <CardBody>
               <CardTitle tag="h4">{item.title}</CardTitle>
