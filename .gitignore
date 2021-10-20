@@ -5,6 +5,7 @@ secrets
 # more of my stuff specific to this project
 data_and_scripts/audio
 data_and_scripts/node_modules
+data_and_scripts/.env
 
 # dependencies
 /node_modules
