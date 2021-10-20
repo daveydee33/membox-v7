@@ -19,7 +19,7 @@ const Collection = () => {
 
   //** on mount
   useEffect(() => {
-    dispatch(getCollections())
+    dispatch(getCollections({ limit: 999 }))
   }, [])
 
   // ** Renders wishlist products
