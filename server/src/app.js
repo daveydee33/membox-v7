@@ -23,7 +23,15 @@ if (config.env !== 'test') {
 }
 
 // set security HTTP headers
-app.use(helmet());
+app.use(
+  helmet.contentSecurityPolicy({
+    useDefaults: true,
+    directives: {
+      'connect-src': ["'self'", 'https://noembed.com', 'https://lla-audio.s3.amazonaws.com'],
+      'media-src': ["'self'", 'https://noembed.com', 'https://lla-audio.s3.amazonaws.com'],
+    },
+  })
+);
 
 // parse json request body
 app.use(express.json());
