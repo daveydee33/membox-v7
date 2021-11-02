@@ -61,6 +61,10 @@ function AudioPlayer(props) {
           }}
           width="50px"
           height="50px"
+          onError={(error) => {
+            console.log(`RealPlayer error: `)
+            console.error(error)
+          }}
           // progressInterval
           // playsinline
           // pip
