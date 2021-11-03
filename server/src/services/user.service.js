@@ -3,6 +3,31 @@ const { User } = require('../models');
 const ApiError = require('../utils/ApiError');
 
 /**
+ * Google login - Create / Update user
+ * @param {Object} profile
+ * @returns {Promise<User>}
+ */
+const googleCreateOrUpdate = async (profile) => {
+  const { name, email, picture, sub } = profile._json;
+  const userProfilePayload = {
+    name,
+    picture,
+    password: undefined,
+    services: {
+      google: {
+        id: sub,
+        fullData: JSON.stringify(profile),
+      },
+    },
+  };
+  return User.findOneAndUpdate({ email }, userProfilePayload, {
+    upsert: true,
+    new: true,
+    useFindAndModify: false,
+  });
+};
+
+/**
  * Create a user
  * @param {Object} userBody
  * @returns {Promise<User>}
@@ -86,4 +111,5 @@ module.exports = {
   getUserByEmail,
   updateUserById,
   deleteUserById,
+  googleCreateOrUpdate,
 };
