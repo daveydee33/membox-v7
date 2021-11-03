@@ -15,7 +15,7 @@ const googleCreateOrUpdate = async (profile) => {
     password: undefined,
     services: {
       google: {
-        id: sub,
+        googleId: sub,
         fullData: JSON.stringify(profile),
       },
     },

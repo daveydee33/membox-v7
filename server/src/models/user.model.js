@@ -49,11 +49,12 @@ const userSchema = mongoose.Schema(
     },
     services: {
       google: {
-        id: {
+        googleId: {
           type: String,
         },
         fullData: {
           type: String,
+          private: true,
         },
       },
     },

@@ -15,6 +15,16 @@ const login = catchAsync(async (req, res) => {
   res.send({ user, tokens });
 });
 
+const googleLogin = catchAsync(async (req, res) => {
+  // req.user already has all the profile info (because it was already fetched from the DB).
+  // We could move the DB fetching logic here (instead of in the googleVerify function)
+  // can i find the data on req.profile or something? req.user still?
+  const user = await userService.googleCreateOrUpdate(req.user);
+  // later can refactor this to be more like the 'login' one above
+  const tokens = await tokenService.generateAuthTokens(user);
+  res.send({ user, tokens });
+});
+
 const logout = catchAsync(async (req, res) => {
   await authService.logout(req.body.refreshToken);
   res.status(httpStatus.NO_CONTENT).send();
@@ -56,4 +66,5 @@ module.exports = {
   resetPassword,
   sendVerificationEmail,
   verifyEmail,
+  googleLogin,
 };
