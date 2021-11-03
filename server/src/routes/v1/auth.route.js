@@ -19,19 +19,8 @@ router.get('/google', passport.authenticate('google', { session: false, scope: [
 router.get(
   '/google/callback',
   passport.authenticate('google', { session: false, failureRedirect: '/fail' }),
-  authController.googleLogin,
-  (req, res) => {
-    // console.log(req.user); // this has the user data after retrieed from the DB from passport initial setup function - googleVerify
-    // Successful authentication,
-    // ? send user a token?
-    // redirect home.
-    // authController.googleLogin()
-    // res.redirect('/success');
-    // authController.googleLogin();
-    // res.redirect('/v1/auth/google/login');
-  }
+  authController.googleLogin
 );
-// router.get('/google/login', authController.googleLogin);
 
 module.exports = router;
 

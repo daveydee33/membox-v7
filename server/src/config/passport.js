@@ -3,7 +3,6 @@ const { Strategy: GoogleStrategy } = require('passport-google-oauth20');
 const config = require('./config');
 const { tokenTypes } = require('./tokens');
 const { User } = require('../models');
-// const { googleCreateOrUpdate } = require('../services/user.service');
 
 const jwtOptions = {
   secretOrKey: config.jwt.secret,
@@ -34,8 +33,6 @@ const googleOptions = {
 };
 
 const googleVerify = async function (accessToken, refreshToken, profile, cb) {
-  // const user = await googleCreateOrUpdate(profile);
-  // just return the profile for now, i'll do the DB lookup in the service instead.
   return cb(undefined, profile);
 };
 
