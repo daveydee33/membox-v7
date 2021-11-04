@@ -52,17 +52,13 @@ app.options('*', cors());
 
 // jwt authentication
 app.use(passport.initialize());
-// app.use(passport.session()); // might not need this?
+
 passport.use('jwt', jwtStrategy);
 passport.use('google', googleStrategy);
 
-app.get('/success', (req, res) =>
-  res.send(
-    `success: ${req.user} \n <a href="/auth/google">/auth/google</a>      <a href="/v1/auth/google">/v1/auth/google</a>`
-  )
-);
+app.get('/success', (req, res) => res.send(`successful login. <a href="/v1/auth/google">/v1/auth/google</a>`));
 
-app.get('/fail', (req, res) => res.send('fail'));
+app.get('/fail', (req, res) => res.send('login failed'));
 
 // limit repeated failed requests to auth endpoints
 if (config.env === 'production') {
