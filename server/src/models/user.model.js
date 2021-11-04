@@ -44,6 +44,20 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    picture: {
+      type: String,
+    },
+    services: {
+      google: {
+        googleId: {
+          type: String,
+        },
+        fullData: {
+          type: String,
+          private: true,
+        },
+      },
+    },
   },
   {
     timestamps: true,

@@ -9,7 +9,7 @@ const httpStatus = require('http-status');
 const path = require('path');
 const config = require('./config/config');
 const morgan = require('./config/morgan');
-const { jwtStrategy } = require('./config/passport');
+const { jwtStrategy, googleStrategy } = require('./config/passport');
 const { authLimiter } = require('./middlewares/rateLimiter');
 const routes = require('./routes/v1');
 const { errorConverter, errorHandler } = require('./middlewares/error');
@@ -52,7 +52,13 @@ app.options('*', cors());
 
 // jwt authentication
 app.use(passport.initialize());
+
 passport.use('jwt', jwtStrategy);
+passport.use('google', googleStrategy);
+
+app.get('/success', (req, res) => res.send(`successful login. <a href="/v1/auth/google">/v1/auth/google</a>`));
+
+app.get('/fail', (req, res) => res.send('login failed'));
 
 // limit repeated failed requests to auth endpoints
 if (config.env === 'production') {
