@@ -28,7 +28,12 @@ app.use(
     useDefaults: true,
     directives: {
       'connect-src': ["'self'", 'https://noembed.com', 'https://lla-audio.s3.amazonaws.com'],
-      'media-src': ["'self'", 'https://noembed.com', 'https://lla-audio.s3.amazonaws.com'],
+      'media-src': [
+        "'self'",
+        'https://noembed.com',
+        'https://lla-audio.s3.amazonaws.com',
+        'https://*.googleusercontent.com',
+      ],
     },
   })
 );
