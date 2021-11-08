@@ -1,3 +1,5 @@
+import { useAuth } from '../../firebase'
+
 // ** React Imports
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -34,6 +36,8 @@ import {
 import defaultAvatar from '@src/assets/images/portrait/small/avatar-s-11.jpg'
 
 const UserDropdown = () => {
+  const currentUser = useAuth()
+
   // ** Store Vars
   const dispatch = useDispatch()
 
@@ -60,10 +64,11 @@ const UserDropdown = () => {
       >
         <div className="user-nav d-sm-flex d-none">
           <span className="user-name font-weight-bold">
-            {(userData && userData['username']) || 'John Doe'}
+            {/* {(userData && userData['username']) || 'John Doe'} */}
+            {currentUser?.email}
           </span>
           <span className="user-status">
-            {(userData && userData.role) || 'Admin'}
+            {/* {(userData && userData.role) || 'Admin'} */}
           </span>
         </div>
         <Avatar img={userAvatar} imgHeight="40" imgWidth="40" status="online" />
