@@ -1,4 +1,4 @@
-import { useState, useContext, Fragment } from 'react'
+import { useState, useEffect, useContext, Fragment } from 'react'
 import classnames from 'classnames'
 import Avatar from '@components/avatar'
 
@@ -26,7 +26,11 @@ import {
   Button
 } from 'reactstrap'
 import '@styles/base/pages/page-auth.scss'
-import { login } from '../firebase'
+import {
+  login,
+  loginWithGooglePopup,
+  loginWithGoogleRedirect
+} from '../firebase'
 
 const Login = () => {
   const [skin, setSkin] = useSkin()
@@ -38,17 +42,26 @@ const Login = () => {
   const illustration = skin === 'dark' ? 'login-v2-dark.svg' : 'login-v2.svg',
     source = require(`@src/assets/images/pages/${illustration}`).default
 
-  async function handleLogin(e) {
+  async function handlePasswordLogin(e) {
     e.preventDefault()
     setLoading(true)
     console.log('login...', email, password)
     try {
       const res = await login(email, password)
-      console.log(res)
+      console.log(`Password login success`, res)
     } catch (error) {
       console.error('Login error', error)
     }
     setLoading(false)
+  }
+
+  async function handleGoogleLogin() {
+    try {
+      await loginWithGooglePopup() // better for web
+      // await loginWithGoogleRedirect() // better for mobile
+    } catch (error) {
+      console.error('Google login error', error)
+    }
   }
 
   return (
@@ -140,7 +153,10 @@ const Login = () => {
             <CardText className="mb-2">
               Please sign-in to your account and start the adventure
             </CardText>
-            <Form className="auth-login-form mt-2" onSubmit={handleLogin}>
+            <Form
+              className="auth-login-form mt-2"
+              onSubmit={handlePasswordLogin}
+            >
               <FormGroup>
                 <Label className="form-label" for="login-email">
                   Email
@@ -203,7 +219,7 @@ const Login = () => {
               <Button.Ripple color="twitter">
                 <Twitter size={14} />
               </Button.Ripple>
-              <Button.Ripple color="google">
+              <Button.Ripple color="google" onClick={handleGoogleLogin}>
                 <Mail size={14} />
               </Button.Ripple>
               <Button.Ripple className="mr-0" color="github">

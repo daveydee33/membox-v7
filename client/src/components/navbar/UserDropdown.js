@@ -1,4 +1,4 @@
-import { useAuth } from '../../firebase'
+import { useAuth, loginWithGooglePopup, logout } from '../../firebase'
 
 // ** React Imports
 import { useEffect, useState } from 'react'
@@ -33,7 +33,7 @@ import {
 } from 'react-feather'
 
 // ** Default Avatar Image
-import defaultAvatar from '@src/assets/images/portrait/small/avatar-s-11.jpg'
+import defaultAvatar from '@src/assets/images/dave/blank_profile.png'
 
 const UserDropdown = () => {
   const currentUser = useAuth()
@@ -52,7 +52,7 @@ const UserDropdown = () => {
   }, [])
 
   //** Vars
-  const userAvatar = (userData && userData.avatar) || defaultAvatar
+  const userAvatar = currentUser?.photoURL || defaultAvatar
 
   return (
     <UncontrolledDropdown tag="li" className="dropdown-user nav-item">
@@ -65,7 +65,7 @@ const UserDropdown = () => {
         <div className="user-nav d-sm-flex d-none">
           <span className="user-name font-weight-bold">
             {/* {(userData && userData['username']) || 'John Doe'} */}
-            {currentUser?.email}
+            {currentUser?.email || 'Login / Register'}
           </span>
           <span className="user-status">
             {/* {(userData && userData.role) || 'Admin'} */}
@@ -74,30 +74,18 @@ const UserDropdown = () => {
         <Avatar img={userAvatar} imgHeight="40" imgWidth="40" status="online" />
       </DropdownToggle>
       <DropdownMenu right>
-        <DropdownItem tag={Link} to="#" onClick={(e) => e.preventDefault()}>
+        <DropdownItem tag={Link} onClick={loginWithGooglePopup}>
           <User size={14} className="mr-75" />
-          <span className="align-middle">Profile</span>
+          <span className="align-middle">
+            {currentUser ? 'Switch User' : 'Login'}
+          </span>
         </DropdownItem>
-        <DropdownItem tag={Link} to="#" onClick={(e) => e.preventDefault()}>
-          <Mail size={14} className="mr-75" />
-          <span className="align-middle">Inbox</span>
-        </DropdownItem>
-        <DropdownItem tag={Link} to="#" onClick={(e) => e.preventDefault()}>
-          <CheckSquare size={14} className="mr-75" />
-          <span className="align-middle">Tasks</span>
-        </DropdownItem>
-        <DropdownItem tag={Link} to="#" onClick={(e) => e.preventDefault()}>
-          <MessageSquare size={14} className="mr-75" />
-          <span className="align-middle">Chats</span>
-        </DropdownItem>
-        <DropdownItem
-          tag={Link}
-          to="/login"
-          onClick={() => dispatch(handleLogout())}
-        >
-          <Power size={14} className="mr-75" />
-          <span className="align-middle">Logout</span>
-        </DropdownItem>
+        {currentUser && (
+          <DropdownItem tag={Link} onClick={() => logout()}>
+            <Power size={14} className="mr-75" />
+            <span className="align-middle">Logout</span>
+          </DropdownItem>
+        )}
       </DropdownMenu>
     </UncontrolledDropdown>
   )
