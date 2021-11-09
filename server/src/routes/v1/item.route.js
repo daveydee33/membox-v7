@@ -1,5 +1,6 @@
 const express = require('express');
 const auth = require('../../middlewares/auth');
+const authFirebase = require('../../middlewares/authFirebase');
 const validate = require('../../middlewares/validate');
 const itemValidation = require('../../validations/item.validation');
 const itemController = require('../../controllers/item.controller');
@@ -10,7 +11,7 @@ router
   .route('/')
   // .post(auth('manageItems'), validate(itemValidation.createItem), itemController.createItem)
   .post(validate(itemValidation.createItem), itemController.createItem)
-  .get(validate(itemValidation.getItems), itemController.getItems);
+  .get(authFirebase('manageItems'), validate(itemValidation.getItems), itemController.getItems);
 
 // TODO: re-add the auth() to each of these routes
 router
