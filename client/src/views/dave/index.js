@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useState } from 'react'
+import { useAuth } from '../../firebase'
 
 // Page Components
 import ItemsList from './ItemsList'
@@ -24,6 +25,8 @@ import {
 import '@styles/base/pages/app-ecommerce.scss'
 
 const ItemsPage = () => {
+  const currentUser = useAuth()
+
   // States
   const [activeView, setActiveView] = useState('grid')
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -38,12 +41,8 @@ const ItemsPage = () => {
 
   // ** Get items on mount & based on dependency change
   useEffect(() => {
-    dispatch(
-      getItems({
-        limit: 99
-      })
-    )
-  }, [dispatch])
+    dispatch(getItems({ limit: 99 }, currentUser?.accessToken))
+  }, [dispatch, currentUser])
 
   return (
     <Fragment>
@@ -68,10 +67,7 @@ const ItemsPage = () => {
         //
       ></ItemsList>
 
-      <Sidebar
-        sidebarOpen={sidebarOpen}
-        handleFormSidebar={handleFormSidebar}
-      />
+      <Sidebar sidebarOpen={sidebarOpen} handleFormSidebar={handleFormSidebar} />
 
       <FormSidebar
         store={store}

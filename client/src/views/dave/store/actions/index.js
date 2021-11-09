@@ -10,10 +10,10 @@ export const getTags = (params) => {
 }
 
 // ** Get Items
-export const getItems = (params) => {
+export const getItems = (params, accessToken) => {
   return (dispatch) => {
     return axios
-      .get('/v1/items', { params })
+      .get('/v1/items', { params, headers: { Authorization: `Bearer ${accessToken}` } })
       .then((res) => {
         dispatch({ type: 'GET_ITEMS', data: res.data, params })
       })
@@ -82,5 +82,4 @@ export const deleteItem = (id) => {
 }
 
 // Select Item
-export const selectItem = (item) => (dispatch) =>
-  dispatch({ type: 'SELECT_ITEM', item }) // eslint-disable-line implicit-arrow-linebreak
+export const selectItem = (item) => (dispatch) => dispatch({ type: 'SELECT_ITEM', item }) // eslint-disable-line implicit-arrow-linebreak
