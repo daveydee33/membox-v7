@@ -7,20 +7,21 @@ const auth = require('../../middlewares/auth');
 
 const router = express.Router();
 
-router.post('/register', validate(authValidation.register), authController.register);
-router.post('/login', validate(authValidation.login), authController.login);
-router.post('/logout', validate(authValidation.logout), authController.logout);
-router.post('/refresh-tokens', validate(authValidation.refreshTokens), authController.refreshTokens);
-router.post('/forgot-password', validate(authValidation.forgotPassword), authController.forgotPassword);
-router.post('/reset-password', validate(authValidation.resetPassword), authController.resetPassword);
-router.post('/send-verification-email', auth(), authController.sendVerificationEmail);
-router.post('/verify-email', validate(authValidation.verifyEmail), authController.verifyEmail);
-router.get('/google', passport.authenticate('google', { session: false, scope: ['profile', 'email', 'openid'] }));
-router.get(
-  '/google/callback',
-  passport.authenticate('google', { session: false, failureRedirect: '/fail' }),
-  authController.googleLogin
-);
+// Replaced all of this with Firebase instead
+// router.post('/register', validate(authValidation.register), authController.register);
+// router.post('/login', validate(authValidation.login), authController.login);
+// router.post('/logout', validate(authValidation.logout), authController.logout);
+// router.post('/refresh-tokens', validate(authValidation.refreshTokens), authController.refreshTokens);
+// router.post('/forgot-password', validate(authValidation.forgotPassword), authController.forgotPassword);
+// router.post('/reset-password', validate(authValidation.resetPassword), authController.resetPassword);
+// router.post('/send-verification-email', auth(), authController.sendVerificationEmail);
+// router.post('/verify-email', validate(authValidation.verifyEmail), authController.verifyEmail);
+// router.get('/google', passport.authenticate('google', { session: false, scope: ['profile', 'email', 'openid'] }));
+// router.get(
+//   '/google/callback',
+//   passport.authenticate('google', { session: false, failureRedirect: '/fail' }),
+//   authController.googleLogin
+// );
 
 module.exports = router;
 
