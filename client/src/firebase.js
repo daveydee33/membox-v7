@@ -1,5 +1,13 @@
-import firebase from 'firebase/compat/app' // v9 compatability to work with Jeft/Fireship's v8 methods
-import { useAuthState } from 'react-firebase-hooks/auth'
+import { initializeApp } from 'firebase/app'
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut
+} from 'firebase/auth'
 import { useEffect, useState } from 'react'
 
 const firebaseConfig = {
@@ -12,33 +20,9 @@ const firebaseConfig = {
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 }
 
-// Initialize Firebase - v8
-firebase.initializeApp(firebaseConfig)
-
-// Initialize Firebase - v9
-// import { initializeApp } from 'firebase/app'
-// const firebaseApp = initializeApp(firebaseConfig)
-
-// v8 method
-import 'firebase/compat/auth'
-import 'firebase/compat/firestore'
-import 'firebase/compat/storage'
-export const auth = firebase.auth()
-export const firestore = firebase.firestore()
-export const storage = firebase.storage()
-
-// v9 method
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  GoogleAuthProvider,
-  signInWithPopup,
-  signOut
-} from 'firebase/auth'
-
-// const auth = getAuth()
+// Initialize Firebase
+const app = initializeApp(firebaseConfig)
+const auth = getAuth()
 
 export function signup(email, password) {
   return createUserWithEmailAndPassword(auth, email, password)
@@ -90,26 +74,14 @@ export function loginWithGooglePopup() {
     })
 }
 
-// Custom hook to read  auth record and user profile doc
-export function useUserData() {
-  const [user] = useAuthState(auth)
-  const [username, setUserName] = useState(null)
+// Custom Hook
+export function useAuth() {
+  const [currentUser, setCurrentUser] = useState()
 
   useEffect(() => {
-    // turn off realtime subscription
-    let unsubscribe
+    const unsub = onAuthStateChanged(auth, (user) => setCurrentUser(user))
+    return unsub
+  }, [])
 
-    if (user) {
-      const ref = firestore.collection('users').doc(user.id)
-      unsubscribe = ref.onSnapshot((doc) => {
-        setUserName(doc.data()?.username)
-      })
-    } else {
-      setUserName(null)
-    }
-
-    return unsubscribe
-  }, [user])
-
-]  return { user, username }
+  return currentUser
 }

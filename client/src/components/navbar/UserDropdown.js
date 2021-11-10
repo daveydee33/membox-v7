@@ -1,8 +1,7 @@
-import { loginWithGooglePopup, logout } from '../../firebase'
-import { UserContext } from '../../utility/context/User'
+import { useAuth, loginWithGooglePopup, logout } from '../../firebase'
 
 // ** React Imports
-import { useEffect, useState, useContext } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 // ** Custom Components
@@ -23,7 +22,7 @@ import { User, Mail, CheckSquare, MessageSquare, Settings, CreditCard, HelpCircl
 import defaultAvatar from '@src/assets/images/dave/blank_profile.png'
 
 const UserDropdown = () => {
-  const { user } = useContext(UserContext)
+  const currentUser = useAuth()
 
   // ** Store Vars
   const dispatch = useDispatch()
@@ -39,7 +38,7 @@ const UserDropdown = () => {
   }, [])
 
   //** Vars
-  const userAvatar = user?.photoURL || defaultAvatar
+  const userAvatar = currentUser?.photoURL || defaultAvatar
 
   return (
     <UncontrolledDropdown tag="li" className="dropdown-user nav-item">
@@ -47,18 +46,22 @@ const UserDropdown = () => {
         <div className="user-nav d-sm-flex d-none">
           <span className="user-name font-weight-bold">
             {/* {(userData && userData['username']) || 'John Doe'} */}
-            {user?.email || 'Login / Register'}
+            {currentUser?.email || 'Login / Register'}
           </span>
-          <span className="user-status">{/* {(userData && userData.role) || 'Admin'} */}</span>
+          <span className="user-status">
+            {/* {(userData && userData.role) || 'Admin'} */}
+            </span>
         </div>
         <Avatar img={userAvatar} imgHeight="40" imgWidth="40" status="online" />
       </DropdownToggle>
       <DropdownMenu right>
         <DropdownItem tag={Link} to="#" onClick={loginWithGooglePopup}>
           <User size={14} className="mr-75" />
-          <span className="align-middle">{user ? 'Switch User' : 'Login'}</span>
+          <span className="align-middle">
+            {currentUser ? 'Switch User' : 'Login'}
+          </span>
         </DropdownItem>
-        {user && (
+        {currentUser && (
           <DropdownItem tag={Link} to="#" onClick={() => logout()}>
             <Power size={14} className="mr-75" />
             <span className="align-middle">Logout</span>

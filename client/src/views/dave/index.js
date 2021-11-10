@@ -1,5 +1,5 @@
-import { Fragment, useEffect, useState, useContext } from 'react'
-import { UserContext } from '../../utility/context/User'
+import { Fragment, useEffect, useState } from 'react'
+import { useAuth } from '../../firebase'
 
 // Page Components
 import ItemsList from './ItemsList'
@@ -25,7 +25,7 @@ import {
 import '@styles/base/pages/app-ecommerce.scss'
 
 const ItemsPage = () => {
-  const { user, username, mongoId } = useContext(UserContext)
+  const currentUser = useAuth()
 
   // States
   const [activeView, setActiveView] = useState('grid')
@@ -41,8 +41,8 @@ const ItemsPage = () => {
 
   // ** Get items on mount & based on dependency change
   useEffect(() => {
-    dispatch(getItems({ limit: 99 }, user?.accessToken))
-  }, [dispatch, user])
+    dispatch(getItems({ limit: 99 }, currentUser?.accessToken))
+  }, [dispatch, currentUser])
 
   return (
     <Fragment>
