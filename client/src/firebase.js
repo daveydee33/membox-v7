@@ -8,6 +8,7 @@ import {
   signInWithPopup,
   signOut
 } from 'firebase/auth'
+import { getFirestore, addDoc, setDoc, doc, collection } from 'firebase/firestore'
 import { useEffect, useState } from 'react'
 
 const firebaseConfig = {
@@ -21,8 +22,9 @@ const firebaseConfig = {
 }
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig)
-const auth = getAuth()
+const firebaseApp = initializeApp(firebaseConfig)
+const auth = getAuth(firebaseApp)
+const firestore = getFirestore(firebaseApp)
 
 export function signup(email, password) {
   return createUserWithEmailAndPassword(auth, email, password)
@@ -74,14 +76,32 @@ export function loginWithGooglePopup() {
     })
 }
 
-// Custom Hook
-export function useAuth() {
+// Custom hook to read  auth record and user profile doc
+export function useUserData() {
   const [currentUser, setCurrentUser] = useState()
+  // const [username, setUserName] = useState(null)
 
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (user) => setCurrentUser(user))
+    const unsub = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user)
+
+      if (user) {
+        // and link the other data?  add username or mongoDb id to this?
+        const collectionRef = collection(firestore, 'login-activity')
+        const docRef = doc(firestore, `all-users/${user.uid}`)
+
+        // Add a record each time there is a login/authentication (even if they do a full refresh on the page, it will trigger this.)
+        // the `user` object that comes back from the onAuthStateChanged for some reason can't be used to set the data in Firestore... not sure, but this is a hack that worked
+        const userObjectPayload = JSON.parse(JSON.stringify(user))
+        delete userObjectPayload.stsTokenManager
+        addDoc(collectionRef, userObjectPayload)
+
+        // Set/Update user database?
+        setDoc(docRef, userObjectPayload)
+      }
+    })
     return unsub
   }, [])
 
-  return currentUser
+  return { currentUser }
 }

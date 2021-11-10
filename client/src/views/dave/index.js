@@ -1,5 +1,5 @@
-import { Fragment, useEffect, useState } from 'react'
-import { useAuth } from '../../firebase'
+import { Fragment, useEffect, useState, useContext } from 'react'
+import { UserContext } from '../../utility/context/User'
 
 // Page Components
 import ItemsList from './ItemsList'
@@ -25,7 +25,7 @@ import {
 import '@styles/base/pages/app-ecommerce.scss'
 
 const ItemsPage = () => {
-  const currentUser = useAuth()
+  const { currentUser } = useContext(UserContext)
 
   // States
   const [activeView, setActiveView] = useState('grid')

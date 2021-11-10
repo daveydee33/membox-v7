@@ -1,7 +1,8 @@
-import { useAuth, loginWithGooglePopup, logout } from '../../firebase'
+import { loginWithGooglePopup, logout } from '../../firebase'
+import { UserContext } from '../../utility/context/User'
 
 // ** React Imports
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 
 // ** Custom Components
@@ -22,7 +23,7 @@ import { User, Mail, CheckSquare, MessageSquare, Settings, CreditCard, HelpCircl
 import defaultAvatar from '@src/assets/images/dave/blank_profile.png'
 
 const UserDropdown = () => {
-  const currentUser = useAuth()
+  const { currentUser } = useContext(UserContext)
 
   // ** Store Vars
   const dispatch = useDispatch()
@@ -48,18 +49,14 @@ const UserDropdown = () => {
             {/* {(userData && userData['username']) || 'John Doe'} */}
             {currentUser?.email || 'Login / Register'}
           </span>
-          <span className="user-status">
-            {/* {(userData && userData.role) || 'Admin'} */}
-            </span>
+          <span className="user-status">{/* {(userData && userData.role) || 'Admin'} */}</span>
         </div>
         <Avatar img={userAvatar} imgHeight="40" imgWidth="40" status="online" />
       </DropdownToggle>
       <DropdownMenu right>
         <DropdownItem tag={Link} to="#" onClick={loginWithGooglePopup}>
           <User size={14} className="mr-75" />
-          <span className="align-middle">
-            {currentUser ? 'Switch User' : 'Login'}
-          </span>
+          <span className="align-middle">{currentUser ? 'Switch User' : 'Login'}</span>
         </DropdownItem>
         {currentUser && (
           <DropdownItem tag={Link} to="#" onClick={() => logout()}>
