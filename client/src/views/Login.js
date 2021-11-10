@@ -7,30 +7,14 @@ import useJwt from '@src/auth/jwt/useJwt'
 import { useDispatch } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { toast, Slide } from 'react-toastify'
-// import { handleLogin } from '@store/actions/auth'
 import { Link, Redirect } from 'react-router-dom'
 
 import InputPasswordToggle from '@components/input-password-toggle'
 import { isObjEmpty } from '@utils'
 import { Facebook, Twitter, Mail, GitHub, Coffee } from 'react-feather'
-import {
-  Row,
-  Col,
-  CardTitle,
-  CardText,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  CustomInput,
-  Button
-} from 'reactstrap'
+import { Row, Col, CardTitle, CardText, Form, FormGroup, Label, Input, CustomInput, Button } from 'reactstrap'
 import '@styles/base/pages/page-auth.scss'
-import {
-  login,
-  loginWithGooglePopup,
-  loginWithGoogleRedirect
-} from '../firebase'
+import { login, loginWithGooglePopup, loginWithGoogleRedirect } from '../firebase'
 
 const Login = () => {
   const [skin, setSkin] = useSkin()
@@ -70,34 +54,16 @@ const Login = () => {
         <Link className="brand-logo" to="/">
           <svg viewBox="0 0 139 95" version="1.1" height="28">
             <defs>
-              <linearGradient
-                x1="100%"
-                y1="10.5120544%"
-                x2="50%"
-                y2="89.4879456%"
-                id="linearGradient-1"
-              >
+              <linearGradient x1="100%" y1="10.5120544%" x2="50%" y2="89.4879456%" id="linearGradient-1">
                 <stop stopColor="#000000" offset="0%"></stop>
                 <stop stopColor="#FFFFFF" offset="100%"></stop>
               </linearGradient>
-              <linearGradient
-                x1="64.0437835%"
-                y1="46.3276743%"
-                x2="37.373316%"
-                y2="100%"
-                id="linearGradient-2"
-              >
+              <linearGradient x1="64.0437835%" y1="46.3276743%" x2="37.373316%" y2="100%" id="linearGradient-2">
                 <stop stopColor="#EEEEEE" stopOpacity="0" offset="0%"></stop>
                 <stop stopColor="#FFFFFF" offset="100%"></stop>
               </linearGradient>
             </defs>
-            <g
-              id="Page-1"
-              stroke="none"
-              strokeWidth="1"
-              fill="none"
-              fillRule="evenodd"
-            >
+            <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
               <g id="Artboard" transform="translate(-400.000000, -178.000000)">
                 <g id="Group" transform="translate(400.000000, 178.000000)">
                   <path
@@ -141,22 +107,13 @@ const Login = () => {
             <img className="img-fluid" src={source} alt="Login V2" />
           </div>
         </Col>
-        <Col
-          className="d-flex align-items-center auth-bg px-2 p-lg-5"
-          lg="4"
-          sm="12"
-        >
+        <Col className="d-flex align-items-center auth-bg px-2 p-lg-5" lg="4" sm="12">
           <Col className="px-xl-2 mx-auto" sm="8" md="6" lg="12">
             <CardTitle tag="h2" className="font-weight-bold mb-1">
               Welcome to MemBox! 👋
             </CardTitle>
-            <CardText className="mb-2">
-              Please sign-in to your account and start the adventure
-            </CardText>
-            <Form
-              className="auth-login-form mt-2"
-              onSubmit={handlePasswordLogin}
-            >
+            <CardText className="mb-2">Please sign-in to your account and start the adventure</CardText>
+            <Form className="auth-login-form mt-2" onSubmit={handlePasswordLogin}>
               <FormGroup>
                 <Label className="form-label" for="login-email">
                   Email
@@ -187,19 +144,9 @@ const Login = () => {
                 />
               </FormGroup>
               <FormGroup>
-                <CustomInput
-                  type="checkbox"
-                  className="custom-control-Primary"
-                  id="remember-me"
-                  label="Remember Me"
-                />
+                <CustomInput type="checkbox" className="custom-control-Primary" id="remember-me" label="Remember Me" />
               </FormGroup>
-              <Button.Ripple
-                disabled={loading}
-                type="submit"
-                color="primary"
-                block
-              >
+              <Button.Ripple disabled={loading} type="submit" color="primary" block>
                 Sign in
               </Button.Ripple>
             </Form>

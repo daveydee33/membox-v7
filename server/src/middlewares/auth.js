@@ -25,25 +25,12 @@ const verifyCallback = (req, resolve, reject, requiredRights) => async (err, use
   resolve();
 };
 
-const auth =
-  (...requiredRights) =>
-  async (req, res, next) => {
-    return new Promise((resolve, reject) => {
-      passport.authenticate('jwt', { session: false }, verifyCallback(req, resolve, reject, requiredRights))(req, res, next);
-    })
-      .then(() => next())
-      .catch((err) => next(err));
-  };
-
-// const firebaseAuth =
-//   (...requiredRights) =>
-//   async (req, res, next) => {
-//     return new Promise((resolve, reject) => {
-//       // do something
-//       // if successful, do this after:  verifyCallback(req, resolve, reject, requiredRights))(req, res, next);
-//     })
-//       .then(() => next())
-//       .catch((err) => next(err));
-//   };
+const auth = (...requiredRights) => async (req, res, next) => {
+  return new Promise((resolve, reject) => {
+    passport.authenticate('jwt', { session: false }, verifyCallback(req, resolve, reject, requiredRights))(req, res, next);
+  })
+    .then(() => next())
+    .catch((err) => next(err));
+};
 
 module.exports = auth;
