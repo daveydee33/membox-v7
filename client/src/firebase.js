@@ -31,51 +31,70 @@ export function signup(email, password) {
   return createUserWithEmailAndPassword(auth, email, password)
 }
 
-async function activityLog(authResponseResultObject) {
-  // authResponseResultObject is the `result` from the firebase functions like signInWithEmailAndPassword or loginWithGooglePopup
+async function saveUserDataToDb(resultData) {
+  // resultData is the `result` from the firebase functions like signInWithEmailAndPassword or loginWithGooglePopup
   // this result should have:
   // operationType: "signIn"
-  // providerId: null (or "google.com")
+  // providerId: null (or "google.com" / facebook)
   // user: --> this has all the data, including the token, which can be used on the server also to get the same user data as this here.
 
-  // so let's save it to Firebase
+  // save to MongoDB
+  let mongoId
   try {
-    const collectionRef = collection(firestore, 'login-activity')
-    const docRef = doc(firestore, `all-users/${authResponseResultObject.user.uid}`)
-
-    // Add a record each time there is a login/authentication (even if they do a full refresh on the page, it will trigger this.)
-    // the `user` object that comes back from the onAuthStateChanged for some reason can't be used to set the data in Firestore... not sure, but this is a hack that worked
-    const userObjectPayload = JSON.parse(JSON.stringify(authResponseResultObject.user))
-    // delete userObjectPayload.stsTokenManager // we don't need to store the tokens in Firebase
-    addDoc(collectionRef, userObjectPayload)
-
-    // Set/Update user database?
-    setDoc(docRef, userObjectPayload)
-  } catch (err) {
-    throw new Error('Error posting to server.1.')
+    const mongoResponse = await axios.post('/v1/auth/firebase-login', undefined, {
+      headers: { Authorization: `Bearer ${resultData.user.accessToken}` }
+    })
+    mongoId = mongoResponse.data.user.id
+    // console.log('zzz:B - success to MongoDB', res)
+  } catch (error) {
+    // console.log('zzz:B - Error ', error)
+    throw new Error('Error posting to server.Mongo.')
   }
 
-  console.log(authResponseResultObject)
-  // save to MongoDB
+  // save to Firebase
   try {
-    const res = await axios.post('/v1/auth/firebase-login', undefined, {
-      headers: { Authorization: `Bearer ${authResponseResultObject.user.accessToken}` }
+    const authActivityCollectionRef = collection(firestore, 'auth-activity-log')
+    const userRecordDocRef = doc(firestore, `all-users/${resultData.user.uid}`)
+    const { operationType, providerId, user } = resultData
+    const { uid, displayName, email, emailVerified, isAnonymous, providerData } = user
+    // delete user.stsTokenManager // I don't want to store token data
+
+    // Activity Record
+    addDoc(authActivityCollectionRef, {
+      mongoId,
+      operationType,
+      providerId,
+      displayName,
+      email
     })
-    console.log('zzz:B - success to MongoDB', res)
-  } catch (error) {
-    console.log('zzz:B - Error ', error)
-    throw new Error('Error posting to server.2.')
+
+    // User Record
+    setDoc(userRecordDocRef, {
+      uid,
+      mongoId,
+      displayName,
+      email,
+      emailVerified,
+      isAnonymous,
+      providerId,
+      providerData: JSON.parse(JSON.stringify(providerData))
+    })
+  } catch (err) {
+    console.error(err)
+    throw new Error('Error posting to server.Firebase.')
   }
 }
 
 export function login(email, password) {
   return signInWithEmailAndPassword(auth, email, password).then((result) => {
-    // result has something like:
-    //operationType: "signIn"
-    //providerId: null
-    // user: UserImpl {providerId: 'firebase', emailVerified: false, isAnonymous: false, tenantId: null, providerData: Array(1), …}
-    // _tokenResponse: {kind: 'identitytoolkit#VerifyPasswordResponse', localId: 'M1JljjWEdJgNgDAPmwmylxWvpO42', email: 'a@a.com', displayName: '', idToken: 'eyJhbGciOiJSUzI1NiIsImtpZCI6IjY5NGNmYTAxOTgyMDNlMj…3aT2RmJieaCPpuBtlND-kAMMdNd1z3tp7SxVlC0NMtZBcgOsw', …}
-    activityLog(result)
+    /*
+    result has something like:
+      operationType: "signIn"
+      providerId: null  // or 'google.com' if using provider instead of login/pass
+      user: UserImpl {providerId: 'firebase', emailVerified: false, isAnonymous: false, tenantId: null, providerData: Array(1), …}
+      _tokenResponse: {kind: 'identitytoolkit#VerifyPasswordResponse', localId: 'M1JljjWEdJgNgDAPmwmylxWvpO42', email: 'a@a.com', displayName: '', idToken: 'eyJhbGc..', …}
+    */
+    saveUserDataToDb(result)
   })
 }
 
@@ -93,40 +112,37 @@ export function loginWithGooglePopup() {
   const provider = new GoogleAuthProvider()
   provider.addScope('profile')
   provider.addScope('email')
-  signInWithPopup(auth, provider)
+  return signInWithPopup(auth, provider)
     .then(async (result) => {
       // This gives you a Google Access Token. You can use it to access the Google API.
-      const credential = GoogleAuthProvider.credentialFromResult(result)
-      const token = credential.accessToken
+      // const credential = GoogleAuthProvider.credentialFromResult(result)
+      // const token = credential.accessToken
       // this `credential` object is type OAuthCredential.  It only contains:
       // idToken, accessToken, pendingToken: null, providerId: "google.com", signInMethod: "google.com"
       // the idToken and accessToken --> I don't think I need these.
 
       // ---
-      // But the `reseult` object contains all the user data I need, including the token which I can use on the backend server to also get all of the user data just with the token.
-      const { operationType, providerId, user } = result // the additional data i don't need and some is duplicate
-      const firebaseUID = user.uid
-
-      activityLog(result)
-
-      // TODO: maybe middleware to DB store the `user` object data?
-      //  user.uid --> this is the Firebase UID (all providers will have this)
-      //  user.providerData.uid --> this is the UID from Google
-      //  user, user.accessToken, displayName, email, emailVerified, isAnonymous, phoneNumber, photoURL, providerId, uid
-      // maybe call another function and pass the "user" object to it, and in that function, save all the data to Mongo
+      // But the `result` object contains all the user data I need, including the token which I can use on the backend server to also get all of the user data just with the token.
+      // const { operationType, providerId, user } = result // the additional data i don't need and some is duplicate
+      // const firebaseUID = user.uid
+      saveUserDataToDb(result)
     })
     .catch((error) => {
       // The provider's account email, can be used in case of
       // auth/account-exists-with-different-credential to fetch the providers
       // linked to the email:
-      const email = error.email
-      // Handle Errors here.
-      const errorCode = error.code
-      const errorMessage = error.message
-      // The AuthCredential type that was used.
-      const credential = GoogleAuthProvider.credentialFromError(error)
-      // The provider's credential:
-      // ...
+      // const email = error.email
+      // // Handle Errors here.
+      // const errorCode = error.code
+      // const errorMessage = error.message
+      // // The AuthCredential type that was used.
+      // const credential = GoogleAuthProvider.credentialFromError(error)
+      // // The provider's credential:
+      // // ...
+
+      // TODO:
+      console.error(error)
+      throw new Error('firebase-loginWithGooglePopup.')
     })
 }
 

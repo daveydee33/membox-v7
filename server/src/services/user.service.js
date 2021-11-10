@@ -1,4 +1,5 @@
 const httpStatus = require('http-status');
+const _merge = require('lodash/merge');
 const { User } = require('../models');
 const ApiError = require('../utils/ApiError');
 
@@ -14,52 +15,57 @@ const googleCreateOrUpdate = async (profile) => {
     picture,
     'services.google': {
       googleId: sub,
-      googleFullData: profile,
+      googleFullData: JSON.stringify(profile),
     },
   };
-  return User.findOneAndUpdate({ email }, userProfilePayload, {
-    // maybe I need to check if email is verified too?
-    setDefaultsOnInsert: true,
-    upsert: true,
-    new: true,
-    useFindAndModify: false,
-  });
+  // return User.findOneAndUpdate({ email }, userProfilePayload, {
+  //   // NEED TO UPDATE THIS ALSO TO USE THE SAME UPDATE FUNCTION .
+  //   setDefaultsOnInsert: true,
+  //   upsert: true,
+  //   new: true,
+  //   useFindAndModify: false,
+  // });
+  const user = await User.findOne({ email });
+  if (!user) {
+    // if (email_verified === true) userProfilePayload.isEmailVerified = true; // need to see what the value is called. it's either email_verified or just verified
+    return createUser(userProfilePayload);
+  }
+  const mergedWithExisting = _merge(user, userProfilePayload);
+  return updateUserById(user._id, mergedWithExisting);
 };
 
 /**
  * Firebase login (email/password, Google, Facebook, etc) -- Create or Update user
- * @param {Object} profile
+ * @param {Object} userData
  * @returns {Promise<User>}
  */
 const firebaseCreateOrUpdate = async (userData) => {
-  // console.log(userData);
-
   const { uid, email, email_verified, name, picture } = userData;
 
   const userProfilePayload = {
+    firebaseUID: uid,
     name,
     picture,
     email,
-    'services.firebase': {
-      firebaseUID: uid,
-      firebaseFullData: userData,
+    isEmailVerified: email_verified,
+    services: {
+      firebase: {
+        firebaseUID: uid,
+        firebaseFullData: JSON.stringify(userData),
+      },
     },
   };
 
   // !!!!!  I found that by creating using this 'findOneAndUpdate' function we are bypassing all of the model checks - like, require-password, default-role-user, etc.  even when `runValidators` is true, it's not doing it.  So I think it might be better to extend this and the google function to first create the user (if email check doesn't find anything), and then update the user.  or do the update first, but if user not found, then run the create with the payload???
 
-  try {
-    return User.findOneAndUpdate({ email }, userProfilePayload, {
-      runValidators: true, // NOT working
-      // setDefaultsOnInsert: true,
-      upsert: true,
-      new: true,
-      useFindAndModify: false,
-    });
-  } catch (error) {
-    console.log(error);
-    // i should just use the functions below instead.
+  const user = await User.findOne({ firebaseUID: uid });
+  if (!user) {
+    const newUser = await createUser(userProfilePayload);
+    return newUser;
   }
+  const updatedUserData = { ...user, ...userProfilePayload };
+  const modifiedUser = await updateUserById(user._id, updatedUserData);
+  return modifiedUser;
 };
 
 /**
