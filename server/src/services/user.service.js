@@ -12,19 +12,54 @@ const googleCreateOrUpdate = async (profile) => {
   const userProfilePayload = {
     name,
     picture,
-    password: undefined,
-    services: {
-      google: {
-        googleId: sub,
-        fullData: JSON.stringify(profile),
-      },
+    'services.google': {
+      googleId: sub,
+      googleFullData: profile,
     },
   };
   return User.findOneAndUpdate({ email }, userProfilePayload, {
+    // maybe I need to check if email is verified too?
+    setDefaultsOnInsert: true,
     upsert: true,
     new: true,
     useFindAndModify: false,
   });
+};
+
+/**
+ * Firebase login (email/password, Google, Facebook, etc) -- Create or Update user
+ * @param {Object} profile
+ * @returns {Promise<User>}
+ */
+const firebaseCreateOrUpdate = async (userData) => {
+  // console.log(userData);
+
+  const { uid, email, email_verified, name, picture } = userData;
+
+  const userProfilePayload = {
+    name,
+    picture,
+    email,
+    'services.firebase': {
+      firebaseUID: uid,
+      firebaseFullData: userData,
+    },
+  };
+
+  // !!!!!  I found that by creating using this 'findOneAndUpdate' function we are bypassing all of the model checks - like, require-password, default-role-user, etc.  even when `runValidators` is true, it's not doing it.  So I think it might be better to extend this and the google function to first create the user (if email check doesn't find anything), and then update the user.  or do the update first, but if user not found, then run the create with the payload???
+
+  try {
+    return User.findOneAndUpdate({ email }, userProfilePayload, {
+      runValidators: true, // NOT working
+      // setDefaultsOnInsert: true,
+      upsert: true,
+      new: true,
+      useFindAndModify: false,
+    });
+  } catch (error) {
+    console.log(error);
+    // i should just use the functions below instead.
+  }
 };
 
 /**
@@ -112,4 +147,5 @@ module.exports = {
   updateUserById,
   deleteUserById,
   googleCreateOrUpdate,
+  firebaseCreateOrUpdate,
 };

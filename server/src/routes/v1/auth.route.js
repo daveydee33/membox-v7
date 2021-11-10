@@ -4,11 +4,12 @@ const validate = require('../../middlewares/validate');
 const authValidation = require('../../validations/auth.validation');
 const authController = require('../../controllers/auth.controller');
 const auth = require('../../middlewares/auth');
+const authFirebase = require('../../middlewares/authFirebase');
 
 const router = express.Router();
 
 // Replaced all of this with Firebase instead
-// router.post('/register', validate(authValidation.register), authController.register);
+router.post('/register', validate(authValidation.register), authController.register);
 // router.post('/login', validate(authValidation.login), authController.login);
 // router.post('/logout', validate(authValidation.logout), authController.logout);
 // router.post('/refresh-tokens', validate(authValidation.refreshTokens), authController.refreshTokens);
@@ -22,6 +23,7 @@ const router = express.Router();
 //   passport.authenticate('google', { session: false, failureRedirect: '/fail' }),
 //   authController.googleLogin
 // );
+router.post('/firebase-login', authFirebase(), authController.firebaseLogin);
 
 module.exports = router;
 

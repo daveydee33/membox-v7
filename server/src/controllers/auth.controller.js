@@ -21,6 +21,11 @@ const googleLogin = catchAsync(async (req, res) => {
   res.send({ user, tokens });
 });
 
+const firebaseLogin = catchAsync(async (req, res) => {
+  const user = await userService.firebaseCreateOrUpdate(req.user);
+  res.send({ user });
+});
+
 const logout = catchAsync(async (req, res) => {
   await authService.logout(req.body.refreshToken);
   res.status(httpStatus.NO_CONTENT).send();
@@ -63,4 +68,5 @@ module.exports = {
   sendVerificationEmail,
   verifyEmail,
   googleLogin,
+  firebaseLogin,
 };

@@ -52,8 +52,17 @@ const userSchema = mongoose.Schema(
         googleId: {
           type: String,
         },
-        fullData: {
+        googleFullData: {
+          type: Object,
+          private: true,
+        },
+      },
+      firebase: {
+        firebaseUID: {
           type: String,
+        },
+        firebaseFullData: {
+          type: Object,
           private: true,
         },
       },
