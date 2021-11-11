@@ -25,8 +25,6 @@ import {
 import '@styles/base/pages/app-ecommerce.scss'
 
 const ItemsPage = () => {
-  const { currentUser } = useContext(UserContext)
-
   // States
   const [activeView, setActiveView] = useState('grid')
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -41,8 +39,8 @@ const ItemsPage = () => {
 
   // ** Get items on mount & based on dependency change
   useEffect(() => {
-    dispatch(getItems({ limit: 99 }, currentUser?.accessToken))
-  }, [dispatch, currentUser])
+    dispatch(getItems({ limit: 99 }))
+  }, [dispatch])
 
   return (
     <Fragment>

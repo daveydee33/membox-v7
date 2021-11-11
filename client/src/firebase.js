@@ -31,31 +31,37 @@ export function signup(email, password) {
   return createUserWithEmailAndPassword(auth, email, password)
 }
 
-async function saveUserDataToDb(resultData) {
-  // resultData is the `result` from the firebase functions like signInWithEmailAndPassword or loginWithGooglePopup
+async function saveUserDataToDb(firebaseResultData) {
+  // firebaseResultData is the `result` from the firebase functions like signInWithEmailAndPassword or loginWithGooglePopup
   // this result should have:
   // operationType: "signIn"
   // providerId: null (or "google.com" / facebook)
   // user: --> this has all the data, including the token, which can be used on the server also to get the same user data as this here.
 
-  // save to MongoDB
+  // ONE) save to MongoDB
   let mongoId
+  let accessToken
+  let refreshToken
   try {
     const mongoResponse = await axios.post('/v1/auth/firebase-login', undefined, {
-      headers: { Authorization: `Bearer ${resultData.user.accessToken}` }
+      headers: { Authorization: `Bearer ${firebaseResultData.user.accessToken}` }
     })
     mongoId = mongoResponse.data.user.id
-    // console.log('zzz:B - success to MongoDB', res)
+    accessToken = mongoResponse.data.tokens.access.token
+    refreshToken = mongoResponse.data.tokens.refresh.token
   } catch (error) {
-    // console.log('zzz:B - Error ', error)
     throw new Error('Error posting to server.Mongo.')
   }
 
-  // save to Firebase
+  // TWO) save tokens to local storage.
+  localStorage.setItem('accessToken', accessToken)
+  localStorage.setItem('refreshToken', refreshToken)
+
+  // THREE)save to Firebase
   try {
     const authActivityCollectionRef = collection(firestore, 'auth-activity-log')
-    const userRecordDocRef = doc(firestore, `all-users/${resultData.user.uid}`)
-    const { operationType, providerId, user } = resultData
+    const userRecordDocRef = doc(firestore, `all-users/${firebaseResultData.user.uid}`)
+    const { operationType, providerId, user } = firebaseResultData
     const { uid, displayName, email, emailVerified, isAnonymous, providerData } = user
     // delete user.stsTokenManager // I don't want to store token data
 

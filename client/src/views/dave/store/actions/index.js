@@ -10,10 +10,10 @@ export const getTags = (params) => {
 }
 
 // ** Get Items
-export const getItems = (params, accessToken) => {
+export const getItems = (params) => {
   return (dispatch) => {
     return axios
-      .get('/v1/items', { params, headers: { Authorization: `Bearer ${accessToken}` } })
+      .get('/v1/items')
       .then((res) => {
         dispatch({ type: 'GET_ITEMS', data: res.data, params })
       })

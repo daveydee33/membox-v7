@@ -11,7 +11,7 @@ router
   .route('/')
   // .post(auth('manageItems'), validate(itemValidation.createItem), itemController.createItem)
   .post(validate(itemValidation.createItem), itemController.createItem)
-  .get(authFirebase('manageItems'), validate(itemValidation.getItems), itemController.getItems);
+  .get(auth('getItems'), validate(itemValidation.getItems), itemController.getItems);
 
 // TODO: re-add the auth() to each of these routes
 router

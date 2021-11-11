@@ -8,7 +8,6 @@ const authFirebase =
   (...requiredRights) =>
   async (req, res, next) => {
     const token = req.headers.authorization.split(' ')[1];
-
     try {
       const decodedValue = await admin.auth().verifyIdToken(token);
       if (decodedValue) {
@@ -28,9 +27,8 @@ const authFirebase =
 
         return next();
       }
-      return res.json({ message: 'Firebase, Not Authorized' });
     } catch (err) {
-      next(new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'Firebase auth error.'));
+      next(new ApiError(httpStatus.UNAUTHORIZED, 'Firebase auth error.  Might be an expired or invalid token'));
     }
   };
 
