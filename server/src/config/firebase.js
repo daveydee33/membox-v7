@@ -1,6 +1,6 @@
 const admin = require('firebase-admin');
 
-const serviceAccount = require('../../../secrets/membox-v7-firebase-firebase-adminsdk-yzi8r-91a05c5b5b.json');
+const serviceAccount = require('../../../secrets/google-credentials.json');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
