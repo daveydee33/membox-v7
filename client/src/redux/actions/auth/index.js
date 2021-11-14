@@ -1,11 +1,12 @@
 // ** UseJWT import to get config
 import useJwt from '@src/auth/jwt/useJwt'
+import { logout } from '../../../firebase'
 
 const config = useJwt.jwtConfig
 
 // ** Handle User Login
-export const handleLogin = data => {
-  return dispatch => {
+export const handleLogin = (data) => {
+  return (dispatch) => {
     dispatch({
       type: 'LOGIN',
       data,
@@ -23,12 +24,15 @@ export const handleLogin = data => {
 
 // ** Handle User Logout
 export const handleLogout = () => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({ type: 'LOGOUT', [config.storageTokenKeyName]: null, [config.storageRefreshTokenKeyName]: null })
 
     // ** Remove user, accessToken & refreshToken from localStorage
     localStorage.removeItem('userData')
     localStorage.removeItem(config.storageTokenKeyName)
     localStorage.removeItem(config.storageRefreshTokenKeyName)
+
+    // Firebase logout
+    logout()
   }
 }

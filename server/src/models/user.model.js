@@ -6,6 +6,10 @@ const { roles } = require('../config/roles');
 
 const userSchema = mongoose.Schema(
   {
+    firebaseUID: {
+      type: String,
+      trim: true,
+    },
     name: {
       type: String,
       required: true,
@@ -25,7 +29,7 @@ const userSchema = mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
+      // required: true, // not sure if this will cause problems, but i'm disabling it for now to update existing records with Firebase logins
       trim: true,
       minlength: 8,
       validate(value) {
@@ -52,7 +56,16 @@ const userSchema = mongoose.Schema(
         googleId: {
           type: String,
         },
-        fullData: {
+        googleFullData: {
+          type: String,
+          private: true,
+        },
+      },
+      firebase: {
+        firebaseUID: {
+          type: String,
+        },
+        firebaseFullData: {
           type: String,
           private: true,
         },
@@ -95,6 +108,11 @@ userSchema.pre('save', async function (next) {
     user.password = await bcrypt.hash(user.password, 8);
   }
   next();
+});
+
+userSchema.pre('save', function (next) {
+  this.increment();
+  return next();
 });
 
 /**

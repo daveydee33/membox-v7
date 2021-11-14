@@ -1,4 +1,5 @@
 const httpStatus = require('http-status');
+const _merge = require('lodash/merge');
 const { User } = require('../models');
 const ApiError = require('../utils/ApiError');
 
@@ -12,19 +13,61 @@ const googleCreateOrUpdate = async (profile) => {
   const userProfilePayload = {
     name,
     picture,
-    password: undefined,
+    'services.google': {
+      googleId: sub,
+      googleFullData: JSON.stringify(profile),
+    },
+  };
+  const user = await User.findOne({ email });
+  if (!user) {
+    return createUser(userProfilePayload);
+  }
+  const mergedWithExisting = _merge(user, userProfilePayload);
+  return updateUserById(user._id, mergedWithExisting);
+};
+
+/**
+ * Firebase login (email/password, Google, Facebook, etc) -- Create or Update user
+ * @param {Object} userData
+ * @returns {Promise<User>}
+ */
+const firebaseCreateOrUpdate = async (userData) => {
+  const { uid, email, email_verified, name, picture } = userData;
+
+  const userProfilePayload = {
+    firebaseUID: uid,
+    name,
+    picture,
+    email,
+    isEmailVerified: email_verified,
     services: {
-      google: {
-        googleId: sub,
-        fullData: JSON.stringify(profile),
+      firebase: {
+        firebaseUID: uid,
+        firebaseFullData: JSON.stringify(userData),
       },
     },
   };
-  return User.findOneAndUpdate({ email }, userProfilePayload, {
-    upsert: true,
-    new: true,
-    useFindAndModify: false,
-  });
+
+  // NOTE: Don't create/update records using  'findOneAndUpdate()' is bypassing all of the Model checks - like, setting default values, require values, etc.
+  // even when `runValidators: true` it's not doing it.
+  // So I switched to this if/then/else option: create the user (if email check doesn't find anything), and then update the user.
+  // and this worked better, and I could also use the .save() hook I which increments the version counter.
+  // So, DON"T use this method - because it doesn't work properly.
+  // return User.findOneAndUpdate({ email }, userProfilePayload, {
+  //   setDefaultsOnInsert: true,
+  //   upsert: true,
+  //   new: true,
+  //   useFindAndModify: false,
+  // });
+
+  const user = await User.findOne({ firebaseUID: uid });
+  if (!user) {
+    const newUser = await createUser(userProfilePayload);
+    return newUser;
+  }
+  const updatedUserData = { ...user, ...userProfilePayload };
+  const modifiedUser = await updateUserById(user._id, updatedUserData);
+  return modifiedUser;
 };
 
 /**
@@ -112,4 +155,5 @@ module.exports = {
   updateUserById,
   deleteUserById,
   googleCreateOrUpdate,
+  firebaseCreateOrUpdate,
 };

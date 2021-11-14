@@ -10,17 +10,23 @@ const itemSchema = mongoose.Schema(
     },
     description: {
       type: String,
-      required: false,
       trim: true,
     },
     details: {
       type: String,
-      required: false,
       trim: true,
+    },
+    related: {
+      type: [String],
     },
     tags: {
       type: [String],
-      required: false,
+    },
+    audios: {
+      type: [String],
+    },
+    images: {
+      type: [String],
     },
     examples: {
       type: [

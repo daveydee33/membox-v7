@@ -6,14 +6,14 @@ import AudioPlayer from '../../components/AudioPlayer'
 // ** Third Party Components
 import classnames from 'classnames'
 import { Star, ShoppingCart, Heart } from 'react-feather'
-import {
-  Card,
-  CardBody,
-  CardText,
-  CardTitle,
-  CardImg,
-  Button,
-  Badge,
+import { 
+  Card, 
+  CardBody, 
+  CardText, 
+  CardTitle, 
+  CardImg, 
+  Button, 
+  Badge, 
   CardColumns
 } from 'reactstrap'
 
@@ -57,9 +57,9 @@ const ItemCards = (props) => {
     if (items.length) {
       return items.map((item) => {
         return (
-          <Card
-            className="ecommerce-card"
-            key={item.id}
+          <Card 
+            className="ecommerce-card" 
+            key={item.id} 
             onClick={() => handleItemClick(item)}
           >
             <CardImg src={randomImg()} />
@@ -69,10 +69,10 @@ const ItemCards = (props) => {
               <CardText>{item.description}</CardText>
               <CardText className="text-muted">{item.details}</CardText>
               {item.tags.map((tag) => (
-                <Badge
-                  color="light-secondary"
-                  className="mr-1 mt-1"
-                  pill
+                <Badge 
+                  color="light-secondary" 
+                  className="mr-1 mt-1" 
+                  pill 
                   key={tag}
                 >
                   {tag}

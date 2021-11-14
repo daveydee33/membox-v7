@@ -82,5 +82,4 @@ export const deleteItem = (id) => {
 }
 
 // Select Item
-export const selectItem = (item) => (dispatch) =>
-  dispatch({ type: 'SELECT_ITEM', item }) // eslint-disable-line implicit-arrow-linebreak
+export const selectItem = (item) => (dispatch) => dispatch({ type: 'SELECT_ITEM', item }) // eslint-disable-line implicit-arrow-linebreak

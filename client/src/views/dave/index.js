@@ -1,4 +1,5 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState, useContext } from 'react'
+import { UserContext } from '../../utility/context/User'
 
 // Page Components
 import ItemsList from './ItemsList'
@@ -38,11 +39,7 @@ const ItemsPage = () => {
 
   // ** Get items on mount & based on dependency change
   useEffect(() => {
-    dispatch(
-      getItems({
-        limit: 99
-      })
-    )
+    dispatch(getItems({ limit: 99 }))
   }, [dispatch])
 
   return (
@@ -68,10 +65,7 @@ const ItemsPage = () => {
         //
       ></ItemsList>
 
-      <Sidebar
-        sidebarOpen={sidebarOpen}
-        handleFormSidebar={handleFormSidebar}
-      />
+      <Sidebar sidebarOpen={sidebarOpen} handleFormSidebar={handleFormSidebar} />
 
       <FormSidebar
         store={store}
