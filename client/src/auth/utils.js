@@ -1,4 +1,4 @@
-import useJwt from '@src/@core/auth/jwt/useJwt'
+import useJwt from '@src/auth/jwt/useJwt'
 
 /**
  * Return if user is logged in
@@ -20,7 +20,7 @@ export const getUserData = () => JSON.parse(localStorage.getItem('userData'))
  * NOTE: If you have different pages to navigate based on user ability then this function can be useful. However, you need to update it.
  * @param {String} userRole Role of user
  */
-export const getHomeRouteForLoggedInUser = userRole => {
+export const getHomeRouteForLoggedInUser = (userRole) => {
   if (userRole === 'admin') return '/'
   if (userRole === 'client') return { name: 'access-control' }
   return { name: 'auth-login' }
