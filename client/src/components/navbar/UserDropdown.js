@@ -59,7 +59,7 @@ const UserDropdown = () => {
           <span className="align-middle">{currentUser ? 'Switch User' : 'Login'}</span>
         </DropdownItem>
         {currentUser && (
-          <DropdownItem tag={Link} to="#" onClick={() => logout()}>
+          <DropdownItem tag={Link} to="#" onClick={() => dispatch(handleLogout())}>
             <Power size={14} className="mr-75" />
             <span className="align-middle">Logout</span>
           </DropdownItem>
