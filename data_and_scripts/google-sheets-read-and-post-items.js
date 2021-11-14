@@ -3,18 +3,18 @@
 // export GOOGLE_APPLICATION_CREDENTIALS="/Users/dave/CODE/membox-v7/secrets/membox-v7-9c068c27c947-gcp-key.json"
 // node google-sheets-read-and-post-items.js
 
+// NOTE: Before import, do a find/replace and make sure semi-colon is used as the separater in the arrays Related, Tags, Examples.
+// Also, need to manually handle the Examples
+
 require('dotenv').config()
 const { google } = require('googleapis')
-const textToSpeech = require('@google-cloud/text-to-speech')
-const fs = require('fs')
-const util = require('util')
 const axios = require('axios').default
 
 const spreadsheetId = '142jqozrURN-3xw6lZbzGD4U7zV_tuIjwREJp7EsLh6Y'
 const tabName = 'Words' // Name of the Sheet tab in google sheets
-const cellRange = 'A3:H5' // the range of interest. skip heading rows? limit the length and width?
+const cellRange = 'A4:H1058' // the range of interest. skip heading rows? limit the length and width?
 // const cellRange = 'A3:H1058' // the range of interest. skip heading rows? limit the length and width?
-const apiURL = 'http://localhost:4001/v1/item' // make sure we're posting to the right Mongo Collection
+const apiURL = 'http://localhost:4001/v1/items' // make sure we're posting to the right Mongo Collection
 const doPostToDB = false
 
 const addToDatabase = async (object) => {
@@ -30,10 +30,10 @@ const addToDatabase = async (object) => {
   }
 
   try {
-    await axios.request(options)
-    console.log(response.data)
+    const res = await axios.request(options)
+    console.log(`${res.data.id}|${res.data.title}`)
   } catch (error) {
-    onsole.error(error)
+    console.log(error.response.data)
   }
 }
 
@@ -58,11 +58,11 @@ async function main() {
         title,
         description,
         details,
-        related,
-        tags,
-        examples,
-        audios,
-        images
+        related: related.split(';'),
+        tags: tags.split(';'),
+        examples: [],
+        audios: [],
+        images: []
       })
     }
   }
