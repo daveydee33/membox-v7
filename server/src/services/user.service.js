@@ -18,16 +18,8 @@ const googleCreateOrUpdate = async (profile) => {
       googleFullData: JSON.stringify(profile),
     },
   };
-  // return User.findOneAndUpdate({ email }, userProfilePayload, {
-  //   // NEED TO UPDATE THIS ALSO TO USE THE SAME UPDATE FUNCTION .
-  //   setDefaultsOnInsert: true,
-  //   upsert: true,
-  //   new: true,
-  //   useFindAndModify: false,
-  // });
   const user = await User.findOne({ email });
   if (!user) {
-    // if (email_verified === true) userProfilePayload.isEmailVerified = true; // need to see what the value is called. it's either email_verified or just verified
     return createUser(userProfilePayload);
   }
   const mergedWithExisting = _merge(user, userProfilePayload);
@@ -56,7 +48,17 @@ const firebaseCreateOrUpdate = async (userData) => {
     },
   };
 
-  // !!!!!  I found that by creating using this 'findOneAndUpdate' function we are bypassing all of the model checks - like, require-password, default-role-user, etc.  even when `runValidators` is true, it's not doing it.  So I think it might be better to extend this and the google function to first create the user (if email check doesn't find anything), and then update the user.  or do the update first, but if user not found, then run the create with the payload???
+  // NOTE: Don't create/update records using  'findOneAndUpdate()' is bypassing all of the Model checks - like, setting default values, require values, etc.
+  // even when `runValidators: true` it's not doing it.
+  // So I switched to this if/then/else option: create the user (if email check doesn't find anything), and then update the user.
+  // and this worked better, and I could also use the .save() hook I which increments the version counter.
+  // So, DON"T use this method - because it doesn't work properly.
+  // return User.findOneAndUpdate({ email }, userProfilePayload, {
+  //   setDefaultsOnInsert: true,
+  //   upsert: true,
+  //   new: true,
+  //   useFindAndModify: false,
+  // });
 
   const user = await User.findOne({ firebaseUID: uid });
   if (!user) {
