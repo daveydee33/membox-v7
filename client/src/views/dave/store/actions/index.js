@@ -13,7 +13,7 @@ export const getTags = (params) => {
 export const getItems = (params) => {
   return (dispatch) => {
     return axios
-      .get('/v1/items')
+      .get('/v1/items', { params })
       .then((res) => {
         dispatch({ type: 'GET_ITEMS', data: res.data, params })
       })
