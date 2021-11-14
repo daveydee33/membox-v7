@@ -23,7 +23,8 @@ const googleLogin = catchAsync(async (req, res) => {
 
 const firebaseLogin = catchAsync(async (req, res) => {
   const user = await userService.firebaseCreateOrUpdate(req.user);
-  res.send({ user });
+  const tokens = await tokenService.generateAuthTokens(user);
+  res.send({ user, tokens });
 });
 
 const logout = catchAsync(async (req, res) => {

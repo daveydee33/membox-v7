@@ -7,7 +7,8 @@ const { roleRights } = require('../config/roles');
 const authFirebase =
   (...requiredRights) =>
   async (req, res, next) => {
-    const token = req.headers.authorization.split(' ')[1];
+    // const token = req.headers.authorization.split(' ')[1];
+    const token = req.body.firebaseToken;
     try {
       const decodedValue = await admin.auth().verifyIdToken(token);
       if (decodedValue) {

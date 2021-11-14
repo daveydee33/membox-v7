@@ -31,6 +31,16 @@ export function signup(email, password) {
   return createUserWithEmailAndPassword(auth, email, password)
 }
 
+export function logout() {
+  return signOut(auth)
+    .then(() => {
+      // Sign-out successful.
+    })
+    .catch((error) => {
+      // An error happened.
+    })
+}
+
 async function saveUserDataToDb(firebaseResultData) {
   // firebaseResultData is the `result` from the firebase functions like signInWithEmailAndPassword or loginWithGooglePopup
   // this result should have:
@@ -43,13 +53,15 @@ async function saveUserDataToDb(firebaseResultData) {
   let accessToken
   let refreshToken
   try {
-    const mongoResponse = await axios.post('/v1/auth/firebase-login', undefined, {
-      headers: { Authorization: `Bearer ${firebaseResultData.user.accessToken}` }
+    const mongoResponse = await axios.post('/v1/auth/firebase-login', {
+      firebaseToken: firebaseResultData.user.accessToken
     })
     mongoId = mongoResponse.data.user.id
     accessToken = mongoResponse.data.tokens.access.token
     refreshToken = mongoResponse.data.tokens.refresh.token
   } catch (error) {
+    // signout, because the Mongo login failed
+    logout()
     throw new Error('Error posting to server.Mongo.')
   }
 
@@ -86,6 +98,8 @@ async function saveUserDataToDb(firebaseResultData) {
       providerData: JSON.parse(JSON.stringify(providerData))
     })
   } catch (err) {
+    // signout, because the Firebase DB save failed
+    logout()
     console.error(err)
     throw new Error('Error posting to server.Firebase.')
   }
@@ -102,16 +116,6 @@ export function login(email, password) {
     */
     saveUserDataToDb(result)
   })
-}
-
-export function logout() {
-  return signOut(auth)
-    .then(() => {
-      // Sign-out successful.
-    })
-    .catch((error) => {
-      // An error happened.
-    })
 }
 
 export function loginWithGooglePopup() {
@@ -147,6 +151,8 @@ export function loginWithGooglePopup() {
       // // ...
 
       // TODO:
+      // signout, because the Mongo login failed
+      logout()
       console.error(error)
       throw new Error('firebase-loginWithGooglePopup.')
     })
