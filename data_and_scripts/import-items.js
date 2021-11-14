@@ -1,10 +1,12 @@
 // require('dotenv').config()
 // or just run the node script like this:
 // export GOOGLE_APPLICATION_CREDENTIALS="/Users/dave/CODE/membox-v7/secrets/membox-v7-9c068c27c947-gcp-key.json"
-// node google-sheets-read-and-post-items.js
+// node import-items.js
 
 // NOTE: Before import, do a find/replace and make sure semi-colon is used as the separater in the arrays Related, Tags, Examples.
 // Also, need to manually handle the Examples
+// NOTE:  This seems to cap off at 1000.
+// So i had to do rows 'A4:H1000' and then 'A1001:H1058'
 
 require('dotenv').config()
 const { google } = require('googleapis')
@@ -12,10 +14,15 @@ const axios = require('axios').default
 
 const spreadsheetId = '142jqozrURN-3xw6lZbzGD4U7zV_tuIjwREJp7EsLh6Y'
 const tabName = 'Words' // Name of the Sheet tab in google sheets
-const cellRange = 'A4:H1058' // the range of interest. skip heading rows? limit the length and width?
+const cellRange = 'A4:H1000' // the range of interest. skip heading rows? limit the length and width?
 // const cellRange = 'A3:H1058' // the range of interest. skip heading rows? limit the length and width?
 const apiURL = 'http://localhost:4001/v1/items' // make sure we're posting to the right Mongo Collection
 const doPostToDB = false
+
+function sleep(ms) {
+  // this sleep doesn't really work - need to look into it further
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
 
 const addToDatabase = async (object) => {
   var options = {
@@ -50,6 +57,7 @@ async function main() {
 
   // Now do what with the data?
   for (const [index, element] of objects.entries()) {
+    await sleep(1000)
     console.log(`running ${index}`)
     // Add to DB (POST to API)
     const { title, description, details, related, tags, examples, audios, images } = element
@@ -58,8 +66,8 @@ async function main() {
         title,
         description,
         details,
-        related: related.split(';'),
-        tags: tags.split(';'),
+        related: related?.split(';'),
+        tags: tags?.split(';'),
         examples: [],
         audios: [],
         images: []
