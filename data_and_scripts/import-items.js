@@ -68,9 +68,9 @@ async function main() {
         details,
         related: related?.split(';'),
         tags: tags?.split(';'),
-        examples: [],
-        audios: [],
-        images: []
+        examples: [], // TODO
+        audios: audios?.split(';'),
+        images: images?.split(';')
       })
     }
   }
