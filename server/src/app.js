@@ -34,7 +34,7 @@ app.use(
         'https://lla-audio.s3.amazonaws.com',
         'https://*.googleusercontent.com',
       ],
-      'script-src-elem': ["'self'", 'https://apis.google.com'],
+      'script-src': ["'self'", 'https://apis.google.com'],
     },
   })
 );
