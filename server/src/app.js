@@ -35,6 +35,7 @@ app.use(
         'https://*.googleusercontent.com',
       ],
       'script-src': ["'self'", 'https://apis.google.com'],
+      'default-src': ["'self'", 'https://membox-v7-firebase.firebaseapp.com'],
     },
   })
 );
