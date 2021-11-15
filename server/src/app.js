@@ -27,13 +27,16 @@ app.use(
   helmet.contentSecurityPolicy({
     useDefaults: true,
     directives: {
-      'connect-src': ["'self'", 'https://noembed.com', 'https://lla-audio.s3.amazonaws.com'],
+      'connect-src': ["'self'", 'https://noembed.com', 'https://lla-audio.s3.amazonaws.com', 'https://*.googleapis.com'],
       'media-src': [
         "'self'",
         'https://noembed.com',
         'https://lla-audio.s3.amazonaws.com',
         'https://*.googleusercontent.com',
       ],
+      'script-src': ["'self'", 'https://apis.google.com'],
+      'default-src': ["'self'", 'https://membox-v7-firebase.firebaseapp.com'],
+      'img-src': ["'self'", 'https://*.googleusercontent.com'],
     },
   })
 );
