@@ -27,7 +27,7 @@ app.use(
   helmet.contentSecurityPolicy({
     useDefaults: true,
     directives: {
-      'connect-src': ["'self'", 'https://noembed.com', 'https://lla-audio.s3.amazonaws.com'],
+      'connect-src': ["'self'", 'https://noembed.com', 'https://lla-audio.s3.amazonaws.com', 'https://*.googleapis.com'],
       'media-src': [
         "'self'",
         'https://noembed.com',
