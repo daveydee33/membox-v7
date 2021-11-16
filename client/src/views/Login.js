@@ -14,7 +14,7 @@ import { isObjEmpty } from '@utils'
 import { Facebook, Twitter, Mail, GitHub, Coffee } from 'react-feather'
 import { Row, Col, CardTitle, CardText, Form, FormGroup, Label, Input, CustomInput, Button } from 'reactstrap'
 import '@styles/base/pages/page-auth.scss'
-import { login, loginWithGooglePopup, loginWithGoogleRedirect } from '../firebase'
+import { loginWithEmail, loginWithGooglePopup, loginWithGoogleRedirect } from '../firebase'
 
 const Login = () => {
   const [skin, setSkin] = useSkin()
@@ -31,7 +31,7 @@ const Login = () => {
     setLoading(true)
     console.log('login...', email, password)
     try {
-      const res = await login(email, password)
+      const res = await loginWithEmail(email, password)
       console.log(`Password login success`, res)
     } catch (error) {
       console.error('Login error', error)

@@ -13,7 +13,7 @@ import { isUserLoggedIn } from '@utils'
 
 // ** Store & Actions
 import { useDispatch } from 'react-redux'
-import { handleLogout } from '@store/actions/auth'
+import { handleLogin, handleLogout } from '@store/actions/auth'
 
 // ** Third Party Components
 import { UncontrolledDropdown, DropdownMenu, DropdownToggle, DropdownItem } from 'reactstrap'
@@ -38,6 +38,16 @@ const UserDropdown = () => {
     }
   }, [])
 
+  const handleLoginButton = async () => {
+    const loginResponseUserData = await loginWithGooglePopup()
+    dispatch(handleLogin(loginResponseUserData))
+  }
+
+  const handleLogoutButton = async () => {
+    await logout
+    dispatch(handleLogout())
+  }
+
   //** Vars
   const userAvatar = currentUser?.photoURL || defaultAvatar
 
@@ -54,12 +64,12 @@ const UserDropdown = () => {
         <Avatar img={userAvatar} imgHeight="40" imgWidth="40" status="online" />
       </DropdownToggle>
       <DropdownMenu right>
-        <DropdownItem tag={Link} to="#" onClick={loginWithGooglePopup}>
+        <DropdownItem tag={Link} to="#" onClick={handleLoginButton}>
           <User size={14} className="mr-75" />
           <span className="align-middle">{currentUser ? 'Switch User' : 'Login'}</span>
         </DropdownItem>
         {currentUser && (
-          <DropdownItem tag={Link} to="#" onClick={() => dispatch(handleLogout())}>
+          <DropdownItem tag={Link} to="#" onClick={handleLogoutButton}>
             <Power size={14} className="mr-75" />
             <span className="align-middle">Logout</span>
           </DropdownItem>
