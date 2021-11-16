@@ -51,6 +51,12 @@ const userSchema = mongoose.Schema(
     picture: {
       type: String,
     },
+    favorites: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Item',
+      },
+    ],
     services: {
       google: {
         googleId: {
