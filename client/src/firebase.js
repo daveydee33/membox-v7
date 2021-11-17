@@ -98,22 +98,21 @@ export function loginWithGooglePopup() {
       // TODO:
       // signout, because the Mongo login failed
       logout()
-      console.error(error)
-      throw new Error('firebase-loginWithGooglePopup.')
+      console.error(`User closed Google login popup/cancelled login`, error)
     })
 }
 
 // Custom hook to read Firebase auth record and user profile doc
-export function useUserData() {
-  // the currentUser object has a lot of info (including accessToken)
-  const [currentUser, setCurrentUser] = useState()
+export function useUserDataFirebase() {
+  // the currentUserFirebase object has a lot of info (including accessToken)
+  const [currentUserFirebase, setCurrentUserFirebase] = useState()
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user)
+      setCurrentUserFirebase(user)
     })
     return unsubscribe
   }, [])
 
-  return { currentUser }
+  return { currentUserFirebase }
 }

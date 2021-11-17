@@ -1,5 +1,4 @@
 import { loginWithGooglePopup, logout } from '../../firebase'
-import { UserContext } from '../../utility/context/User'
 
 // ** React Imports
 import { useEffect, useState, useContext } from 'react'
@@ -22,53 +21,54 @@ import { User, Mail, CheckSquare, MessageSquare, Settings, CreditCard, HelpCircl
 // ** Default Avatar Image
 import defaultAvatar from '@src/assets/images/dave/blank_profile.png'
 
-const UserDropdown = () => {
-  const { currentUser } = useContext(UserContext)
+import { UserContext } from '../../utility/context/UserContext'
 
+const UserDropdown = () => {
   // ** Store Vars
   const dispatch = useDispatch()
 
   // ** State
-  const [userData, setUserData] = useState(null)
+  const { user, setUser } = useContext(UserContext)
 
   //** ComponentDidMount
   useEffect(() => {
     if (isUserLoggedIn() !== null) {
-      setUserData(JSON.parse(localStorage.getItem('userData')))
+      setUser(JSON.parse(localStorage.getItem('userData')))
     }
   }, [])
 
   const handleLoginButton = async () => {
-    const loginResponseUserData = await loginWithGooglePopup()
-    dispatch(handleLogin(loginResponseUserData))
+    const loginResponseData = await loginWithGooglePopup()
+    if (loginResponseData) {
+      setUser(loginResponseData.user)
+      dispatch(handleLogin(loginResponseData))
+    }
   }
 
   const handleLogoutButton = async () => {
     await logout
+    setUser(null)
     dispatch(handleLogout())
   }
 
   //** Vars
-  const userAvatar = currentUser?.photoURL || defaultAvatar
+  const userAvatar = (user && user.picture) || defaultAvatar
 
   return (
     <UncontrolledDropdown tag="li" className="dropdown-user nav-item">
       <DropdownToggle href="/" tag="a" className="nav-link dropdown-user-link" onClick={(e) => e.preventDefault()}>
         <div className="user-nav d-sm-flex d-none">
-          <span className="user-name font-weight-bold">
-            {/* {(userData && userData['username']) || 'John Doe'} */}
-            {currentUser?.email || 'Login / Register'}
-          </span>
-          <span className="user-status">{/* {(userData && userData.role) || 'Admin'} */}</span>
+          <span className="user-name font-weight-bold">{user?.email || 'Login / Register'}</span>
+          <span className="user-status">{user?.role !== 'user' && user?.role}</span>
         </div>
         <Avatar img={userAvatar} imgHeight="40" imgWidth="40" status="online" />
       </DropdownToggle>
       <DropdownMenu right>
         <DropdownItem tag={Link} to="#" onClick={handleLoginButton}>
           <User size={14} className="mr-75" />
-          <span className="align-middle">{currentUser ? 'Switch User' : 'Login'}</span>
+          <span className="align-middle">{user ? 'Switch User' : 'Login'}</span>
         </DropdownItem>
-        {currentUser && (
+        {user && (
           <DropdownItem tag={Link} to="#" onClick={handleLogoutButton}>
             <Power size={14} className="mr-75" />
             <span className="align-middle">Logout</span>

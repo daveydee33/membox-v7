@@ -1,5 +1,4 @@
-import { Fragment, useEffect, useState, useContext } from 'react'
-import { UserContext } from '../../utility/context/User'
+import { Fragment, useEffect, useState } from 'react'
 
 // Page Components
 import ItemsList from './ItemsList'
