@@ -1,5 +1,4 @@
-import { Fragment, useEffect, useState, useContext } from 'react'
-import { UserContext } from '../../utility/context/User'
+import { Fragment, useEffect, useState } from 'react'
 
 // Page Components
 import ItemsList from './ItemsList'
@@ -18,7 +17,9 @@ import {
   selectItem,
   addItem,
   deleteItem,
-  reOrderItems
+  reOrderItems,
+  addToFavorites,
+  removeFromFavorites
 } from './store/actions'
 
 // ** Styles
@@ -62,6 +63,8 @@ const ItemsPage = () => {
         setSidebarOpen={setSidebarOpen}
         selectItem={selectItem}
         handleFormSidebar={handleFormSidebar}
+        addToFavorites={addToFavorites}
+        removeFromFavorites={removeFromFavorites}
         //
       ></ItemsList>
 

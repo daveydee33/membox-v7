@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { initializeApp } from 'firebase/app'
 import {
@@ -10,7 +11,6 @@ import {
   signOut
 } from 'firebase/auth'
 import { getFirestore, addDoc, setDoc, doc, collection } from 'firebase/firestore'
-import { useEffect, useState } from 'react'
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -33,89 +33,33 @@ export function signup(email, password) {
 
 export function logout() {
   return signOut(auth)
-    .then(() => {
-      // Sign-out successful.
-    })
-    .catch((error) => {
-      // An error happened.
-    })
 }
 
-async function saveUserDataToDb(firebaseResultData) {
-  // firebaseResultData is the `result` from the firebase functions like signInWithEmailAndPassword or loginWithGooglePopup
-  // this result should have:
-  // operationType: "signIn"
-  // providerId: null (or "google.com" / facebook)
-  // user: --> this has all the data, including the token, which can be used on the server also to get the same user data as this here.
-
-  // ONE) save to MongoDB
-  let mongoId
-  let accessToken
-  let refreshToken
+async function saveFirebaseUserDataToMongoDb(firebaseResultData) {
   try {
     const mongoResponse = await axios.post('/v1/auth/firebase-login', {
       firebaseToken: firebaseResultData.user.accessToken
     })
-    mongoId = mongoResponse.data.user.id
-    accessToken = mongoResponse.data.tokens.access.token
-    refreshToken = mongoResponse.data.tokens.refresh.token
+    return {
+      user: mongoResponse.data.user,
+      accessToken: mongoResponse.data.tokens.access.token,
+      refreshToken: mongoResponse.data.tokens.refresh.token
+    }
   } catch (error) {
-    // signout, because the Mongo login failed
     logout()
     throw new Error('Error posting to server.Mongo.')
   }
-
-  // TWO) save tokens to local storage.
-  localStorage.setItem('accessToken', accessToken)
-  localStorage.setItem('refreshToken', refreshToken)
-
-  // THREE)save to Firebase
-  try {
-    const authActivityCollectionRef = collection(firestore, 'auth-activity-log')
-    const userRecordDocRef = doc(firestore, `all-users/${firebaseResultData.user.uid}`)
-    const { operationType, providerId, user } = firebaseResultData
-    const { uid, displayName, email, emailVerified, isAnonymous, providerData } = user
-    // delete user.stsTokenManager // I don't want to store token data
-
-    // Activity Record
-    addDoc(authActivityCollectionRef, {
-      mongoId,
-      operationType,
-      providerId,
-      displayName,
-      email
-    })
-
-    // User Record
-    setDoc(userRecordDocRef, {
-      uid,
-      mongoId,
-      displayName,
-      email,
-      emailVerified,
-      isAnonymous,
-      providerId,
-      providerData: JSON.parse(JSON.stringify(providerData))
-    })
-  } catch (err) {
-    // signout, because the Firebase DB save failed
-    logout()
-    console.error(err)
-    throw new Error('Error posting to server.Firebase.')
-  }
 }
 
-export function login(email, password) {
-  return signInWithEmailAndPassword(auth, email, password).then((result) => {
-    /*
-    result has something like:
-      operationType: "signIn"
-      providerId: null  // or 'google.com' if using provider instead of login/pass
-      user: UserImpl {providerId: 'firebase', emailVerified: false, isAnonymous: false, tenantId: null, providerData: Array(1), …}
-      _tokenResponse: {kind: 'identitytoolkit#VerifyPasswordResponse', localId: 'M1JljjWEdJgNgDAPmwmylxWvpO42', email: 'a@a.com', displayName: '', idToken: 'eyJhbGc..', …}
-    */
-    saveUserDataToDb(result)
-  })
+export function loginWithEmail(email, password) {
+  return signInWithEmailAndPassword(auth, email, password)
+    .then((firebaseResultData) => {
+      return saveFirebaseUserDataToMongoDb(firebaseResultData)
+    })
+    .catch((error) => {
+      logout()
+      throw new Error('Error posting to server.Mongo.')
+    })
 }
 
 export function loginWithGooglePopup() {
@@ -123,7 +67,7 @@ export function loginWithGooglePopup() {
   provider.addScope('profile')
   provider.addScope('email')
   return signInWithPopup(auth, provider)
-    .then(async (result) => {
+    .then(async (firebaseResultData) => {
       // This gives you a Google Access Token. You can use it to access the Google API.
       // const credential = GoogleAuthProvider.credentialFromResult(result)
       // const token = credential.accessToken
@@ -135,7 +79,8 @@ export function loginWithGooglePopup() {
       // But the `result` object contains all the user data I need, including the token which I can use on the backend server to also get all of the user data just with the token.
       // const { operationType, providerId, user } = result // the additional data i don't need and some is duplicate
       // const firebaseUID = user.uid
-      saveUserDataToDb(result)
+      // saveUserDataToDb(result)
+      return saveFirebaseUserDataToMongoDb(firebaseResultData)
     })
     .catch((error) => {
       // The provider's account email, can be used in case of
@@ -153,23 +98,21 @@ export function loginWithGooglePopup() {
       // TODO:
       // signout, because the Mongo login failed
       logout()
-      console.error(error)
-      throw new Error('firebase-loginWithGooglePopup.')
+      console.error(`User closed Google login popup/cancelled login`, error)
     })
 }
 
-// Custom hook to read  auth record and user profile doc
-export function useUserData() {
-  // the currentUser object has a lot of info (including accessToken)
-  const [currentUser, setCurrentUser] = useState()
-  // const [username, setUserName] = useState(null)
+// Custom hook to read Firebase auth record and user profile doc
+export function useUserDataFirebase() {
+  // the currentUserFirebase object has a lot of info (including accessToken)
+  const [currentUserFirebase, setCurrentUserFirebase] = useState()
 
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user)
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUserFirebase(user)
     })
-    return unsub
+    return unsubscribe
   }, [])
 
-  return { currentUser }
+  return { currentUserFirebase }
 }

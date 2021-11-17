@@ -1,15 +1,21 @@
-// ** Router Import
 import Router from './router/Router'
-
-import { UserContext } from './utility/context/User'
-import { useUserData } from './firebase'
+import { useState, useMemo } from 'react'
+import { UserContext } from './utility/context/UserContext'
+import { UserContextFirebase } from './utility/context/UserContextFirebase'
+import { useUserDataFirebase } from './firebase'
 
 function App(props) {
-  const userData = useUserData()
+  // Mongo Auth
+  const [user, setUser] = useState(null)
+  const value = useMemo(() => ({ user, setUser }), [user, setUser])
+  // Firebase Auth
+  const userDataFirebase = useUserDataFirebase()
 
   return (
-    <UserContext.Provider value={userData}>
-      <Router />
+    <UserContext.Provider value={value}>
+      <UserContextFirebase.Provider value={userDataFirebase}>
+        <Router />
+      </UserContextFirebase.Provider>
     </UserContext.Provider>
   )
 }

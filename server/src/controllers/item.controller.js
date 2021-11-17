@@ -35,10 +35,22 @@ const deleteItem = catchAsync(async (req, res) => {
   res.status(httpStatus.NO_CONTENT).send();
 });
 
+const setFavorite = catchAsync(async (req, res) => {
+  const item = await itemService.setFavorite(req.params.itemId, req.user.id);
+  res.send(item);
+});
+
+const unsetFavorite = catchAsync(async (req, res) => {
+  const item = await itemService.unsetFavorite(req.params.itemId, req.user.id);
+  res.send(item);
+});
+
 module.exports = {
   createItem,
   getItems,
   getItem,
   updateItem,
   deleteItem,
+  setFavorite,
+  unsetFavorite,
 };
