@@ -19,7 +19,9 @@ const ItemsList = (props) => {
     sidebarOpen,
     setSidebarOpen,
     selectItem,
-    handleFormSidebar
+    handleFormSidebar,
+    addToFavorites,
+    removeFromFavorites
   } = props
 
   return (
@@ -59,6 +61,8 @@ const ItemsList = (props) => {
             selectItem={selectItem}
             dispatch={dispatch}
             handleFormSidebar={handleFormSidebar}
+            addToFavorites={addToFavorites}
+            removeFromFavorites={removeFromFavorites}
           />
         ) : (
           <div className="d-flex justify-content-center mt-2">

@@ -17,7 +17,9 @@ import {
   selectItem,
   addItem,
   deleteItem,
-  reOrderItems
+  reOrderItems,
+  addToFavorites,
+  removeFromFavorites
 } from './store/actions'
 
 // ** Styles
@@ -61,6 +63,8 @@ const ItemsPage = () => {
         setSidebarOpen={setSidebarOpen}
         selectItem={selectItem}
         handleFormSidebar={handleFormSidebar}
+        addToFavorites={addToFavorites}
+        removeFromFavorites={removeFromFavorites}
         //
       ></ItemsList>
 

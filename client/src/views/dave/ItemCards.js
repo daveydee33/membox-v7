@@ -22,18 +22,18 @@ const ItemCards = (props) => {
     dispatch,
     // getItems,
     selectItem,
-    handleFormSidebar
+    handleFormSidebar,
+    addToFavorites,
+    removeFromFavorites
   } = props
 
-  console.log(`items`, items)
-  console.log(`user`, user)
-
-  const handleFavoriteClick = (item, val) => {
-    // if (val) {
-    //   dispatch(deleteWishlistItem(id))
-    // } else {
-    //   dispatch(addToWishlist(id))
-    // }
+  const handleFavoriteClick = (e, id, removeFavorite) => {
+    e.stopPropagation()
+    if (removeFavorite) {
+      dispatch(removeFromFavorites(id))
+    } else {
+      dispatch(addToFavorites(id))
+    }
     // dispatch(getProducts(store.params))
   }
 
@@ -79,11 +79,12 @@ const ItemCards = (props) => {
               <Button
                 className="btn-wishlist"
                 color="light"
-                onClick={() => handleFavoriteClick(item, item.isInWishlist)}
+                // TODO: fix this onClick third parameter
+                onClick={(e) => handleFavoriteClick(e, item.id, user?.favorites?.includes(item.id))}
               >
                 <Heart
                   className={classnames('mr-50', {
-                    'text-danger': user.favorites.includes(item.id)
+                    'text-danger': user?.favorites?.includes(item.id)
                   })}
                   size={14}
                 />

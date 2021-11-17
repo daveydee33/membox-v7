@@ -3,7 +3,8 @@ const initialState = {
   params: {},
   totalItems: 0,
   selectedItem: {},
-  tags: []
+  tags: [],
+  favorites: []
 }
 
 const itemsReducer = (state = initialState, action) => {
@@ -23,6 +24,10 @@ const itemsReducer = (state = initialState, action) => {
       return { ...state, selectedItem: action.item }
     case 'GET_TAGS':
       return { ...state, tags: action.data }
+    case 'ADD_FAVORITE':
+      return { ...state, favorites: action.data }
+    case 'REMOVE_FAVORITE':
+      return { ...state, favorites: action.data }
     default:
       return state
   }
