@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { getUserData } from '../auth'
 
 // ** Get Tags
 export const getTags = (params) => {
@@ -29,6 +30,7 @@ export const addToFavorites = (id) => {
         type: 'ADD_FAVORITE',
         favorites: res.data.favorites
       })
+      dispatch(getUserData())
     })
   }
 }
@@ -37,13 +39,11 @@ export const addToFavorites = (id) => {
 export const removeFromFavorites = (id) => {
   return (dispatch, getState) => {
     axios.delete(`/v1/items/${id}/favorites`).then((res) => {
-      // TEST
-      console.log(`res.data -- REMOVE_FAVORITE`, res.data)
-
       dispatch({
         type: 'REMOVE_FAVORITE',
         favorites: res.data.favorites
       })
+      dispatch(getUserData())
     })
   }
 }
