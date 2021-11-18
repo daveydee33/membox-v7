@@ -1,4 +1,3 @@
-// **  Initial State
 const initialState = {
   userData: {}
 }

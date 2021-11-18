@@ -7,7 +7,7 @@ import { Card, CardBody, CardText, CardTitle } from 'reactstrap'
 
 // ** Store & Actions
 import { useDispatch, useSelector } from 'react-redux'
-import { getCollections } from './store/actions'
+import { getCollections } from '../../redux/actions/collections'
 
 // ** Styles
 import '@styles/base/pages/app-ecommerce.scss'
@@ -49,9 +49,7 @@ const Collection = () => {
   return (
     <Fragment>
       {store.collections.length ? (
-        <section className="grid-view wishlist-items">
-          {renderCollections()}
-        </section>
+        <section className="grid-view wishlist-items">{renderCollections()}</section>
       ) : (
         // TODO - display Loading or Empty
         <Fragment>Loading...</Fragment>

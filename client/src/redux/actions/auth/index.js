@@ -1,4 +1,3 @@
-// ** UseJWT import to get config
 import useJwt from '@src/auth/jwt/useJwt'
 import { logout } from '../../../firebase'
 
