@@ -2,28 +2,10 @@ import { Mail, Home, Plus, Package, Book, BookOpen } from 'react-feather'
 
 export default [
   {
-    id: 'home',
-    title: 'Home',
-    icon: <Home size={20} />,
-    navLink: '/home'
-  },
-  {
-    id: 'secondPage',
-    title: 'Second Page',
-    icon: <Mail size={20} />,
-    navLink: '/second-page'
-  },
-  {
-    id: 'addWord',
-    title: 'Add a Word',
-    icon: <Plus size={20} />,
-    navLink: '/add-word'
-  },
-  {
-    id: 'wordsAndPhrases',
-    title: 'Words and Phrases',
+    id: 'items',
+    title: 'Words and Phrases (Items)',
     icon: <Book size={20} />,
-    navLink: '/dave'
+    navLink: '/items'
   },
   // {
   //   id: 'examples',
@@ -36,5 +18,23 @@ export default [
     title: 'Collections',
     icon: <Package size={20} />,
     navLink: '/collections'
+  },
+  {
+    id: 'addWord',
+    title: 'Add a Word',
+    icon: <Plus size={20} />,
+    navLink: '/add-word'
+  },
+  {
+    id: 'home',
+    title: 'Home',
+    icon: <Home size={20} />,
+    navLink: '/home'
+  },
+  {
+    id: 'secondPage',
+    title: 'Second Page',
+    icon: <Mail size={20} />,
+    navLink: '/second-page'
   }
 ]

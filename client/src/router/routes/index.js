@@ -1,7 +1,7 @@
 import { lazy } from 'react'
 
 // ** Document title
-const TemplateTitle = '%s - Vuexy React Admin Template'
+const TemplateTitle = '%s - LLA'
 
 // ** Default Route
 const DefaultRoute = '/home'
@@ -21,9 +21,9 @@ const Routes = [
     component: lazy(() => import('../../views/AddWord'))
   },
   {
-    path: '/dave',
-    className: 'ecommerce-application',
-    component: lazy(() => import('../../views/dave'))
+    path: '/items',
+    className: 'ecommerce-application', // re-using these css styles from the demo
+    component: lazy(() => import('../../views/Items'))
   },
   {
     path: '/collections',
