@@ -28,7 +28,7 @@ const Routes = [
   {
     path: '/collections',
     className: 'collections',
-    component: lazy(() => import('../../views/collections'))
+    component: lazy(() => import('../../views/Collections'))
   },
   {
     path: '/login',

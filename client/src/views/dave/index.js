@@ -20,7 +20,7 @@ import {
   reOrderItems,
   addToFavorites,
   removeFromFavorites
-} from './store/actions'
+} from '../../redux/actions/items'
 
 // ** Styles
 import '@styles/base/pages/app-ecommerce.scss'

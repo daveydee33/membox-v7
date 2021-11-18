@@ -5,8 +5,8 @@ import { combineReducers } from 'redux'
 import auth from './auth'
 import navbar from './navbar'
 import layout from './layout'
-import items from '@src/views/dave/store/reducer'
-import collections from '@src/views/collections/store/reducer'
+import items from './items'
+import collections from './collections'
 
 const rootReducer = combineReducers({
   auth,
