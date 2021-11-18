@@ -10,7 +10,7 @@ function AudioPlayer(props) {
   const [playing, setPlaying] = useState(false)
   const [loop, setLoop] = useState(false)
   const [controls, setControls] = useState(false) // probably false, because we don't need the progress bar and buttons for such short audio clips.  for longer audio phrases and videos or dialoges we will probably set this to true.
-  const [light, setLight] = useState(true) // seems to only work if this is false
+  const [light, setLight] = useState(buttonImg) // we can set this to true, or a url for a preview image. if true, it will fetch the thumbnail image (but not good for 1000 items on a page).  But if we set it to false, then it doesn't display the play button on top of the image.  I tried setting this to any image, but it doesn't display for audio anyway, so I'm just going to use the same button image for now.
   // const [light, setLight] = useState(
   //   "https://avatars.githubusercontent.com/u/1926029?s=48&v=4"
   // ); // this is good because it won't load the full player untill someone has clicked on it (good for when I'm loading 1000 items on a page, it doesn't load the full player for each of these, only when the user clicks on one.)
@@ -26,7 +26,7 @@ function AudioPlayer(props) {
 
       // a hack that seems to get the preview play button to load again at the end of playing the array.  might not always work, and probably should be a useEffect, but it works for now.
       setLight(false)
-      setLight(true)
+      setLight(buttonImg)
     }
   }
 
