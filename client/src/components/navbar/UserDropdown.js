@@ -8,11 +8,7 @@ import { Link } from 'react-router-dom'
 import Avatar from '@components/avatar'
 
 // ** Utils
-import { isUserLoggedIn } from '@utils'
-
-// ** Store & Actions
-import { useDispatch } from 'react-redux'
-import { handleLogin, handleLogout } from '@store/actions/auth'
+import { isUserLoggedIn, saveToLocalStorage, removeFromLocalStorage } from '@utils'
 
 // ** Third Party Components
 import { UncontrolledDropdown, DropdownMenu, DropdownToggle, DropdownItem } from 'reactstrap'
@@ -24,9 +20,6 @@ import defaultAvatar from '@src/assets/images/dave/blank_profile.png'
 import { UserContext } from '../../utility/context/UserContext'
 
 const UserDropdown = () => {
-  // ** Store Vars
-  const dispatch = useDispatch()
-
   // ** State
   const { user, setUser } = useContext(UserContext)
 
@@ -37,18 +30,19 @@ const UserDropdown = () => {
     }
   }, [])
 
-  const handleLoginButton = async () => {
+  const handleLoginClick = async () => {
     const loginResponseData = await loginWithGooglePopup()
     if (loginResponseData) {
-      setUser(loginResponseData.user) // context
-      dispatch(handleLogin(loginResponseData)) // redux
+      const { user, accessToken, refreshToken } = loginResponseData
+      setUser(user)
+      saveToLocalStorage(user, accessToken, refreshToken)
     }
   }
 
-  const handleLogoutButton = async () => {
+  const handleLogoutClick = async () => {
     await logout
     setUser(null)
-    dispatch(handleLogout())
+    removeFromLocalStorage()
   }
 
   //** Vars
@@ -64,12 +58,12 @@ const UserDropdown = () => {
         <Avatar img={userAvatar} imgHeight="40" imgWidth="40" status="online" />
       </DropdownToggle>
       <DropdownMenu right>
-        <DropdownItem tag={Link} to="#" onClick={handleLoginButton}>
+        <DropdownItem tag={Link} to="#" onClick={handleLoginClick}>
           <User size={14} className="mr-75" />
           <span className="align-middle">{user ? 'Switch User' : 'Login'}</span>
         </DropdownItem>
         {user && (
-          <DropdownItem tag={Link} to="#" onClick={handleLogoutButton}>
+          <DropdownItem tag={Link} to="#" onClick={handleLogoutClick}>
             <Power size={14} className="mr-75" />
             <span className="align-middle">Logout</span>
           </DropdownItem>
