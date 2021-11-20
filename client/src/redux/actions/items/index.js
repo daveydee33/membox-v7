@@ -31,6 +31,7 @@ export const addToFavorites = (id) => {
         favorites: res.data.favorites
       })
       dispatch(getUserData())
+      dispatch(getItems(getState().items.params))
     })
   }
 }
@@ -44,6 +45,7 @@ export const removeFromFavorites = (id) => {
         favorites: res.data.favorites
       })
       dispatch(getUserData())
+      dispatch(getItems(getState().items.params))
     })
   }
 }
