@@ -1,16 +1,14 @@
-import useJwt from '@src/auth/jwt/useJwt'
-
 // ** Checks if an object is empty (returns boolean)
-export const isObjEmpty = (obj) => Object.keys(obj).length === 0
+export const isObjEmpty = obj => Object.keys(obj).length === 0
 
 // ** Returns K format from a number
-export const kFormatter = (num) => (num > 999 ? `${(num / 1000).toFixed(1)}k` : num)
+export const kFormatter = num => (num > 999 ? `${(num / 1000).toFixed(1)}k` : num)
 
 // ** Converts HTML to string
-export const htmlToString = (html) => html.replace(/<\/?[^>]+(>|$)/g, '')
+export const htmlToString = html => html.replace(/<\/?[^>]+(>|$)/g, '')
 
 // ** Checks if the passed date is today
-const isToday = (date) => {
+const isToday = date => {
   const today = new Date()
   return (
     /* eslint-disable operator-linebreak */
@@ -50,23 +48,8 @@ export const formatDateToMonthShort = (value, toTimeForCurrentDay = true) => {
  ** This is completely up to you and how you want to store the token in your frontend application
  *  ? e.g. If you are using cookies to store the application please update this function
  */
-export const isUserLoggedIn = () => {
-  return localStorage.getItem('userData') && localStorage.getItem(useJwt.jwtConfig.storageTokenKeyName)
-}
-
+export const isUserLoggedIn = () => localStorage.getItem('userData')
 export const getUserData = () => JSON.parse(localStorage.getItem('userData'))
-
-export const saveToLocalStorage = (userData, accessToken, refreshToken) => {
-  localStorage.setItem('userData', JSON.stringify(userData))
-  localStorage.setItem('accessToken', accessToken)
-  localStorage.setItem('refreshToken', refreshToken)
-}
-
-export const removeFromLocalStorage = () => {
-  localStorage.removeItem('userData')
-  localStorage.removeItem('accessToken')
-  localStorage.removeItem('refreshToken')
-}
 
 /**
  ** This function is used for demo purpose route navigation
@@ -76,14 +59,14 @@ export const removeFromLocalStorage = () => {
  * ? NOTE: If you have different pages to navigate based on user ability then this function can be useful. However, you need to update it.
  * @param {String} userRole Role of user
  */
-export const getHomeRouteForLoggedInUser = (userRole) => {
+export const getHomeRouteForLoggedInUser = userRole => {
   if (userRole === 'admin') return '/'
   if (userRole === 'client') return '/access-control'
   return '/login'
 }
 
 // ** React Select Theme Colors
-export const selectThemeColors = (theme) => ({
+export const selectThemeColors = theme => ({
   ...theme,
   colors: {
     ...theme.colors,
