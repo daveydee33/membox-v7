@@ -25,11 +25,11 @@ const Routes = [
     className: 'ecommerce-application', // re-using these css styles from the demo
     component: lazy(() => import('../../views/Items'))
   },
-  {
-    path: '/collections',
-    className: 'collections',
-    component: lazy(() => import('../../views/Collections'))
-  },
+  // {
+  //   path: '/collections',
+  //   className: 'collections',
+  //   component: lazy(() => import('../../views/Collections'))
+  // },
   {
     path: '/login',
     component: lazy(() => import('../../views/Login')),

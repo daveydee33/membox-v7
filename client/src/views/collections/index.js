@@ -12,7 +12,7 @@ import { getCollections } from '../../redux/actions/collections'
 // ** Styles
 import '@styles/base/pages/app-ecommerce.scss'
 
-const Collection = () => {
+const Collections = () => {
   // ** Store Vars
   const dispatch = useDispatch()
   const store = useSelector((state) => state.collections)
@@ -58,4 +58,4 @@ const Collection = () => {
   )
 }
 
-export default Collection
+export default Collections
