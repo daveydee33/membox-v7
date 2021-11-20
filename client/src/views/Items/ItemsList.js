@@ -66,6 +66,7 @@ const ItemsList = (props) => {
             addToFavorites={addToFavorites}
             removeFromFavorites={removeFromFavorites}
             getUserData={getUserData}
+            getItems={getItems}
             userDataRedux={userDataRedux}
           />
         ) : (
