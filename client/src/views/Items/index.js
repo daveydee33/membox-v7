@@ -13,14 +13,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   getItems,
   updateSingleItem,
-  updateMultipleItems,
   selectItem,
   addItem,
   deleteItem,
-  reOrderItems,
   addToFavorites,
   removeFromFavorites
 } from '../../redux/actions/items'
+import { getUserData } from '../../redux/actions/auth'
 
 // ** Styles
 import '@styles/base/pages/app-ecommerce.scss'
@@ -34,6 +33,7 @@ const ItemsPage = () => {
   // ** Store Vars
   const dispatch = useDispatch()
   const store = useSelector((state) => state.items)
+  const userDataRedux = useSelector((state) => state.auth.userData)
 
   // ** Function to handle Left sidebar & Form sidebar
   const handleFormSidebar = () => setOpenFormSidebar(!openFormSidebar)
@@ -41,6 +41,7 @@ const ItemsPage = () => {
   // ** Get items on mount & based on dependency change
   useEffect(() => {
     dispatch(getItems({ limit: 99 }))
+    dispatch(getUserData())
   }, [dispatch])
 
   return (
@@ -65,6 +66,8 @@ const ItemsPage = () => {
         handleFormSidebar={handleFormSidebar}
         addToFavorites={addToFavorites}
         removeFromFavorites={removeFromFavorites}
+        getUserData={getUserData}
+        userDataRedux={userDataRedux}
         //
       ></ItemsList>
 

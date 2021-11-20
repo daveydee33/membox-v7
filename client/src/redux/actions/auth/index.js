@@ -1,5 +1,6 @@
 import useJwt from '@src/auth/jwt/useJwt'
 import { logout } from '../../../firebase'
+import axios from 'axios'
 
 const config = useJwt.jwtConfig
 
@@ -33,5 +34,17 @@ export const handleLogout = () => {
 
     // Firebase logout
     logout()
+  }
+}
+
+// ** Get User Data
+export const getUserData = () => {
+  return async (dispatch) => {
+    try {
+      const res = await axios.get(`/v1/users/me`)
+      dispatch({ type: 'GET_USER_DATA', payload: res.data })
+    } catch (error) {
+      console.error(error)
+    }
   }
 }

@@ -21,7 +21,9 @@ const ItemsList = (props) => {
     selectItem,
     handleFormSidebar,
     addToFavorites,
-    removeFromFavorites
+    removeFromFavorites,
+    getUserData,
+    userDataRedux
   } = props
 
   return (
@@ -53,7 +55,7 @@ const ItemsList = (props) => {
           //
         />
 
-        {/* Items List */}
+        {/* Item Cards */}
         {store.items.length ? (
           <ItemCards
             items={store.items}
@@ -63,6 +65,8 @@ const ItemsList = (props) => {
             handleFormSidebar={handleFormSidebar}
             addToFavorites={addToFavorites}
             removeFromFavorites={removeFromFavorites}
+            getUserData={getUserData}
+            userDataRedux={userDataRedux}
           />
         ) : (
           <div className="d-flex justify-content-center mt-2">

@@ -1,6 +1,4 @@
 import { Link } from 'react-router-dom'
-import { useContext } from 'react'
-import { UserContext } from '../../utility/context/UserContext'
 import AudioPlayer from '../../components/AudioPlayer'
 import classnames from 'classnames'
 import { Star, Heart, Check } from 'react-feather'
@@ -12,22 +10,20 @@ import img3 from '@src/assets/images/pages/content-img-3.jpg'
 import img4 from '@src/assets/images/pages/content-img-4.jpg'
 
 const ItemCards = (props) => {
-  const { user } = useContext(UserContext)
-
   // ** Props
   const {
-    // store,
+    dispatch,
     items,
     activeView,
-    dispatch,
-    // getItems,
     selectItem,
     handleFormSidebar,
     addToFavorites,
-    removeFromFavorites
+    removeFromFavorites,
+    getUserData,
+    userDataRedux
   } = props
 
-  const handleFavoriteClick = (e, id, removeFavorite) => {
+  const handleFavoriteClick = (e, id, removeFavorite = false) => {
     e.stopPropagation()
     if (removeFavorite) {
       dispatch(removeFromFavorites(id))
@@ -80,11 +76,11 @@ const ItemCards = (props) => {
                 className="btn-wishlist"
                 color="light"
                 // TODO: fix this onClick third parameter
-                onClick={(e) => handleFavoriteClick(e, item.id, user?.favorites?.includes(item.id))}
+                onClick={(e) => handleFavoriteClick(e, item.id, userDataRedux?.favorites?.includes(item.id))}
               >
                 <Heart
                   className={classnames('mr-50', {
-                    'text-danger': user?.favorites?.includes(item.id)
+                    'text-danger': item.isFavorite
                   })}
                   size={14}
                 />

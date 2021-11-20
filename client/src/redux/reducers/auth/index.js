@@ -15,6 +15,8 @@ const authReducer = (state = initialState, action) => {
       const obj = { ...action }
       delete obj.type
       return { ...state, userData: {}, ...obj }
+    case 'GET_USER_DATA':
+      return { ...state, userData: action.payload }
     default:
       return state
   }

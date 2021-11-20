@@ -1,7 +1,7 @@
 import { loginWithGooglePopup, logout } from '../../firebase'
 
 // ** React Imports
-import { useEffect, useState, useContext } from 'react'
+import { useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
 
 // ** Custom Components
@@ -40,8 +40,8 @@ const UserDropdown = () => {
   const handleLoginButton = async () => {
     const loginResponseData = await loginWithGooglePopup()
     if (loginResponseData) {
-      setUser(loginResponseData.user)
-      dispatch(handleLogin(loginResponseData))
+      setUser(loginResponseData.user) // context
+      dispatch(handleLogin(loginResponseData)) // redux
     }
   }
 
