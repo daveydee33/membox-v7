@@ -80,7 +80,7 @@ const ItemCards = (props) => {
               >
                 <Heart
                   className={classnames('mr-50', {
-                    'text-danger': userDataRedux?.favorites?.includes(item.id)
+                    'text-danger': item.isFavorite
                   })}
                   size={14}
                 />

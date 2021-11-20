@@ -2,7 +2,7 @@ const httpStatus = require('http-status');
 const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
-const { itemService } = require('../services');
+const { itemService, userService } = require('../services');
 
 const createItem = catchAsync(async (req, res) => {
   const item = await itemService.createItem(req.body);
@@ -13,7 +13,11 @@ const getItems = catchAsync(async (req, res) => {
   // const filter = pick(req.query, ['title', 'description', 'details']);
   const filter = pick(req.query, ['q']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
-  const result = await itemService.queryItems(filter, options);
+  let userFavorites = [];
+  if (req.user.id) {
+    userFavorites = await userService.getUserById(req.user.id).then((user) => user.favorites);
+  }
+  const result = await itemService.queryItems(filter, options, userFavorites);
   res.send(result);
 });
 

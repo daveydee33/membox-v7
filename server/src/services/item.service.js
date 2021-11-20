@@ -22,11 +22,25 @@ const createItem = async (itemBody) => {
  * @param {string} [filter.q] - For general string seaching of multiple DB fields
  * @returns {Promise<QueryResult>}
  */
-const queryItems = async (filter, options) => {
+const queryItems = async (filter, options, userFavorites) => {
   const regex = new RegExp(filter.q, 'gi');
   const regexFilter = { $or: [{ title: regex }, { description: regex }, { details: regex }] };
-  const items = await Item.paginate(regexFilter, options);
-  return items;
+  const itemsModels = await Item.paginate(regexFilter, options);
+
+  // This will trigger our mongose toJSON() plugin to get it to remove the (_v, fields marked private: true, and change _id to id), so that we can then work with the object.  Normally, it wouldn't run that plugin until the express sends it back with send()
+  const itemsObjects = JSON.parse(JSON.stringify(itemsModels));
+
+  const itemsWithIsFavorites = {
+    ...itemsObjects,
+    results: itemsObjects.results.map((item) => {
+      return {
+        ...item,
+        isFavorite: userFavorites.includes(item.id),
+      };
+    }),
+  };
+
+  return itemsWithIsFavorites;
 };
 
 /**
