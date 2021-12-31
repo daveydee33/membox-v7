@@ -48,9 +48,6 @@ const updateCollectionById = async (collectionId, updateBody) => {
   if (!collection) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Collection not found');
   }
-  // if (updateBody.email && (await Collection.isEmailTaken(updateBody.email, collectionId))) {
-  //   throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
-  // }
   Object.assign(collection, updateBody);
   await collection.save();
   return collection;
