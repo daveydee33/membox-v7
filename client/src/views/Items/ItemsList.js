@@ -16,8 +16,8 @@ const ItemsList = (props) => {
     dispatch,
     activeView,
     setActiveView,
-    sidebarOpen,
-    setSidebarOpen,
+    filtersOpen,
+    setFiltersOpen,
     selectItem,
     handleFormPanel,
     addToFavorites,
@@ -36,15 +36,15 @@ const ItemsList = (props) => {
           getItems={getItems}
           activeView={activeView}
           setActiveView={setActiveView}
-          setSidebarOpen={setSidebarOpen}
+          setFiltersOpen={setFiltersOpen}
         />
 
         {/* Hamburger menu on small screens */}
         <div
           className={classnames('body-content-overlay', {
-            show: sidebarOpen
+            show: filtersOpen
           })}
-          onClick={() => setSidebarOpen(false)}
+          onClick={() => setFiltersOpen(false)}
         ></div>
 
         {/* Searchbar */}

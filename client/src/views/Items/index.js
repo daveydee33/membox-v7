@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from 'react'
 
 // Page Components
 import ItemsList from './ItemsList'
-import Sidebar from './Sidebar'
+import Filters from './Filters'
 import FormPanel from './FormPanel'
 
 // ** Custom Components
@@ -27,7 +27,7 @@ import '@styles/base/pages/app-ecommerce.scss'
 const ItemsPage = () => {
   // States
   const [activeView, setActiveView] = useState('grid')
-  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [filtersOpen, setFiltersOpen] = useState(false)
   const [openFormPanel, setOpenFormPanel] = useState(false)
 
   // ** Store Vars
@@ -35,7 +35,6 @@ const ItemsPage = () => {
   const store = useSelector((state) => state.items)
   const userDataRedux = useSelector((state) => state.auth.userData)
 
-  // ** Function to handle Left sidebar & Form sidebar
   const handleFormPanel = () => setOpenFormPanel(!openFormPanel)
 
   // ** Get items on mount & based on dependency change
@@ -60,8 +59,8 @@ const ItemsPage = () => {
         getItems={getItems}
         activeView={activeView}
         setActiveView={setActiveView}
-        sidebarOpen={sidebarOpen}
-        setSidebarOpen={setSidebarOpen}
+        filtersOpen={filtersOpen}
+        setFiltersOpen={setFiltersOpen}
         selectItem={selectItem}
         handleFormPanel={handleFormPanel}
         addToFavorites={addToFavorites}
@@ -71,7 +70,7 @@ const ItemsPage = () => {
         //
       ></ItemsList>
 
-      <Sidebar sidebarOpen={sidebarOpen} handleFormPanel={handleFormPanel} />
+      <Filters filtersOpen={filtersOpen} handleFormPanel={handleFormPanel} />
 
       <FormPanel
         store={store}
