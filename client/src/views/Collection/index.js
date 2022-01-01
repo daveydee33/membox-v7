@@ -1,18 +1,8 @@
-// ** React Imports
 import { Fragment, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-
-// Page Components
-import FormPanel from './FormPanel'
-
-// ** Third Party Components
 import { Card, CardBody, CardText, CardTitle } from 'reactstrap'
-
-// ** Store & Actions
 import { useDispatch, useSelector } from 'react-redux'
 import { getCollections } from '../../redux/actions/collections'
-
-// ** Styles
+import FormPanel from './FormPanel'
 import '@styles/base/pages/app-ecommerce.scss'
 
 const Collection = () => {
@@ -25,19 +15,12 @@ const Collection = () => {
 
   const renderCollections = () => {
     return store.collections.map((collection) => {
-      const CartBtnTag = collection.isInCart ? Link : 'button'
       return (
-        <Card className="ecommerce-card" key={collection.title}>
-          {/* 
-          <div className="item-img text-center mx-auto">
-            <Link to={`/apps/ecommerce/product-detail/${collection.slug}`}>
-              <img className="img-fluid" src={collection.image} alt={collection.name} />
-            </Link>
-          </div>
-          */}
+        <Card key={collection.id}>
           <CardBody>
             <CardTitle>{collection.title}</CardTitle>
             <CardText>{collection.description}</CardText>
+            <CardText>{collection.id}</CardText>
           </CardBody>
         </Card>
       )
@@ -49,11 +32,11 @@ const Collection = () => {
       {store.collections.length ? (
         <section className="grid-view wishlist-items">{renderCollections()}</section>
       ) : (
-        // TODO - display Loading or Empty
+        // TODO: display Loading or Empty
         <Fragment>Loading...</Fragment>
       )}
 
-      <FormPanel
+      {/* <FormPanel
         store={store}
         // params={params}
         // addItem={addItem}
@@ -63,7 +46,7 @@ const Collection = () => {
         // deleteItem={deleteItem}
         // selectItem={selectItem}
         // handleFormPanel={handleFormPanel}
-      />
+      /> */}
     </Fragment>
   )
 }
