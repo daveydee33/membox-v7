@@ -1,14 +1,4 @@
 import { Fragment, useEffect, useState } from 'react'
-
-// Page Components
-import ItemsList from './ItemsList'
-import Filters from './Filters'
-import FormPanel from './FormPanel'
-
-// ** Custom Components
-import Breadcrumbs from '@components/breadcrumbs'
-
-// ** Store & Actions
 import { useDispatch, useSelector } from 'react-redux'
 import {
   getItems,
@@ -20,8 +10,9 @@ import {
   removeFromFavorites
 } from '../../redux/actions/items'
 import { getUserData } from '../../redux/actions/auth'
-
-// ** Styles
+import ItemsList from './ItemsList'
+import Filters from './Filters'
+import FormPanel from './FormPanel'
 import '@styles/base/pages/app-ecommerce.scss'
 
 const ItemsPage = () => {
