@@ -1,22 +1,13 @@
-import _cloneDeep from 'lodash/cloneDeep'
-// ** React Imports
 import { useState, Fragment, useEffect } from 'react'
-
-// ** Third Party Components
+import _cloneDeep from 'lodash/cloneDeep'
 import { X, Plus, Trash } from 'react-feather'
 import CreatableSelect from 'react-select/creatable'
 import Repeater from '@components/repeater'
 import { Modal, ModalBody, Button, Form, FormGroup, Input, Label } from 'reactstrap'
-
-// ** Utils
 import { isObjEmpty, selectThemeColors } from '@utils'
-
-// ** Styles Imports
 import '@styles/react/libs/react-select/_react-select.scss'
 
-// ** Modal Header
 const ModalHeader = (props) => {
-  // ** Props
   const { children, handleFormPanel } = props
   return (
     <div className="modal-header d-flex align-items-center justify-content-between mb-1">
@@ -29,52 +20,49 @@ const ModalHeader = (props) => {
 }
 
 const FormPanel = (props) => {
-  // ** Props
-  const { open, handleFormPanel, store, dispatch, updateSingleItem, selectItem, addItem, deleteItem } = props
+  const {
+    open,
+    handleFormPanel,
+    store,
+    dispatch,
+    updateSingleCollection,
+    selectedCollection,
+    setSelectedCollection,
+    addCollection,
+    deleteCollection
+  } = props
 
-  // ** Item data
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [details, setDetails] = useState('')
   const [tags, setTags] = useState([])
-  const [examples, setExamples] = useState([])
   const [tagOptions, setTagOptions] = useState([])
-  const [repeaterCount, setRepeaterCount] = useState(1)
 
-  const increaseRepeaterCount = () => {
-    setRepeaterCount(repeaterCount + 1)
-  }
-
-  const deleteRepeaterForm = (e, index) => {
-    e.preventDefault()
-    setExamples(examples.filter((k, i) => i !== index))
-  }
+  useEffect(() => {
+    if (props.defaultSuggestions && focused) {
+      setShowSuggestions(true)
+    }
+  }, [])
 
   const getTagObjects = () => {
-    const tagOptions = store.tags.map((tag) => ({ value: tag, label: tag }))
+    const tagOptions = store?.tags?.map((tag) => ({ value: tag, label: tag })) || []
+    // TODO: fix this because it's always empty
     return tagOptions
   }
 
-  // ** Returns sidebar title
   const handleSidebarTitle = () => {
-    if (store && !isObjEmpty(store.selectedItem)) {
-      return 'Edit Item'
+    if (!isObjEmpty(selectedCollection)) {
+      return 'Edit Collection'
     } else {
-      return 'Add New Item'
+      return 'Create New Collection'
     }
   }
 
-  useEffect(() => {
-    setRepeaterCount(examples.length || 1)
-  }, [examples])
-
-  // ** Function to reset fileds with selectedItem values
   const handleResetFields = () => {
-    const { title, description, details, examples, tags } = store.selectedItem
+    const { title, description, details, tags } = selectedCollection
     setTitle(title)
     setDescription(description)
     setDetails(details)
-    setExamples(_cloneDeep(examples))
     if (tags && tags.length) {
       const tagsTrimmed = tags.map((tag) => tag.trim())
       const tagsUnique = [...new Set(tagsTrimmed)]
@@ -86,43 +74,35 @@ const FormPanel = (props) => {
     }
   }
 
-  // ** Function to run when sidebar opens
   const handleSidebarOpened = () => {
-    if (!isObjEmpty(store.selectedItem)) {
+    if (!isObjEmpty(selectedCollection)) {
       handleResetFields()
     }
     setTagOptions(getTagObjects())
   }
 
-  // ** Function to run when sidebar closes
   const handleSidebarClosed = () => {
     setTitle('')
     setDescription('')
     setDetails('')
-    setExamples([])
     setTags([])
-    dispatch(selectItem({}))
-    setRepeaterCount(1)
+    setSelectedCollection({})
   }
 
-  // ** Renders Footer Buttons
   const renderFooterButtons = () => {
-    const newItemTag = []
+    const newTags = []
     if (tags.length) {
-      tags.map((tag) => newItemTag.push(tag.value))
+      tags.map((tag) => newTags.push(tag.value))
     }
-
-    const examplesWithEmptyObjectsRemoved = examples.filter((example) => example.title || example.description)
 
     const payload = {
       title,
       description,
-      details,
-      examples: examplesWithEmptyObjectsRemoved,
-      tags: newItemTag
+      details
+      // tags: newTags // TODO: add these when server supports it
     }
 
-    if (store && !isObjEmpty(store.selectedItem)) {
+    if (!isObjEmpty(selectedCollection)) {
       return (
         <Fragment>
           <Button.Ripple
@@ -130,7 +110,7 @@ const FormPanel = (props) => {
             disabled={!title.length}
             className="update-btn update-todo-item mr-1"
             onClick={() => {
-              dispatch(updateSingleItem(store.selectedItem.id, payload))
+              dispatch(updateSingleCollection(selectedCollection.id, payload))
               handleFormPanel()
             }}
           >
@@ -140,12 +120,12 @@ const FormPanel = (props) => {
             Reset
           </Button.Ripple>
 
-          {store && !isObjEmpty(store.selectedItem) ? (
+          {!isObjEmpty(selectedCollection) ? (
             <Button.Ripple
               color="danger"
               className="ml-1"
               onClick={() => {
-                dispatch(deleteItem(store.selectedItem.id))
+                dispatch(deleteCollection(selectedCollection.id))
                 handleFormPanel()
               }}
               outline
@@ -166,11 +146,11 @@ const FormPanel = (props) => {
             disabled={!title.length}
             className="add-todo-item mr-1"
             onClick={() => {
-              dispatch(addItem(payload))
+              dispatch(addCollection(payload))
               handleFormPanel()
             }}
           >
-            Add
+            Create
           </Button>
           <Button color="secondary" onClick={handleFormPanel} outline>
             Cancel
@@ -178,28 +158,6 @@ const FormPanel = (props) => {
         </Fragment>
       )
     }
-  }
-
-  const handleOnChangeExampleTitle = (event, i) => {
-    const newExamples = [...examples]
-    if (!newExamples[i]) {
-      for (let a = examples.length; a <= i; a++) {
-        newExamples.push({ title: '', description: '' })
-      }
-    }
-    newExamples[i].title = event.target.value
-    setExamples(newExamples)
-  }
-
-  const handleOnChangeExampleDescription = (event, i) => {
-    const newExamples = [...examples]
-    if (!newExamples[i]) {
-      for (let a = examples.length; a <= i; a++) {
-        newExamples.push({ title: '', description: '' })
-      }
-    }
-    newExamples[i].description = event.target.value
-    setExamples(newExamples)
   }
 
   return (
@@ -275,50 +233,6 @@ const FormPanel = (props) => {
             />
           </FormGroup>
 
-          {/* Examples */}
-          <h6 className="mt-3">Examples</h6>
-          <Repeater count={repeaterCount}>
-            {(i) => (
-              <div className="repeater-form" key={i}>
-                <FormGroup>
-                  <Label for="example" className="form-label">
-                    Example
-                  </Label>
-                  <Input
-                    id="example"
-                    placeholder="Example"
-                    value={examples[i] ? examples[i].title : ''}
-                    onChange={(e) => handleOnChangeExampleTitle(e, i)}
-                  />
-                </FormGroup>
-
-                <FormGroup>
-                  <Label for="meaning" className="form-label">
-                    Meaning
-                  </Label>
-                  <Input
-                    id="meaning"
-                    placeholder="Meaning"
-                    value={examples[i] ? examples[i].description : ''}
-                    onChange={(e) => handleOnChangeExampleDescription(e, i)}
-                  />
-                </FormGroup>
-
-                <Button.Ripple
-                  color="flat-danger"
-                  className="btn-icon rounded-circle"
-                  onClick={(e) => deleteRepeaterForm(e, i)}
-                >
-                  <Trash size={14} />
-                </Button.Ripple>
-                <hr />
-              </div>
-            )}
-          </Repeater>
-          <Button.Ripple className="btn-icon" color="bg-gradient-info" onClick={increaseRepeaterCount}>
-            <Plus size={14} />
-            <span className="align-middle ml-25">More</span>
-          </Button.Ripple>
           <FormGroup className="my-1">{renderFooterButtons()}</FormGroup>
         </ModalBody>
       </Form>

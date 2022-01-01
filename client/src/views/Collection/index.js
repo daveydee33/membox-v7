@@ -1,22 +1,36 @@
-import { Fragment, useEffect } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Card, CardBody, CardText, CardTitle } from 'reactstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCollections } from '../../redux/actions/collections'
+import {
+  getCollections,
+  addCollection,
+  updateSingleCollection,
+  deleteCollection
+} from '../../redux/actions/collections'
 import FormPanel from './FormPanel'
 import '@styles/base/pages/app-ecommerce.scss'
 
 const Collection = () => {
   const dispatch = useDispatch()
   const store = useSelector((state) => state.collections)
+  const [selectedCollection, setSelectedCollection] = useState({})
+  const [openFormPanel, setOpenFormPanel] = useState(false)
 
   useEffect(() => {
     dispatch(getCollections({ limit: 999 }))
   }, [])
 
+  const handleFormPanel = () => setOpenFormPanel(!openFormPanel)
+
+  function handleCardClick(collection) {
+    setSelectedCollection(collection)
+    handleFormPanel()
+  }
+
   const renderCollections = () => {
     return store.collections.map((collection) => {
       return (
-        <Card key={collection.id}>
+        <Card key={collection.id} onClick={() => handleCardClick(collection)}>
           <CardBody>
             <CardTitle>{collection.title}</CardTitle>
             <CardText>{collection.description}</CardText>
@@ -36,17 +50,18 @@ const Collection = () => {
         <Fragment>Loading...</Fragment>
       )}
 
-      {/* <FormPanel
+      <FormPanel
         store={store}
         // params={params}
-        // addItem={addItem}
         dispatch={dispatch}
-        // open={openFormPanel}
-        // updateSingleItem={updateSingleItem}
-        // deleteItem={deleteItem}
-        // selectItem={selectItem}
-        // handleFormPanel={handleFormPanel}
-      /> */}
+        open={openFormPanel}
+        addCollection={addCollection}
+        updateSingleCollection={updateSingleCollection}
+        deleteCollection={deleteCollection}
+        selectedCollection={selectedCollection}
+        setSelectedCollection={setSelectedCollection}
+        handleFormPanel={handleFormPanel}
+      />
     </Fragment>
   )
 }
