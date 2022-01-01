@@ -16,12 +16,14 @@ const itemsReducer = (state = initialState, action) => {
         params: action.params,
         totalItems: action.data.totalResults
       }
+    case 'ADD_ITEM':
+      return { ...state }
     case 'UPDATE_SINGLE_ITEM':
       return { ...state }
     case 'DELETE_ITEM':
       return { ...state }
     case 'SELECT_ITEM':
-      return { ...state, selectedItem: action.item }
+      return { ...state, selectedItem: action.data }
     case 'GET_TAGS':
       return { ...state, tags: action.data }
     case 'ADD_FAVORITE':
