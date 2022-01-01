@@ -16,7 +16,7 @@ const ItemCards = (props) => {
     items,
     activeView,
     selectItem,
-    handleFormSidebar,
+    handleFormPanel,
     addToFavorites,
     removeFromFavorites,
     getUserData,
@@ -36,7 +36,7 @@ const ItemCards = (props) => {
   // ** Function to selectItem on click
   const handleItemClick = (obj) => {
     dispatch(selectItem(obj))
-    handleFormSidebar()
+    handleFormPanel()
   }
 
   const getItemUrls = (title) => [

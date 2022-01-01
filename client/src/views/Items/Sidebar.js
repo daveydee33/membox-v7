@@ -10,7 +10,7 @@ import '@styles/react/libs/noui-slider/noui-slider.scss'
 
 const Sidebar = (props) => {
   // ** Props
-  const { sidebarOpen, handleFormSidebar } = props
+  const { sidebarOpen, handleFormPanel } = props
 
   // ** Hooks
   const [isRtl, setIsRtl] = useRTL()
@@ -168,7 +168,7 @@ const Sidebar = (props) => {
               </div>
             </CardBody>
           </Card>
-          <Button.Ripple color="primary" onClick={handleFormSidebar} block>
+          <Button.Ripple color="primary" onClick={handleFormPanel} block>
             Add New Item
           </Button.Ripple>
         </div>

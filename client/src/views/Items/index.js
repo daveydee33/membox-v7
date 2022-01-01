@@ -3,7 +3,7 @@ import { Fragment, useEffect, useState } from 'react'
 // Page Components
 import ItemsList from './ItemsList'
 import Sidebar from './Sidebar'
-import FormSidebar from './FormSidebar'
+import FormPanel from './FormPanel'
 
 // ** Custom Components
 import Breadcrumbs from '@components/breadcrumbs'
@@ -28,7 +28,7 @@ const ItemsPage = () => {
   // States
   const [activeView, setActiveView] = useState('grid')
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [openFormSidebar, setOpenFormSidebar] = useState(false)
+  const [openFormPanel, setOpenFormPanel] = useState(false)
 
   // ** Store Vars
   const dispatch = useDispatch()
@@ -36,7 +36,7 @@ const ItemsPage = () => {
   const userDataRedux = useSelector((state) => state.auth.userData)
 
   // ** Function to handle Left sidebar & Form sidebar
-  const handleFormSidebar = () => setOpenFormSidebar(!openFormSidebar)
+  const handleFormPanel = () => setOpenFormPanel(!openFormPanel)
 
   // ** Get items on mount & based on dependency change
   useEffect(() => {
@@ -63,7 +63,7 @@ const ItemsPage = () => {
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
         selectItem={selectItem}
-        handleFormSidebar={handleFormSidebar}
+        handleFormPanel={handleFormPanel}
         addToFavorites={addToFavorites}
         removeFromFavorites={removeFromFavorites}
         getUserData={getUserData}
@@ -71,18 +71,18 @@ const ItemsPage = () => {
         //
       ></ItemsList>
 
-      <Sidebar sidebarOpen={sidebarOpen} handleFormSidebar={handleFormSidebar} />
+      <Sidebar sidebarOpen={sidebarOpen} handleFormPanel={handleFormPanel} />
 
-      <FormSidebar
+      <FormPanel
         store={store}
         // params={params}
         addItem={addItem}
         dispatch={dispatch}
-        open={openFormSidebar}
+        open={openFormPanel}
         updateSingleItem={updateSingleItem}
         deleteItem={deleteItem}
         selectItem={selectItem}
-        handleFormSidebar={handleFormSidebar}
+        handleFormPanel={handleFormPanel}
       />
     </Fragment>
   )

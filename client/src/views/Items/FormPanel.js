@@ -6,15 +6,7 @@ import { useState, Fragment, useEffect } from 'react'
 import { X, Plus, Trash } from 'react-feather'
 import CreatableSelect from 'react-select/creatable'
 import Repeater from '@components/repeater'
-import {
-  Modal,
-  ModalBody,
-  Button,
-  Form,
-  FormGroup,
-  Input,
-  Label
-} from 'reactstrap'
+import { Modal, ModalBody, Button, Form, FormGroup, Input, Label } from 'reactstrap'
 
 // ** Utils
 import { isObjEmpty, selectThemeColors } from '@utils'
@@ -25,33 +17,20 @@ import '@styles/react/libs/react-select/_react-select.scss'
 // ** Modal Header
 const ModalHeader = (props) => {
   // ** Props
-  const { children, handleFormSidebar } = props
+  const { children, handleFormPanel } = props
   return (
     <div className="modal-header d-flex align-items-center justify-content-between mb-1">
       <h5 className="modal-title">{children}</h5>
       <div className="todo-item-action d-flex align-items-center">
-        <X
-          className="font-weight-normal mt-25"
-          size={16}
-          onClick={handleFormSidebar}
-        />
+        <X className="font-weight-normal mt-25" size={16} onClick={handleFormPanel} />
       </div>
     </div>
   )
 }
 
-const FormSidebar = (props) => {
+const FormPanel = (props) => {
   // ** Props
-  const {
-    open,
-    handleFormSidebar,
-    store,
-    dispatch,
-    updateSingleItem,
-    selectItem,
-    addItem,
-    deleteItem
-  } = props
+  const { open, handleFormPanel, store, dispatch, updateSingleItem, selectItem, addItem, deleteItem } = props
 
   // ** Item data
   const [title, setTitle] = useState('')
@@ -133,9 +112,7 @@ const FormSidebar = (props) => {
       tags.map((tag) => newItemTag.push(tag.value))
     }
 
-    const examplesWithEmptyObjectsRemoved = examples.filter(
-      (example) => example.title || example.description
-    )
+    const examplesWithEmptyObjectsRemoved = examples.filter((example) => example.title || example.description)
 
     const payload = {
       title,
@@ -154,7 +131,7 @@ const FormSidebar = (props) => {
             className="update-btn update-todo-item mr-1"
             onClick={() => {
               dispatch(updateSingleItem(store.selectedItem.id, payload))
-              handleFormSidebar()
+              handleFormPanel()
             }}
           >
             Update
@@ -169,14 +146,14 @@ const FormSidebar = (props) => {
               className="ml-1"
               onClick={() => {
                 dispatch(deleteItem(store.selectedItem.id))
-                handleFormSidebar()
+                handleFormPanel()
               }}
               outline
             >
               Delete
             </Button.Ripple>
           ) : null}
-          <Button color="secondary" onClick={handleFormSidebar} outline>
+          <Button color="secondary" onClick={handleFormPanel} outline>
             Cancel
           </Button>
         </Fragment>
@@ -190,12 +167,12 @@ const FormSidebar = (props) => {
             className="add-todo-item mr-1"
             onClick={() => {
               dispatch(addItem(payload))
-              handleFormSidebar()
+              handleFormPanel()
             }}
           >
             Add
           </Button>
-          <Button color="secondary" onClick={handleFormSidebar} outline>
+          <Button color="secondary" onClick={handleFormPanel} outline>
             Cancel
           </Button>
         </Fragment>
@@ -228,23 +205,15 @@ const FormSidebar = (props) => {
   return (
     <Modal
       isOpen={open}
-      toggle={handleFormSidebar}
+      toggle={handleFormPanel}
       className="sidebar-lg"
       contentClassName="p-0"
       onOpened={handleSidebarOpened}
       onClosed={handleSidebarClosed}
       modalClassName="modal-slide-in sidebar-todo-modal"
     >
-      <Form
-        id="form-modal-todo"
-        className="todo-modal"
-        onSubmit={(e) => e.preventDefault()}
-      >
-        <ModalHeader
-          store={store}
-          dispatch={dispatch}
-          handleFormSidebar={handleFormSidebar}
-        >
+      <Form id="form-modal-todo" className="todo-modal" onSubmit={(e) => e.preventDefault()}>
+        <ModalHeader store={store} dispatch={dispatch} handleFormPanel={handleFormPanel}>
           {handleSidebarTitle()}
         </ModalHeader>
         <ModalBody className="flex-grow-1 pb-sm-0 pb-3">
@@ -346,11 +315,7 @@ const FormSidebar = (props) => {
               </div>
             )}
           </Repeater>
-          <Button.Ripple
-            className="btn-icon"
-            color="bg-gradient-info"
-            onClick={increaseRepeaterCount}
-          >
+          <Button.Ripple className="btn-icon" color="bg-gradient-info" onClick={increaseRepeaterCount}>
             <Plus size={14} />
             <span className="align-middle ml-25">More</span>
           </Button.Ripple>
@@ -361,4 +326,4 @@ const FormSidebar = (props) => {
   )
 }
 
-export default FormSidebar
+export default FormPanel

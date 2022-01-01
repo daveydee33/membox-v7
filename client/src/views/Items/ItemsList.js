@@ -19,7 +19,7 @@ const ItemsList = (props) => {
     sidebarOpen,
     setSidebarOpen,
     selectItem,
-    handleFormSidebar,
+    handleFormPanel,
     addToFavorites,
     removeFromFavorites,
     getUserData,
@@ -62,7 +62,7 @@ const ItemsList = (props) => {
             activeView={activeView}
             selectItem={selectItem}
             dispatch={dispatch}
-            handleFormSidebar={handleFormSidebar}
+            handleFormPanel={handleFormPanel}
             addToFavorites={addToFavorites}
             removeFromFavorites={removeFromFavorites}
             getUserData={getUserData}
