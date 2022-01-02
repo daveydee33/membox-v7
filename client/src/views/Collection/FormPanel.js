@@ -35,6 +35,7 @@ const FormPanel = (props) => {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [details, setDetails] = useState('')
+  const [items, setItems] = useState('')
   const [tags, setTags] = useState([])
   const [tagOptions, setTagOptions] = useState([])
 
@@ -59,10 +60,11 @@ const FormPanel = (props) => {
   }
 
   const handleResetFields = () => {
-    const { title, description, details, tags } = selectedCollection
+    const { title, description, details, item_titles, tags } = selectedCollection
     setTitle(title)
     setDescription(description)
     setDetails(details)
+    setItems(item_titles?.join('\n') || '')
     if (tags && tags.length) {
       const tagsTrimmed = tags.map((tag) => tag.trim())
       const tagsUnique = [...new Set(tagsTrimmed)]
@@ -85,6 +87,7 @@ const FormPanel = (props) => {
     setTitle('')
     setDescription('')
     setDetails('')
+    setItems('')
     setTags([])
     setSelectedCollection({})
   }
@@ -98,7 +101,8 @@ const FormPanel = (props) => {
     const payload = {
       title,
       description,
-      details
+      details,
+      item_titles: items.split('\n')
       // tags: newTags // TODO: add these when server supports it
     }
 
@@ -211,6 +215,20 @@ const FormPanel = (props) => {
               type="textarea"
               rows={6}
               onChange={(e) => setDetails(e.target.value)}
+            />
+          </FormGroup>
+
+          <FormGroup>
+            <Label for="items" className="form-label">
+              Words / Phrases (<i>one per line</i>)
+            </Label>
+            <Input
+              id="items"
+              value={items}
+              placeholder="Word list"
+              type="textarea"
+              rows={6}
+              onChange={(e) => setItems(e.target.value)}
             />
           </FormGroup>
 
