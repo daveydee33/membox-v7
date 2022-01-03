@@ -8,7 +8,6 @@ import {
   deleteCollection
 } from '../../redux/actions/collections'
 import FormPanel from './FormPanel'
-import '@styles/base/pages/app-ecommerce.scss'
 
 const Collection = () => {
   const dispatch = useDispatch()
@@ -30,11 +29,11 @@ const Collection = () => {
   const renderCollections = () => {
     return store.collections.map((collection) => {
       return (
-        <Card key={collection.id} onClick={() => handleCardClick(collection)}>
+        <Card key={collection.id} onClick={() => handleCardClick(collection)} className="card-hover">
           <CardBody>
             <CardTitle>{collection.title}</CardTitle>
             <CardText>{collection.description}</CardText>
-            <CardText>{collection.id}</CardText>
+            <CardText>{collection.item_titles.join(', ')}</CardText>
           </CardBody>
         </Card>
       )
