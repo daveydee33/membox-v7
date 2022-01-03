@@ -18,14 +18,10 @@ const collectionSchema = mongoose.Schema(
       required: false,
       trim: true,
     },
-    items: {
-      type: [String],
+    item_titles: {
+      type: [{ type: String, required: true, trim: true }],
       required: false,
     },
-    // tags: {
-    //   type: [String],
-    //   required: false,
-    // }
   },
   {
     timestamps: true,

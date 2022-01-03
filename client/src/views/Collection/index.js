@@ -1,45 +1,39 @@
-// ** React Imports
-import { Fragment, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-
-// ** Third Party Components
+import { Fragment, useEffect, useState } from 'react'
 import { Card, CardBody, CardText, CardTitle } from 'reactstrap'
-
-// ** Store & Actions
 import { useDispatch, useSelector } from 'react-redux'
-import { getCollections } from '../../redux/actions/collections'
-
-// ** Styles
-import '@styles/base/pages/app-ecommerce.scss'
+import {
+  getCollections,
+  addCollection,
+  updateSingleCollection,
+  deleteCollection
+} from '../../redux/actions/collections'
+import FormPanel from './FormPanel'
 
 const Collection = () => {
-  // ** Store Vars
   const dispatch = useDispatch()
   const store = useSelector((state) => state.collections)
+  const [selectedCollection, setSelectedCollection] = useState({})
+  const [openFormPanel, setOpenFormPanel] = useState(false)
 
-  //** on mount
   useEffect(() => {
     dispatch(getCollections({ limit: 999 }))
   }, [])
 
-  // ** Renders wishlist products
+  const handleFormPanel = () => setOpenFormPanel(!openFormPanel)
+
+  function handleCardClick(collection) {
+    setSelectedCollection(collection)
+    handleFormPanel()
+  }
+
   const renderCollections = () => {
     return store.collections.map((collection) => {
-      const CartBtnTag = collection.isInCart ? Link : 'button'
       return (
-        <Card className="ecommerce-card" key={collection.title}>
-          <div className="item-img text-center mx-auto">
-            {/* <Link to={`/apps/ecommerce/product-detail/${collection.slug}`}>
-              <img
-                className="img-fluid"
-                src={collection.image}
-                alt={collection.name}
-              />
-            </Link> */}
-          </div>
+        <Card key={collection.id} onClick={() => handleCardClick(collection)} className="card-hover">
           <CardBody>
             <CardTitle>{collection.title}</CardTitle>
             <CardText>{collection.description}</CardText>
+            <CardText>{collection.item_titles.join(', ')}</CardText>
           </CardBody>
         </Card>
       )
@@ -51,9 +45,22 @@ const Collection = () => {
       {store.collections.length ? (
         <section className="grid-view wishlist-items">{renderCollections()}</section>
       ) : (
-        // TODO - display Loading or Empty
+        // TODO: display Loading or Empty
         <Fragment>Loading...</Fragment>
       )}
+
+      <FormPanel
+        store={store}
+        // params={params}
+        dispatch={dispatch}
+        open={openFormPanel}
+        addCollection={addCollection}
+        updateSingleCollection={updateSingleCollection}
+        deleteCollection={deleteCollection}
+        selectedCollection={selectedCollection}
+        setSelectedCollection={setSelectedCollection}
+        handleFormPanel={handleFormPanel}
+      />
     </Fragment>
   )
 }

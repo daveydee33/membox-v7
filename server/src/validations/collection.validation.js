@@ -6,13 +6,8 @@ const createCollection = {
     title: Joi.string().required(),
     description: Joi.string().allow(''),
     details: Joi.string().allow(''),
-    tags: Joi.array().items(Joi.string()),
-    examples: Joi.array().items(
-      Joi.object().keys({
-        title: Joi.string().allow(''),
-        description: Joi.string().allow(''),
-      })
-    ),
+    // tags: Joi.array().items(Joi.string()),
+    item_titles: Joi.array().items(Joi.string()).unique(),
   }),
 };
 
@@ -43,13 +38,8 @@ const updateCollection = {
       title: Joi.string().required(),
       description: Joi.string().allow(''),
       details: Joi.string().allow(''),
-      tags: Joi.array().items(Joi.string()),
-      examples: Joi.array().items(
-        Joi.object().keys({
-          title: Joi.string().allow(''),
-          description: Joi.string().allow(''),
-        })
-      ),
+      // tags: Joi.array().items(Joi.string()),
+      item_titles: Joi.array().items(Joi.string()).unique(),
     })
     .min(1),
 };

@@ -8,9 +8,9 @@ import { Card, CardBody, Row, Col, CustomInput, Button } from 'reactstrap'
 // ** Styles
 import '@styles/react/libs/noui-slider/noui-slider.scss'
 
-const Sidebar = (props) => {
+const Filters = (props) => {
   // ** Props
-  const { sidebarOpen, handleFormSidebar } = props
+  const { filtersOpen, handleFormPanel } = props
 
   // ** Hooks
   const [isRtl, setIsRtl] = useRTL()
@@ -110,7 +110,7 @@ const Sidebar = (props) => {
       <div className="sidebar">
         <div
           className={classnames('sidebar-shop', {
-            show: sidebarOpen
+            show: filtersOpen
           })}
         >
           <Row>
@@ -168,7 +168,7 @@ const Sidebar = (props) => {
               </div>
             </CardBody>
           </Card>
-          <Button.Ripple color="primary" onClick={handleFormSidebar} block>
+          <Button.Ripple color="primary" onClick={handleFormPanel} block>
             Add New Item
           </Button.Ripple>
         </div>
@@ -177,4 +177,4 @@ const Sidebar = (props) => {
   )
 }
 
-export default Sidebar
+export default Filters

@@ -5,7 +5,11 @@ import { getUserData } from '../auth'
 export const getTags = (params) => {
   return (dispatch) => {
     return axios.get('/v1/tags').then((res) => {
-      dispatch({ type: 'GET_TAGS', data: res.data, params })
+      dispatch({
+        type: 'GET_TAGS',
+        data: res.data,
+        params
+      })
     })
   }
 }
@@ -16,7 +20,11 @@ export const getItems = (params) => {
     return axios
       .get('/v1/items', { params })
       .then((res) => {
-        dispatch({ type: 'GET_ITEMS', data: res.data, params })
+        dispatch({
+          type: 'GET_ITEMS',
+          data: res.data,
+          params
+        })
       })
       .then(() => dispatch(getTags()))
   }
@@ -58,7 +66,7 @@ export const addItem = (item) => {
       .then((res) => {
         dispatch({
           type: 'ADD_ITEM',
-          item: res.data
+          data: res.data
         })
       })
       .then(dispatch(getItems(getState().items.params)))
@@ -73,7 +81,7 @@ export const updateSingleItem = (id, item) => {
       .then((res) => {
         dispatch({
           type: 'UPDATE_SINGLE_ITEM',
-          item: res.data
+          data: res.data
         })
       })
       .then(() => dispatch(getItems(getState().items.params)))
@@ -88,7 +96,7 @@ export const updateSingleItem = (id, item) => {
 //       .then((res) => {
 //         dispatch({
 //           type: 'UPDATE_MULTIPLE_ITEMS',
-//           item: res.data
+//           data: res.data
 //         })
 //       })
 //       // .then(() => dispatch(getItems(getState().items.params)))
@@ -103,7 +111,7 @@ export const deleteItem = (id) => {
       .then((res) => {
         dispatch({
           type: 'DELETE_ITEM',
-          item: res.data
+          data: res.data
         })
       })
       .then(() => dispatch(getItems(getState().items.params)))
@@ -111,4 +119,4 @@ export const deleteItem = (id) => {
 }
 
 // Select Item
-export const selectItem = (item) => (dispatch) => dispatch({ type: 'SELECT_ITEM', item }) // eslint-disable-line implicit-arrow-linebreak
+export const selectItem = (item) => (dispatch) => dispatch({ type: 'SELECT_ITEM', data: item }) // eslint-disable-line implicit-arrow-linebreak

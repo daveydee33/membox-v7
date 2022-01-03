@@ -14,7 +14,7 @@ const getItems = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['q']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
   let userFavorites = [];
-  if (req.user.id) {
+  if (req.user?.id) {
     userFavorites = await userService.getUserById(req.user.id).then((user) => user.favorites);
   }
   const result = await itemService.queryItems(filter, options, userFavorites);

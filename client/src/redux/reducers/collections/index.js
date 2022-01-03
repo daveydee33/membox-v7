@@ -13,6 +13,12 @@ const collectionsReducer = (state = initialState, action) => {
         collectionsTotal: action.data.totalResults,
         collectionsParams: action.params
       }
+    case 'ADD_COLLECTION':
+      return { ...state }
+    case 'UPDATE_SINGLE_COLLECTION':
+      return { ...state }
+    case 'DELETE_COLLECTION':
+      return { ...state }
     default:
       return state
   }

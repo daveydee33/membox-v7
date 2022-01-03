@@ -15,3 +15,10 @@
     color: yellowgreen;
   }
 }
+
+.card-hover {
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 25px 0 rgba($black, 0.25);
+  }
+}
