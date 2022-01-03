@@ -4,8 +4,7 @@
 const themeConfig = {
   app: {
     appName: 'MemBox',
-    appLogoImage: require('@src/assets/images/logo/membox-logo-memories.gif')
-      .default
+    appLogoImage: require('@src/assets/images/logo/android-chrome-512x512.png').default
   },
   layout: {
     isRTL: false,

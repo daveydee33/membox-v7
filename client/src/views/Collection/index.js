@@ -33,7 +33,7 @@ const Collection = () => {
           <CardBody>
             <CardTitle>{collection.title}</CardTitle>
             <CardText>{collection.description}</CardText>
-            <CardText>{collection.item_titles.join(', ')}</CardText>
+            {/* <CardText>{collection.item_titles.join(', ')}</CardText> */}
           </CardBody>
         </Card>
       )
