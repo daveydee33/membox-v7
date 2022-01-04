@@ -115,5 +115,8 @@
     "not op_mini all"
   ],
   "homepage": "",
+  "engines": {
+    "node": "16.x"
+  },
   "proxy": "http://localhost:4001"
 }
