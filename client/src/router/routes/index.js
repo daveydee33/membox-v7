@@ -1,7 +1,7 @@
 import { lazy } from 'react'
 
 // ** Document title
-const TemplateTitle = '%s - LLA'
+const TemplateTitle = '%s - MemBox'
 
 // ** Default Route
 const DefaultRoute = '/home'
