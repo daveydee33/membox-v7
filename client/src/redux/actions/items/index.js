@@ -30,34 +30,6 @@ export const getItems = (params) => {
   }
 }
 
-// Add to Favorites
-export const addToFavorites = (id) => {
-  return (dispatch, getState) => {
-    axios.post(`/v1/items/${id}/favorites`).then((res) => {
-      dispatch({
-        type: 'ADD_FAVORITE',
-        favorites: res.data.favorites
-      })
-      dispatch(getUserData())
-      dispatch(getItems(getState().items.params))
-    })
-  }
-}
-
-// Remove from Favorites
-export const removeFromFavorites = (id) => {
-  return (dispatch, getState) => {
-    axios.delete(`/v1/items/${id}/favorites`).then((res) => {
-      dispatch({
-        type: 'REMOVE_FAVORITE',
-        favorites: res.data.favorites
-      })
-      dispatch(getUserData())
-      dispatch(getItems(getState().items.params))
-    })
-  }
-}
-
 // ** Add Item
 export const addItem = (item) => {
   return (dispatch, getState) => {

@@ -20,8 +20,6 @@ const ItemsList = (props) => {
     setFiltersOpen,
     selectItem,
     handleFormPanel,
-    addToFavorites,
-    removeFromFavorites,
     getUserData,
     userDataRedux
   } = props
@@ -63,8 +61,6 @@ const ItemsList = (props) => {
             selectItem={selectItem}
             dispatch={dispatch}
             handleFormPanel={handleFormPanel}
-            addToFavorites={addToFavorites}
-            removeFromFavorites={removeFromFavorites}
             getUserData={getUserData}
             getItems={getItems}
             userDataRedux={userDataRedux}

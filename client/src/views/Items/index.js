@@ -1,14 +1,6 @@
 import { Fragment, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  getItems,
-  updateSingleItem,
-  selectItem,
-  addItem,
-  deleteItem,
-  addToFavorites,
-  removeFromFavorites
-} from '../../redux/actions/items'
+import { getItems, updateSingleItem, selectItem, addItem, deleteItem } from '../../redux/actions/items'
 import { getUserData } from '../../redux/actions/auth'
 import ItemsList from './ItemsList'
 import Filters from './Filters'
@@ -54,8 +46,6 @@ const ItemsPage = () => {
         setFiltersOpen={setFiltersOpen}
         selectItem={selectItem}
         handleFormPanel={handleFormPanel}
-        addToFavorites={addToFavorites}
-        removeFromFavorites={removeFromFavorites}
         getUserData={getUserData}
         userDataRedux={userDataRedux}
         //

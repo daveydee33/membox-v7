@@ -1,30 +1,19 @@
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import AudioPlayer from '../../components/AudioPlayer'
 import classnames from 'classnames'
 import { Star, Heart, Check } from 'react-feather'
 import { Card, CardBody, CardText, CardTitle, CardImg, Button, Badge, CardColumns } from 'reactstrap'
-// Context - with Firebase data
 import { UserContextFirebase } from '../../utility/context/UserContextFirebase'
+import { setFavorite, unsetFavorite } from '../../firebase'
 
 import img1 from '@src/assets/images/pages/content-img-1.jpg'
 import img2 from '@src/assets/images/pages/content-img-2.jpg'
 import img3 from '@src/assets/images/pages/content-img-3.jpg'
 import img4 from '@src/assets/images/pages/content-img-4.jpg'
-import { setFavorite, unsetFavorite } from '../../firebase'
 
 const ItemCards = (props) => {
   // ** Props
-  const {
-    dispatch,
-    items,
-    activeView,
-    selectItem,
-    handleFormPanel,
-    addToFavorites,
-    removeFromFavorites,
-    getUserData,
-    userDataRedux
-  } = props
+  const { dispatch, items, activeView, selectItem, handleFormPanel, userDataRedux } = props
 
   // Context-Firebase
   const { currentUserFirebase, favorites: firebaseFavorites } = useContext(UserContextFirebase)
@@ -75,23 +64,7 @@ const ItemCards = (props) => {
               ))}
             </CardBody>
 
-            {/* Buttons */}
             <div className="item-options text-center">
-              <Button
-                className="btn-wishlist"
-                color="light"
-                // TODO: fix this onClick third parameter
-                onClick={(e) => handleFavoriteClick(e, item.id, userDataRedux?.favorites?.includes(item.id))}
-              >
-                <Heart
-                  className={classnames('mr-50', {
-                    'text-danger': item.isFavorite
-                  })}
-                  size={14}
-                />
-                <span>Favorite</span>
-              </Button>
-
               {/* Buttons */}
               <Button className="btn-wishlist" color="light" onClick={(e) => handleFavoriteClick(e, item)}>
                 <Heart
@@ -103,7 +76,8 @@ const ItemCards = (props) => {
                 <span>Favorite</span>
               </Button>
 
-              {/* <Button
+              {/* 
+              <Button
                 className="btn-wishlist"
                 color="light"
                 onClick={() => handleWishlistClick(item.id, item.isInWishlist)}
@@ -114,7 +88,8 @@ const ItemCards = (props) => {
                   color={'green'}
                 />
                 <span>Completed</span>
-              </Button> */}
+              </Button> 
+              */}
             </div>
           </Card>
         )
