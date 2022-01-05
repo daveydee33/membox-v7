@@ -22,11 +22,6 @@ router
   // .delete(auth('manageItems'), validate(itemValidation.deleteItem), itemController.deleteItem);
   .delete(validate(itemValidation.deleteItem), itemController.deleteItem);
 
-router
-  .route('/:itemId/favorites')
-  .post(auth(), validate(itemValidation.setFavorite), itemController.setFavorite)
-  .delete(auth(), validate(itemValidation.unsetFavorite), itemController.unsetFavorite);
-
 module.exports = router;
 
 /**

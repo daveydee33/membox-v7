@@ -1,7 +1,6 @@
 const httpStatus = require('http-status');
 const { Item } = require('../models');
 const ApiError = require('../utils/ApiError');
-const { userService } = require('.');
 
 /**
  * Create an item
@@ -22,25 +21,11 @@ const createItem = async (itemBody) => {
  * @param {string} [filter.q] - For general string seaching of multiple DB fields
  * @returns {Promise<QueryResult>}
  */
-const queryItems = async (filter, options, userFavorites) => {
+const queryItems = async (filter, options) => {
   const regex = new RegExp(filter.q, 'gi');
   const regexFilter = { $or: [{ title: regex }, { description: regex }, { details: regex }] };
-  const itemsModels = await Item.paginate(regexFilter, options);
-
-  // This will trigger our mongose toJSON() plugin to get it to remove the (_v, fields marked private: true, and change _id to id), so that we can then work with the object.  Normally, it wouldn't run that plugin until the express sends it back with send()
-  const itemsObjects = JSON.parse(JSON.stringify(itemsModels));
-
-  const itemsWithIsFavorites = {
-    ...itemsObjects,
-    results: itemsObjects.results.map((item) => {
-      return {
-        ...item,
-        isFavorite: userFavorites.includes(item.id),
-      };
-    }),
-  };
-
-  return itemsWithIsFavorites;
+  const items = await Item.paginate(regexFilter, options);
+  return items;
 };
 
 /**
@@ -94,51 +79,6 @@ const deleteItemById = async (itemId) => {
   return item;
 };
 
-/**
- * Set item favorite for userId
- * @param {ObjectId} itemId
- * @param {ObjectId} userId
- * @returns {Promise<Item>}
- */
-const setFavorite = async (itemId, userId) => {
-  const item = await getItemById(itemId);
-  const user = await userService.getUserById(userId);
-  if (!item) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Item not found');
-  }
-  if (!user) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
-  }
-  if (!user.favorites.includes(itemId)) {
-    await user.favorites.push(itemId);
-    await user.save();
-  }
-  return user;
-};
-
-/**
- * Unset item favorite for userId
- * @param {ObjectId} itemId
- * @param {ObjectId} userId
- * @returns {Promise<Item>}
- */
-const unsetFavorite = async (itemId, userId) => {
-  const item = await getItemById(itemId);
-  const user = await userService.getUserById(userId);
-  if (!item) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Item not found');
-  }
-  if (!user) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
-  }
-  if (user.favorites.includes(itemId)) {
-    const filtered = user.favorites.filter((fav) => fav.toString() !== itemId);
-    user.favorites = filtered;
-    await user.save();
-  }
-  return user;
-};
-
 module.exports = {
   createItem,
   queryItems,
@@ -146,6 +86,4 @@ module.exports = {
   // getUserByEmail,
   updateItemById,
   deleteItemById,
-  setFavorite,
-  unsetFavorite,
 };
