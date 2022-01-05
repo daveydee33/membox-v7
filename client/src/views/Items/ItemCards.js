@@ -1,13 +1,16 @@
-import { Link } from 'react-router-dom'
+import { useContext, useEffect } from 'react'
 import AudioPlayer from '../../components/AudioPlayer'
 import classnames from 'classnames'
 import { Star, Heart, Check } from 'react-feather'
 import { Card, CardBody, CardText, CardTitle, CardImg, Button, Badge, CardColumns } from 'reactstrap'
+// Context - with Firebase data
+import { UserContextFirebase } from '../../utility/context/UserContextFirebase'
 
 import img1 from '@src/assets/images/pages/content-img-1.jpg'
 import img2 from '@src/assets/images/pages/content-img-2.jpg'
 import img3 from '@src/assets/images/pages/content-img-3.jpg'
 import img4 from '@src/assets/images/pages/content-img-4.jpg'
+import { setFavorite, unsetFavorite } from '../../firebase'
 
 const ItemCards = (props) => {
   // ** Props
@@ -23,14 +26,16 @@ const ItemCards = (props) => {
     userDataRedux
   } = props
 
-  const handleFavoriteClick = (e, id, removeFavorite = false) => {
+  // Context-Firebase
+  const { currentUserFirebase, favorites: firebaseFavorites } = useContext(UserContextFirebase)
+
+  const handleFavoriteClick = (e, item) => {
     e.stopPropagation()
-    if (removeFavorite) {
-      dispatch(removeFromFavorites(id))
+    if (firebaseFavorites.includes(item.title)) {
+      unsetFavorite(item, currentUserFirebase.uid)
     } else {
-      dispatch(addToFavorites(id))
+      setFavorite(item, currentUserFirebase.uid)
     }
-    // dispatch(getProducts(store.params))
   }
 
   // ** Function to selectItem on click
@@ -81,6 +86,17 @@ const ItemCards = (props) => {
                 <Heart
                   className={classnames('mr-50', {
                     'text-danger': item.isFavorite
+                  })}
+                  size={14}
+                />
+                <span>Favorite</span>
+              </Button>
+
+              {/* Buttons */}
+              <Button className="btn-wishlist" color="light" onClick={(e) => handleFavoriteClick(e, item)}>
+                <Heart
+                  className={classnames('mr-50', {
+                    'text-danger': firebaseFavorites.includes(item.title)
                   })}
                   size={14}
                 />

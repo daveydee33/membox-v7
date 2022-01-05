@@ -15,7 +15,7 @@ const SecondPage = () => {
   // Context-Mongo
   const { user: userDataContextMongo } = useContext(UserContext)
   // Context-Firebase
-  const { currentUserFirebase } = useContext(UserContextFirebase)
+  const { currentUserFirebase, favorites } = useContext(UserContextFirebase)
   // Redux-Mongo
   const dispatch = useDispatch()
   const userDataRedux = useSelector((state) => state.auth.userData)
@@ -41,6 +41,7 @@ const SecondPage = () => {
         <CardTitle>UserContextFirebase</CardTitle>
         <CardText>
           <pre>{JSON.stringify(currentUserFirebase, null, 2)}</pre>
+          <pre>{JSON.stringify(favorites, null, 2)}</pre>
         </CardText>
 
         <CardTitle>UserDataRedux</CardTitle>

@@ -10,7 +10,19 @@ import {
   signInWithPopup,
   signOut
 } from 'firebase/auth'
-import { getFirestore, addDoc, setDoc, doc, collection, serverTimestamp } from 'firebase/firestore'
+import {
+  getFirestore,
+  addDoc,
+  setDoc,
+  doc,
+  collection,
+  serverTimestamp,
+  onSnapshot,
+  get,
+  updateDoc,
+  arrayUnion,
+  arrayRemove
+} from 'firebase/firestore'
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -150,10 +162,11 @@ export function loginWithGooglePopup() {
     })
 }
 
-// Custom hook to read Firebase auth record and user profile doc
+// Custom hook to read Firebase auth record and user data
 export function useUserDataFirebase() {
   // the currentUserFirebase object has a lot of info (including accessToken)
   const [currentUserFirebase, setCurrentUserFirebase] = useState()
+  const [favorites, setFavorites] = useState([])
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -162,5 +175,35 @@ export function useUserDataFirebase() {
     return unsubscribe
   }, [])
 
-  return { currentUserFirebase }
+  useEffect(() => {
+    if (!currentUserFirebase) {
+      setFavorites([])
+      return
+    }
+    const unsubscribe = onSnapshot(doc(firestore, 'user-data', currentUserFirebase.uid), (doc) => {
+      try {
+        const favorites = doc?.data()?.favorites
+        setFavorites(favorites || [])
+      } catch (error) {
+        setFavorites([])
+      }
+    })
+    return unsubscribe
+  }, [currentUserFirebase])
+
+  return { currentUserFirebase, favorites }
+}
+
+export async function setFavorite(item, userId) {
+  const ref = doc(firestore, 'user-data', userId)
+  await updateDoc(ref, {
+    favorites: arrayUnion(item.title)
+  })
+}
+
+export async function unsetFavorite(item, userId) {
+  const ref = doc(firestore, 'user-data', userId)
+  await updateDoc(ref, {
+    favorites: arrayRemove(item.title)
+  })
 }
