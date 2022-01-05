@@ -10,7 +10,7 @@ import {
   signInWithPopup,
   signOut
 } from 'firebase/auth'
-import { getFirestore, addDoc, setDoc, doc, collection } from 'firebase/firestore'
+import { getFirestore, addDoc, setDoc, doc, collection, serverTimestamp } from 'firebase/firestore'
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -33,6 +33,51 @@ export function signup(email, password) {
 
 export function logout() {
   return signOut(auth)
+}
+
+async function saveUserDataToFirestore(firebaseResultData, mongoData) {
+  const {
+    uid,
+    providerId,
+    displayName,
+    email,
+    emailVerified,
+    isAnonymous,
+    phoneNumber,
+    photoURL,
+    metadata,
+    providerData
+  } = firebaseResultData.user
+
+  try {
+    // login activity log
+    await addDoc(collection(firestore, 'auth-activity-log'), {
+      operationType: firebaseResultData.operationType,
+      providerId,
+      displayName,
+      email,
+      timestamp: serverTimestamp(),
+      mongoId: mongoData.user.id
+    })
+
+    // overwrite/write user record
+    await setDoc(doc(firestore, 'users', firebaseResultData.user.uid), {
+      uid,
+      providerId,
+      displayName,
+      email,
+      emailVerified,
+      isAnonymous,
+      phoneNumber,
+      photoURL,
+      metadata: { ...metadata },
+      providerData,
+      mongoId: mongoData.user.id
+    })
+  } catch (error) {
+    console.error('ERROR writing to firebase.', error)
+    throw new Error('ERROR writing to firebase.')
+  }
 }
 
 async function saveFirebaseUserDataToMongoDb(firebaseResultData) {
@@ -80,7 +125,10 @@ export function loginWithGooglePopup() {
       // const { operationType, providerId, user } = result // the additional data i don't need and some is duplicate
       // const firebaseUID = user.uid
       // saveUserDataToDb(result)
-      return saveFirebaseUserDataToMongoDb(firebaseResultData)
+
+      const mongoData = await saveFirebaseUserDataToMongoDb(firebaseResultData)
+      saveUserDataToFirestore(firebaseResultData, mongoData)
+      return mongoData
     })
     .catch((error) => {
       // The provider's account email, can be used in case of
