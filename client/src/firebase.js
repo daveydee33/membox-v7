@@ -167,6 +167,7 @@ export function useUserDataFirebase() {
   // the currentUserFirebase object has a lot of info (including accessToken)
   const [currentUserFirebase, setCurrentUserFirebase] = useState()
   const [favorites, setFavorites] = useState([])
+  const [progress, setProgress] = useState({})
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -191,7 +192,23 @@ export function useUserDataFirebase() {
     return unsubscribe
   }, [currentUserFirebase])
 
-  return { currentUserFirebase, favorites }
+  useEffect(() => {
+    if (!currentUserFirebase) {
+      setProgress([])
+      return
+    }
+    const unsubscribe = onSnapshot(doc(firestore, 'user-data', currentUserFirebase.uid), (doc) => {
+      try {
+        const progress = doc?.data()?.progress
+        setProgress(progress || [])
+      } catch (error) {
+        setProgress([])
+      }
+    })
+    return unsubscribe
+  }, [currentUserFirebase])
+
+  return { currentUserFirebase, favorites, progress }
 }
 
 export async function setFavorite(item, userId) {
@@ -205,5 +222,20 @@ export async function unsetFavorite(item, userId) {
   const ref = doc(firestore, 'user-data', userId)
   await updateDoc(ref, {
     favorites: arrayRemove(item.title)
+  })
+}
+
+export async function setProgress(item, userId, progress) {
+  console.log(item, userId, progress)
+  const ref = doc(firestore, 'user-data', userId)
+  if (progress === 0) {
+    progress = 1
+  } else if (progress === 1) {
+    progress = 2
+  } else {
+    progress = 0
+  }
+  await updateDoc(ref, {
+    ['progress.' + `${item.title}`]: progress // eslint-disable-line no-useless-concat
   })
 }

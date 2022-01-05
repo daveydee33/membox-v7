@@ -1,10 +1,10 @@
 import { useContext } from 'react'
 import AudioPlayer from '../../components/AudioPlayer'
 import classnames from 'classnames'
-import { Star, Heart, Check } from 'react-feather'
+import { Star, Heart, Check, Square } from 'react-feather'
 import { Card, CardBody, CardText, CardTitle, CardImg, Button, Badge, CardColumns } from 'reactstrap'
 import { UserContextFirebase } from '../../utility/context/UserContextFirebase'
-import { setFavorite, unsetFavorite } from '../../firebase'
+import { setFavorite, unsetFavorite, setProgress } from '../../firebase'
 
 import img1 from '@src/assets/images/pages/content-img-1.jpg'
 import img2 from '@src/assets/images/pages/content-img-2.jpg'
@@ -16,15 +16,20 @@ const ItemCards = (props) => {
   const { dispatch, items, activeView, selectItem, handleFormPanel, userDataRedux } = props
 
   // Context-Firebase
-  const { currentUserFirebase, favorites: firebaseFavorites } = useContext(UserContextFirebase)
+  const { currentUserFirebase, favorites, progress } = useContext(UserContextFirebase)
 
   const handleFavoriteClick = (e, item) => {
     e.stopPropagation()
-    if (firebaseFavorites.includes(item.title)) {
+    if (favorites.includes(item.title)) {
       unsetFavorite(item, currentUserFirebase.uid)
     } else {
       setFavorite(item, currentUserFirebase.uid)
     }
+  }
+
+  const handleProgressClick = (e, item) => {
+    e.stopPropagation()
+    setProgress(item, currentUserFirebase.uid, progress[item.title])
   }
 
   // ** Function to selectItem on click
@@ -50,8 +55,8 @@ const ItemCards = (props) => {
     if (items.length) {
       return items.map((item) => {
         return (
-          <Card className="ecommerce-card" key={item.id} onClick={() => handleItemClick(item)}>
-            <CardImg src={randomImg()} />
+          <Card key={item.id} onClick={() => handleItemClick(item)}>
+            <CardImg src={img1} />
             <AudioPlayer urls={getItemUrls(item.title)} />
             <CardBody>
               <CardTitle tag="h4">{item.title}</CardTitle>
@@ -69,27 +74,21 @@ const ItemCards = (props) => {
               <Button className="btn-wishlist" color="light" onClick={(e) => handleFavoriteClick(e, item)}>
                 <Heart
                   className={classnames('mr-50', {
-                    'text-danger': firebaseFavorites.includes(item.title)
+                    'text-danger': favorites.includes(item.title)
                   })}
                   size={14}
                 />
-                <span>Favorite</span>
+                {/* <span>Favorite</span> */}
               </Button>
 
-              {/* 
-              <Button
-                className="btn-wishlist"
-                color="light"
-                onClick={() => handleWishlistClick(item.id, item.isInWishlist)}
-              >
-                <Check
-                  className={classnames('mr-50', { 'text-danger': item.isInWishlist })}
-                  size={14}
-                  color={'green'}
-                />
-                <span>Completed</span>
-              </Button> 
-              */}
+              <Button className="btn-wishlist" color="light" onClick={(e) => handleProgressClick(e, item)}>
+                {progress[item.title] && progress[item.title] > 0 ? (
+                  <Check className={classnames('mr-50')} size={14} color={'green'} />
+                ) : (
+                  <Square className={classnames('mr-50')} size={14} />
+                )}
+                {/* <span>Completed</span> */}
+              </Button>
             </div>
           </Card>
         )
