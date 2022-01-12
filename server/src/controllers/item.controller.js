@@ -13,11 +13,7 @@ const getItems = catchAsync(async (req, res) => {
   // const filter = pick(req.query, ['title', 'description', 'details']);
   const filter = pick(req.query, ['q']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
-  let userFavorites = [];
-  if (req.user?.id) {
-    userFavorites = await userService.getUserById(req.user.id).then((user) => user.favorites);
-  }
-  const result = await itemService.queryItems(filter, options, userFavorites);
+  const result = await itemService.queryItems(filter, options);
   res.send(result);
 });
 
@@ -39,22 +35,10 @@ const deleteItem = catchAsync(async (req, res) => {
   res.status(httpStatus.NO_CONTENT).send();
 });
 
-const setFavorite = catchAsync(async (req, res) => {
-  const item = await itemService.setFavorite(req.params.itemId, req.user.id);
-  res.send(item);
-});
-
-const unsetFavorite = catchAsync(async (req, res) => {
-  const item = await itemService.unsetFavorite(req.params.itemId, req.user.id);
-  res.send(item);
-});
-
 module.exports = {
   createItem,
   getItems,
   getItem,
   updateItem,
   deleteItem,
-  setFavorite,
-  unsetFavorite,
 };

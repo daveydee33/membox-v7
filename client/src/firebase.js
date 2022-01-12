@@ -10,7 +10,19 @@ import {
   signInWithPopup,
   signOut
 } from 'firebase/auth'
-import { getFirestore, addDoc, setDoc, doc, collection } from 'firebase/firestore'
+import {
+  getFirestore,
+  addDoc,
+  setDoc,
+  doc,
+  collection,
+  serverTimestamp,
+  onSnapshot,
+  get,
+  updateDoc,
+  arrayUnion,
+  arrayRemove
+} from 'firebase/firestore'
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -33,6 +45,51 @@ export function signup(email, password) {
 
 export function logout() {
   return signOut(auth)
+}
+
+async function saveUserDataToFirestore(firebaseResultData, mongoData) {
+  const {
+    uid,
+    providerId,
+    displayName,
+    email,
+    emailVerified,
+    isAnonymous,
+    phoneNumber,
+    photoURL,
+    metadata,
+    providerData
+  } = firebaseResultData.user
+
+  try {
+    // login activity log
+    await addDoc(collection(firestore, 'auth-activity-log'), {
+      operationType: firebaseResultData.operationType,
+      providerId,
+      displayName,
+      email,
+      timestamp: serverTimestamp(),
+      mongoId: mongoData.user.id
+    })
+
+    // overwrite/write user record
+    await setDoc(doc(firestore, 'users', firebaseResultData.user.uid), {
+      uid,
+      providerId,
+      displayName,
+      email,
+      emailVerified,
+      isAnonymous,
+      phoneNumber,
+      photoURL,
+      metadata: { ...metadata },
+      providerData,
+      mongoId: mongoData.user.id
+    })
+  } catch (error) {
+    console.error('ERROR writing to firebase.', error)
+    throw new Error('ERROR writing to firebase.')
+  }
 }
 
 async function saveFirebaseUserDataToMongoDb(firebaseResultData) {
@@ -80,7 +137,10 @@ export function loginWithGooglePopup() {
       // const { operationType, providerId, user } = result // the additional data i don't need and some is duplicate
       // const firebaseUID = user.uid
       // saveUserDataToDb(result)
-      return saveFirebaseUserDataToMongoDb(firebaseResultData)
+
+      const mongoData = await saveFirebaseUserDataToMongoDb(firebaseResultData)
+      saveUserDataToFirestore(firebaseResultData, mongoData)
+      return mongoData
     })
     .catch((error) => {
       // The provider's account email, can be used in case of
@@ -102,10 +162,12 @@ export function loginWithGooglePopup() {
     })
 }
 
-// Custom hook to read Firebase auth record and user profile doc
+// Custom hook to read Firebase auth record and user data
 export function useUserDataFirebase() {
   // the currentUserFirebase object has a lot of info (including accessToken)
   const [currentUserFirebase, setCurrentUserFirebase] = useState()
+  const [favorites, setFavorites] = useState([])
+  const [progress, setProgress] = useState({})
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -114,5 +176,66 @@ export function useUserDataFirebase() {
     return unsubscribe
   }, [])
 
-  return { currentUserFirebase }
+  useEffect(() => {
+    if (!currentUserFirebase) {
+      setFavorites([])
+      return
+    }
+    const unsubscribe = onSnapshot(doc(firestore, 'user-data', currentUserFirebase.uid), (doc) => {
+      try {
+        const favorites = doc?.data()?.favorites
+        setFavorites(favorites || [])
+      } catch (error) {
+        setFavorites([])
+      }
+    })
+    return unsubscribe
+  }, [currentUserFirebase])
+
+  useEffect(() => {
+    if (!currentUserFirebase) {
+      setProgress([])
+      return
+    }
+    const unsubscribe = onSnapshot(doc(firestore, 'user-data', currentUserFirebase.uid), (doc) => {
+      try {
+        const progress = doc?.data()?.progress
+        setProgress(progress || [])
+      } catch (error) {
+        setProgress([])
+      }
+    })
+    return unsubscribe
+  }, [currentUserFirebase])
+
+  return { currentUserFirebase, favorites, progress }
+}
+
+export async function setFavorite(item, userId) {
+  const ref = doc(firestore, 'user-data', userId)
+  await updateDoc(ref, {
+    favorites: arrayUnion(item.title)
+  })
+}
+
+export async function unsetFavorite(item, userId) {
+  const ref = doc(firestore, 'user-data', userId)
+  await updateDoc(ref, {
+    favorites: arrayRemove(item.title)
+  })
+}
+
+export async function setProgress(item, userId, progress) {
+  console.log(item, userId, progress)
+  const ref = doc(firestore, 'user-data', userId)
+  if (progress === 0) {
+    progress = 1
+  } else if (progress === 1) {
+    progress = 2
+  } else {
+    progress = 0
+  }
+  await updateDoc(ref, {
+    ['progress.' + `${item.title}`]: progress // eslint-disable-line no-useless-concat
+  })
 }

@@ -63,24 +63,10 @@ const deleteItem = {
   }),
 };
 
-const setFavorite = {
-  params: Joi.object().keys({
-    itemId: Joi.string().custom(objectId),
-  }),
-};
-
-const unsetFavorite = {
-  params: Joi.object().keys({
-    itemId: Joi.string().custom(objectId),
-  }),
-};
-
 module.exports = {
   createItem,
   getItems,
   getItem,
   updateItem,
   deleteItem,
-  setFavorite,
-  unsetFavorite,
 };
