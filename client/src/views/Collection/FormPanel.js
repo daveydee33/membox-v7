@@ -60,11 +60,11 @@ const FormPanel = (props) => {
   }
 
   const handleResetFields = () => {
-    const { title, description, details, item_titles, tags } = selectedCollection
+    const { title, description, details, items, tags } = selectedCollection
     setTitle(title)
     setDescription(description)
     setDetails(details)
-    setItems(item_titles?.join('\n') || '')
+    setItems(items?.join('\n') || '')
     if (tags && tags.length) {
       const tagsTrimmed = tags.map((tag) => tag.trim())
       const tagsUnique = [...new Set(tagsTrimmed)]
@@ -102,7 +102,7 @@ const FormPanel = (props) => {
       title,
       description,
       details,
-      item_titles: items.split('\n')
+      items: items?.split('\n').filter(String)
       // tags: newTags // TODO: add these when server supports it
     }
 

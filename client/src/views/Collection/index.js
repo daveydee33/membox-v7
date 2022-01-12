@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from 'react'
-import { Card, CardBody, CardText, CardTitle } from 'reactstrap'
+import { Card, CardBody, CardText, CardTitle, Button } from 'reactstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   getCollections,
@@ -33,15 +33,30 @@ const Collection = () => {
           <CardBody>
             <CardTitle>{collection.title}</CardTitle>
             <CardText>{collection.description}</CardText>
-            {/* <CardText>{collection.item_titles.join(', ')}</CardText> */}
+            <CardText>
+              <i>{collection.items.join(', ')}</i>
+            </CardText>
           </CardBody>
         </Card>
       )
     })
   }
 
+  const handleAddNew = () => {
+    setSelectedCollection({})
+    handleFormPanel()
+  }
+
   return (
     <Fragment>
+      <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '1rem' }}>
+        <h1>Collections</h1>
+        <p>[{store.collections.length}]</p>
+        <Button.Ripple color="primary" onClick={handleAddNew}>
+          Add Collection
+        </Button.Ripple>
+      </div>
+
       {store.collections.length ? (
         <section className="grid-view wishlist-items">{renderCollections()}</section>
       ) : (
