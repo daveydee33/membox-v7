@@ -102,7 +102,7 @@ const FormPanel = (props) => {
       title,
       description,
       details,
-      item_titles: items.split('\n')
+      item_titles: items?.split('\n').filter(String)
       // tags: newTags // TODO: add these when server supports it
     }
 
