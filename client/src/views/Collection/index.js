@@ -34,7 +34,7 @@ const Collection = () => {
             <CardTitle>{collection.title}</CardTitle>
             <CardText>{collection.description}</CardText>
             <CardText>
-              <i>{collection.item_titles.join(', ')}</i>
+              <i>{collection.items.join(', ')}</i>
             </CardText>
           </CardBody>
         </Card>

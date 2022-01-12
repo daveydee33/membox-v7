@@ -7,7 +7,7 @@ const createCollection = {
     description: Joi.string().allow(''),
     details: Joi.string().allow(''),
     // tags: Joi.array().items(Joi.string()),
-    item_titles: Joi.array().items(Joi.string()).unique(),
+    items: Joi.array().items(Joi.string()).unique(),
   }),
 };
 
@@ -39,7 +39,7 @@ const updateCollection = {
       description: Joi.string().allow(''),
       details: Joi.string().allow(''),
       // tags: Joi.array().items(Joi.string()),
-      item_titles: Joi.array().items(Joi.string()).unique(),
+      items: Joi.array().items(Joi.string()).unique(),
     })
     .min(1),
 };
