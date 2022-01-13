@@ -34,8 +34,8 @@ function AudioPlayer(props) {
     <Fragment>
       <div
         onClick={(e) => {
-          setPlaying(!playing)
           e.stopPropagation()
+          setPlaying(!playing)
         }}
       >
         <ReactPlayer
