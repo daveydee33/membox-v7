@@ -57,7 +57,7 @@ const ItemCards = (props) => {
     if (items.length) {
       return items.map((item) => {
         return (
-          <Card key={item.id}>
+          <Card key={item.id} className="ecommerce-card">
             <CardImg src={img1} />
             <CardBody onClick={() => history.push(`/item/${item.id}`)}>
               <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '1rem' }}>
