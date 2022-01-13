@@ -61,10 +61,14 @@ const ItemCards = (props) => {
           <Card key={item.id}>
             <CardImg src={img1} />
             <CardBody>
-              <AudioPlayer urls={getItemUrls(item.title)} />
               <Link to={`/item/${item.id}`}>
-                <CardTitle tag="h4">{item.title}</CardTitle>
-                <CardText>{item.description}</CardText>
+                <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '1rem' }}>
+                  <div>
+                    <CardText tag="h2">{item.title}</CardText>
+                    <CardText tag="h5">{item.description}</CardText>
+                  </div>
+                  <AudioPlayer urls={getItemUrls(item.title)} />
+                </div>
                 <CardText className="text-muted">{item.details}</CardText>
                 {item.tags.map((tag) => (
                   <Badge color="light-secondary" className="mr-1 mt-1" pill key={tag}>
