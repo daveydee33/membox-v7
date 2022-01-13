@@ -34,9 +34,10 @@ const ItemCards = (props) => {
     setProgress(item, currentUserFirebase.uid, progress[item.title])
   }
 
-  // ** Function to selectItem on click
-  const handleItemClick = (obj) => {
-    dispatch(selectItem(obj))
+  const handleEditClick = (e, item) => {
+    console.log(`e, item`, e, item)
+    e.stopPropagation()
+    dispatch(selectItem(item))
     handleFormPanel()
   }
 
@@ -57,35 +58,38 @@ const ItemCards = (props) => {
     if (items.length) {
       return items.map((item) => {
         return (
-          <Card key={item.id} onClick={() => handleItemClick(item)}>
+          <Card key={item.id}>
             <CardImg src={img1} />
-            <AudioPlayer urls={getItemUrls(item.title)} />
             <CardBody>
-              <CardTitle tag="h4">{item.title}</CardTitle>
-              <CardText>{item.description}</CardText>
-              <CardText className="text-muted">{item.details}</CardText>
-              {item.tags.map((tag) => (
-                <Badge color="light-secondary" className="mr-1 mt-1" pill key={tag}>
-                  {tag}
-                </Badge>
-              ))}
+              <AudioPlayer urls={getItemUrls(item.title)} />
+              <Link to={`/item/${item.id}`}>
+                <CardTitle tag="h4">{item.title}</CardTitle>
+                <CardText>{item.description}</CardText>
+                <CardText className="text-muted">{item.details}</CardText>
+                {item.tags.map((tag) => (
+                  <Badge color="light-secondary" className="mr-1 mt-1" pill key={tag}>
+                    {tag}
+                  </Badge>
+                ))}
+              </Link>
             </CardBody>
             <CardFooter
               className="text-center"
               style={{ display: 'flex', justifyContent: 'space-around', paddingBottom: '1rem' }}
             >
-              <Link to={`/item/${item.id}`}>
-                <Edit2 />
+              <Link onClick={(e) => handleEditClick(e, item)} to="#">
+                <Edit2 color="gray" />
               </Link>
               <Link
                 className={classnames('mr-50', {
                   'text-danger': favorites.includes(item.title)
                 })}
                 onClick={(e) => handleFavoriteClick(e, item)}
+                to="#"
               >
                 <Heart color={favorites.includes(item.title) ? 'red' : 'gray'} />
               </Link>
-              <Link onClick={(e) => handleProgressClick(e, item)}>
+              <Link onClick={(e) => handleProgressClick(e, item)} to="#">
                 {progress[item.title] && progress[item.title] > 0 ? (
                   <Check color={'green'} />
                 ) : (
