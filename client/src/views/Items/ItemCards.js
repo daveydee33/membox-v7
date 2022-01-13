@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import AudioPlayer from '../../components/AudioPlayer'
 import classnames from 'classnames'
 import { Star, Heart, Check, Square, Edit2 } from 'react-feather'
-import { Card, CardBody, CardText, CardTitle, CardImg, Button, Badge, CardColumns } from 'reactstrap'
+import { Card, CardBody, CardText, CardTitle, CardImg, Button, Badge, CardColumns, CardFooter } from 'reactstrap'
 import { UserContextFirebase } from '../../utility/context/UserContextFirebase'
 import { setFavorite, unsetFavorite, setProgress } from '../../firebase'
 import { Link, useHistory } from 'react-router-dom'
@@ -11,7 +11,6 @@ import img1 from '@src/assets/images/pages/content-img-1.jpg'
 import img2 from '@src/assets/images/pages/content-img-2.jpg'
 import img3 from '@src/assets/images/pages/content-img-3.jpg'
 import img4 from '@src/assets/images/pages/content-img-4.jpg'
-import CardFooter from 'reactstrap/lib/CardFooter'
 
 const ItemCards = (props) => {
   // ** Props
