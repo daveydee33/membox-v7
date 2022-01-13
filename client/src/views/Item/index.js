@@ -30,23 +30,23 @@ import axios from 'axios'
 
 const ItemPage = () => {
   const { id } = useParams()
-  const [data, setData] = useState({})
+  const [item, setItem] = useState({})
 
   useEffect(() => {
-    axios.get(`/v1/items/${id}`).then((res) => setData(res.data))
+    axios.get(`/v1/items/${id}`).then((res) => setItem(res.data))
   }, [])
 
   return (
-    <Card>
+    <Card className="card">
       <CardBody>
-        <CardTitle tag="h1">{data.title}</CardTitle>
-        <CardSubtitle className="mb-2">{data.description}</CardSubtitle>
-        <CardText>{data.details}</CardText>
+        <CardText tag="h2">{item.title}</CardText>
+        <CardText tag="h5">{item.description}</CardText>
+        <CardText>{item.details}</CardText>
         <CardText>
-          {data.examples?.map((example) => {
-            const regexTitle = new RegExp(data.title, 'gi')
+          {item.examples?.map((example) => {
+            const regexTitle = new RegExp(item.title, 'gi')
             const titleWithBold = example.title.replace(regexTitle, `<b>$&</b>`)
-            const regexDescription = new RegExp(`\\b(${data.description.split('; ').join('|')})\\b`, 'gi')
+            const regexDescription = new RegExp(`\\b(${item.description.split('; ').join('|')})\\b`, 'gi')
             const descriptionWithBold = example.description.replace(regexDescription, `<b>$&</b>`)
             return (
               <span style={{ display: 'flex', justifyContent: 'center', padding: '0.5rem' }} key={example.title}>
@@ -58,7 +58,7 @@ const ItemPage = () => {
           })}
         </CardText>
         <CardText>
-          {data.tags?.map((tag) => (
+          {item.tags?.map((tag) => (
             <Badge color="light-secondary" className="mr-1 mt-1" pill key={tag}>
               {tag}
             </Badge>
