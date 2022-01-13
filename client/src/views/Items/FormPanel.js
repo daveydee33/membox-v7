@@ -51,7 +51,8 @@ const FormPanel = (props) => {
   }
 
   const getTagObjects = () => {
-    const tagOptions = store.tags.map((tag) => ({ value: tag, label: tag }))
+    console.log(store.tags)
+    const tagOptions = store.tags.filter((tag) => tag).map((tag) => ({ value: tag, label: tag }))
     return tagOptions
   }
 
@@ -76,7 +77,7 @@ const FormPanel = (props) => {
     setDetails(details)
     setExamples(_cloneDeep(examples))
     if (tags && tags.length) {
-      const tagsTrimmed = tags.map((tag) => tag.trim())
+      const tagsTrimmed = tags.map((tag) => tag.trim()).filter((tag) => tag)
       const tagsUnique = [...new Set(tagsTrimmed)]
       const tagObjects = tagsUnique.map((tag) => ({
         value: tag,

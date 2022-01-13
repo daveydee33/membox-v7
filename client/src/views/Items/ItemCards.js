@@ -34,7 +34,6 @@ const ItemCards = (props) => {
   }
 
   const handleEditClick = (e, item) => {
-    console.log(`e, item`, e, item)
     e.stopPropagation()
     dispatch(selectItem(item))
     handleFormPanel()
