@@ -1,15 +1,17 @@
 import { useContext } from 'react'
 import AudioPlayer from '../../components/AudioPlayer'
 import classnames from 'classnames'
-import { Star, Heart, Check, Square } from 'react-feather'
+import { Star, Heart, Check, Square, Edit2 } from 'react-feather'
 import { Card, CardBody, CardText, CardTitle, CardImg, Button, Badge, CardColumns } from 'reactstrap'
 import { UserContextFirebase } from '../../utility/context/UserContextFirebase'
 import { setFavorite, unsetFavorite, setProgress } from '../../firebase'
+import { Link } from 'react-router-dom'
 
 import img1 from '@src/assets/images/pages/content-img-1.jpg'
 import img2 from '@src/assets/images/pages/content-img-2.jpg'
 import img3 from '@src/assets/images/pages/content-img-3.jpg'
 import img4 from '@src/assets/images/pages/content-img-4.jpg'
+import CardFooter from 'reactstrap/lib/CardFooter'
 
 const ItemCards = (props) => {
   // ** Props
@@ -68,28 +70,30 @@ const ItemCards = (props) => {
                 </Badge>
               ))}
             </CardBody>
-
-            <div className="item-options text-center">
-              {/* Buttons */}
-              <Button className="btn-wishlist" color="light" onClick={(e) => handleFavoriteClick(e, item)}>
-                <Heart
-                  className={classnames('mr-50', {
-                    'text-danger': favorites.includes(item.title)
-                  })}
-                  size={14}
-                />
-                {/* <span>Favorite</span> */}
-              </Button>
-
-              <Button className="btn-wishlist" color="light" onClick={(e) => handleProgressClick(e, item)}>
+            <CardFooter
+              className="text-center"
+              style={{ display: 'flex', justifyContent: 'space-around', paddingBottom: '1rem' }}
+            >
+              <Link to={`/item/${item.id}`}>
+                <Edit2 />
+              </Link>
+              <Link
+                className={classnames('mr-50', {
+                  'text-danger': favorites.includes(item.title)
+                })}
+                onClick={(e) => handleFavoriteClick(e, item)}
+              >
+                <Heart color={favorites.includes(item.title) ? 'red' : 'gray'} />
+              </Link>
+              <Link onClick={(e) => handleProgressClick(e, item)}>
                 {progress[item.title] && progress[item.title] > 0 ? (
-                  <Check className={classnames('mr-50')} size={14} color={'green'} />
+                  <Check color={'green'} />
                 ) : (
-                  <Square className={classnames('mr-50')} size={14} />
+                  <Square color={'gray'} />
                 )}
                 {/* <span>Completed</span> */}
-              </Button>
-            </div>
+              </Link>
+            </CardFooter>
           </Card>
         )
       })
