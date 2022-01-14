@@ -1,4 +1,4 @@
-import { loginWithGooglePopup, logout } from '../../firebase'
+import { loginWithGooglePopup, logout } from '../../../firebase'
 
 // ** React Imports
 import { useEffect, useContext } from 'react'
@@ -12,7 +12,7 @@ import { isUserLoggedIn } from '@utils'
 
 // ** Store & Actions
 import { useDispatch } from 'react-redux'
-import { handleLogin, handleLogout } from '@store/actions/auth'
+import { handleLogin, handleLogout } from '@store/authentication'
 
 // ** Third Party Components
 import { UncontrolledDropdown, DropdownMenu, DropdownToggle, DropdownItem } from 'reactstrap'
@@ -21,7 +21,7 @@ import { User, Mail, CheckSquare, MessageSquare, Settings, CreditCard, HelpCircl
 // ** Default Avatar Image
 import defaultAvatar from '@src/assets/images/dave/blank_profile.png'
 
-import { UserContext } from '../../utility/context/UserContext'
+import { UserContext } from '../../../utility/context/UserContext'
 
 const UserDropdown = () => {
   // ** Store Vars
@@ -63,7 +63,7 @@ const UserDropdown = () => {
         </div>
         <Avatar img={userAvatar} imgHeight="40" imgWidth="40" status="online" />
       </DropdownToggle>
-      <DropdownMenu right>
+      <DropdownMenu end>
         <DropdownItem tag={Link} to="#" onClick={handleLoginButton}>
           <User size={14} className="mr-75" />
           <span className="align-middle">{user ? 'Switch User' : 'Login'}</span>

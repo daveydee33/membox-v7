@@ -4,7 +4,7 @@ import { Fragment } from 'react'
 // ** Custom Components
 import NavbarUser from './NavbarUser'
 
-const ThemeNavbar = props => {
+const ThemeNavbar = (props) => {
   // ** Props
   const { skin, setSkin, setMenuVisibility } = props
 

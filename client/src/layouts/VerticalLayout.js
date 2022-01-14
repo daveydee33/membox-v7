@@ -5,7 +5,10 @@ import Layout from '@layouts/VerticalLayout'
 // ** Menu Items Array
 import navigation from '@src/navigation/vertical'
 
-const VerticalLayout = props => {
+// My custom Navbar
+import CustomNavbar from './components/navbar'
+
+const VerticalLayout = (props) => {
   // const [menuData, setMenuData] = useState([])
 
   // ** For ServerSide navigation
@@ -14,7 +17,7 @@ const VerticalLayout = props => {
   // }, [])
 
   return (
-    <Layout menuData={navigation} {...props}>
+    <Layout menuData={navigation} navbar={<CustomNavbar />} {...props}>
       {props.children}
     </Layout>
   )

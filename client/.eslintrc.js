@@ -29,7 +29,7 @@ module.exports = {
     // Variable
     // 'init-declarations': 'error',
     'no-use-before-define': 'error',
-    'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z]' }],
+    // 'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z]' }],
 
     // Stylistic Issues
     'array-bracket-newline': ['error', { multiline: true, minItems: null }],
@@ -52,10 +52,7 @@ module.exports = {
     'no-unneeded-ternary': 'error',
     'no-whitespace-before-property': 'error',
     'nonblock-statement-body-position': 'error',
-    'object-property-newline': [
-      'error',
-      { allowAllPropertiesOnSameLine: true }
-    ],
+    'object-property-newline': ['error', { allowAllPropertiesOnSameLine: true }],
     'quote-props': ['error', 'as-needed'],
     // quotes: ['error', 'prefer-single'],
     semi: ['error', 'never'],
