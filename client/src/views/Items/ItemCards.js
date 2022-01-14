@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import AudioPlayer from '../../components/AudioPlayer'
 import classnames from 'classnames'
-import { Star, Heart, Check, Square, Edit2 } from 'react-feather'
+import { Star, Heart, CheckSquare, Square, Edit2 } from 'react-feather'
 import { Card, CardBody, CardText, CardTitle, CardImg, Button, Badge, CardColumns, CardFooter } from 'reactstrap'
 import { UserContextFirebase } from '../../utility/context/UserContextFirebase'
 import { setFavorite, unsetFavorite, setProgress } from '../../firebase'
@@ -55,6 +55,13 @@ const ItemCards = (props) => {
   const renderItems = () => {
     if (items.length) {
       return items.map((item) => {
+        console.log(progress[item.title])
+        const progressIcon = () => {
+          if (progress[item.title] && progress[item.title] === 1) return <CheckSquare color={'orange'} />
+          if (progress[item.title] && progress[item.title] === 2) return <CheckSquare color={'green'} />
+          return <Square color={'gray'} />
+        }
+
         return (
           <Card key={item.id} className="ecommerce-card">
             <CardImg src={img1} />
@@ -94,22 +101,11 @@ const ItemCards = (props) => {
               <Link onClick={(e) => handleEditClick(e, item)} to="#">
                 <Edit2 color="gray" />
               </Link>
-              <Link
-                className={classnames('mr-50', {
-                  'text-danger': favorites.includes(item.title)
-                })}
-                onClick={(e) => handleFavoriteClick(e, item)}
-                to="#"
-              >
+              <Link onClick={(e) => handleFavoriteClick(e, item)} to="#">
                 <Heart color={favorites.includes(item.title) ? 'red' : 'gray'} />
               </Link>
               <Link onClick={(e) => handleProgressClick(e, item)} to="#">
-                {progress[item.title] && progress[item.title] > 0 ? (
-                  <Check color={'green'} />
-                ) : (
-                  <Square color={'gray'} />
-                )}
-                {/* <span>Completed</span> */}
+                {progressIcon()}
               </Link>
             </CardFooter>
           </Card>
