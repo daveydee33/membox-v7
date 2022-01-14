@@ -15,7 +15,7 @@ const Collection = () => {
   const store = useSelector((state) => state.collections)
   const [selectedCollection, setSelectedCollection] = useState({})
   const [openFormPanel, setOpenFormPanel] = useState(false)
-  const { favorites } = useContext(UserContextFirebase)
+  const { progress } = useContext(UserContextFirebase)
 
   useEffect(() => {
     dispatch(getCollections({ limit: 999 }))
@@ -36,9 +36,7 @@ const Collection = () => {
             <CardTitle>{collection.title}</CardTitle>
             <CardText>{collection.description}</CardText>
             <Progress
-              value={
-                (collection.items.filter((item) => favorites.includes(item)).length / collection.items.length) * 100
-              }
+              value={(collection.items.filter((item) => progress[item] > 0).length / collection.items.length) * 100}
             />
             <CardText>{/* <i>{collection.items.join(', ')}</i> */}</CardText>
           </CardBody>
