@@ -9,7 +9,7 @@ import { UserContextFirebase } from '../utility/context/UserContextFirebase'
 
 // Redux - with Mongo data
 import { useSelector, useDispatch } from 'react-redux'
-import { getUserData } from '../redux/actions/auth'
+// import { getUserData } from '../redux/actions/auth'
 
 const SecondPage = () => {
   // Context-Mongo
@@ -19,7 +19,7 @@ const SecondPage = () => {
   // Redux-Mongo
   const dispatch = useDispatch()
   const userDataRedux = useSelector((state) => state.auth.userData)
-  useEffect(() => dispatch(getUserData()), [dispatch]) // why do i need [dispatch] ?
+  // useEffect(() => dispatch(getUserData()), [dispatch]) // why do i need [dispatch] ?
 
   return (
     <Card>

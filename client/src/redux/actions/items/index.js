@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { getUserData } from '../auth'
 
 // ** Get Tags
 export const getTags = (params) => {

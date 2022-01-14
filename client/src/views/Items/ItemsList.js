@@ -1,15 +1,9 @@
-// ** React Imports
-import { useState } from 'react'
-
-// import ItemCards from './ItemCards'
 import ItemsHeader from './ItemsHeader'
 import ItemsSearchbar from './ItemsSearchbar'
 import ItemCards from './ItemCards'
-
 import classnames from 'classnames'
 
 const ItemsList = (props) => {
-  // ** Props
   const {
     store,
     getItems,
@@ -20,7 +14,6 @@ const ItemsList = (props) => {
     setFiltersOpen,
     selectItem,
     handleFormPanel,
-    getUserData,
     userDataRedux
   } = props
 
@@ -61,7 +54,6 @@ const ItemsList = (props) => {
             selectItem={selectItem}
             dispatch={dispatch}
             handleFormPanel={handleFormPanel}
-            getUserData={getUserData}
             getItems={getItems}
             userDataRedux={userDataRedux}
           />

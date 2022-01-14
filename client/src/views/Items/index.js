@@ -1,7 +1,6 @@
 import { Fragment, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getItems, updateSingleItem, selectItem, addItem, deleteItem } from '../../redux/actions/items'
-import { getUserData } from '../../redux/actions/auth'
 import ItemsList from './ItemsList'
 import Filters from './Filters'
 import FormPanel from './FormPanel'
@@ -23,7 +22,6 @@ const ItemsPage = () => {
   // ** Get items on mount & based on dependency change
   useEffect(() => {
     dispatch(getItems({ limit: 99 }))
-    dispatch(getUserData())
   }, [dispatch])
 
   return (
@@ -46,7 +44,6 @@ const ItemsPage = () => {
         setFiltersOpen={setFiltersOpen}
         selectItem={selectItem}
         handleFormPanel={handleFormPanel}
-        getUserData={getUserData}
         userDataRedux={userDataRedux}
         //
       ></ItemsList>
