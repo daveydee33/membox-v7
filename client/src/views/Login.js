@@ -1,20 +1,20 @@
 import { useSkin } from '@hooks/useSkin'
-import { Link, Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Facebook, Twitter, Mail, GitHub } from 'react-feather'
 import InputPasswordToggle from '@components/input-password-toggle'
-import { Row, Col, CardTitle, CardText, Form, FormGroup, Label, Input, Button } from 'reactstrap'
-import '@styles/base/pages/page-auth.scss'
+import { Row, Col, CardTitle, CardText, Form, Label, Input, Button } from 'reactstrap'
+import '@styles/react/pages/page-authentication.scss'
 
-const Login = () => {
-  const [skin, setSkin] = useSkin()
+const LoginCover = () => {
+  const { skin } = useSkin()
 
   const illustration = skin === 'dark' ? 'login-v2-dark.svg' : 'login-v2.svg',
     source = require(`@src/assets/images/pages/${illustration}`).default
 
   return (
-    <div className='auth-wrapper auth-v2'>
+    <div className='auth-wrapper auth-cover'>
       <Row className='auth-inner m-0'>
-        <Link className='brand-logo' to='/'>
+        <Link className='brand-logo' to='/' onClick={e => e.preventDefault()}>
           <svg viewBox='0 0 139 95' version='1.1' height='28'>
             <defs>
               <linearGradient x1='100%' y1='10.5120544%' x2='50%' y2='89.4879456%' id='linearGradient-1'>
@@ -63,47 +63,50 @@ const Login = () => {
               </g>
             </g>
           </svg>
-          <h2 className='brand-text text-primary ml-1'>Vuexy</h2>
+          <h2 className='brand-text text-primary ms-1'>Vuexy</h2>
         </Link>
         <Col className='d-none d-lg-flex align-items-center p-5' lg='8' sm='12'>
           <div className='w-100 d-lg-flex align-items-center justify-content-center px-5'>
-            <img className='img-fluid' src={source} alt='Login V2' />
+            <img className='img-fluid' src={source} alt='Login Cover' />
           </div>
         </Col>
         <Col className='d-flex align-items-center auth-bg px-2 p-lg-5' lg='4' sm='12'>
           <Col className='px-xl-2 mx-auto' sm='8' md='6' lg='12'>
-            <CardTitle tag='h2' className='font-weight-bold mb-1'>
+            <CardTitle tag='h2' className='fw-bold mb-1'>
               Welcome to Vuexy! 👋
             </CardTitle>
             <CardText className='mb-2'>Please sign-in to your account and start the adventure</CardText>
             <Form className='auth-login-form mt-2' onSubmit={e => e.preventDefault()}>
-              <FormGroup>
+              <div className='mb-1'>
                 <Label className='form-label' for='login-email'>
                   Email
                 </Label>
                 <Input type='email' id='login-email' placeholder='john@example.com' autoFocus />
-              </FormGroup>
-              <FormGroup>
+              </div>
+              <div className='mb-1'>
                 <div className='d-flex justify-content-between'>
                   <Label className='form-label' for='login-password'>
                     Password
                   </Label>
-                  <Link to='/'>
+                  <Link to='/pages/forgot-password-cover'>
                     <small>Forgot Password?</small>
                   </Link>
                 </div>
                 <InputPasswordToggle className='input-group-merge' id='login-password' />
-              </FormGroup>
-              <FormGroup>
-                <Input type='checkbox' className='custom-control-Primary' id='remember-me' label='Remember Me' />
-              </FormGroup>
-              <Button.Ripple tag={Link} to='/' color='primary' block>
+              </div>
+              <div className='form-check mb-1'>
+                <Input type='checkbox' id='remember-me' />
+                <Label className='form-check-label' for='remember-me'>
+                  Remember Me
+                </Label>
+              </div>
+              <Button color='primary' tag={Link} block to='/'>
                 Sign in
-              </Button.Ripple>
+              </Button>
             </Form>
             <p className='text-center mt-2'>
-              <span className='mr-25'>New on our platform?</span>
-              <Link to='/'>
+              <span className='me-25'>New on our platform?</span>
+              <Link to='/pages/register-cover'>
                 <span>Create an account</span>
               </Link>
             </p>
@@ -111,18 +114,18 @@ const Login = () => {
               <div className='divider-text'>or</div>
             </div>
             <div className='auth-footer-btn d-flex justify-content-center'>
-              <Button.Ripple color='facebook'>
+              <Button color='facebook'>
                 <Facebook size={14} />
-              </Button.Ripple>
-              <Button.Ripple color='twitter'>
+              </Button>
+              <Button color='twitter'>
                 <Twitter size={14} />
-              </Button.Ripple>
-              <Button.Ripple color='google'>
+              </Button>
+              <Button color='google'>
                 <Mail size={14} />
-              </Button.Ripple>
-              <Button.Ripple className='mr-0' color='github'>
+              </Button>
+              <Button className='me-0' color='github'>
                 <GitHub size={14} />
-              </Button.Ripple>
+              </Button>
             </div>
           </Col>
         </Col>
@@ -131,4 +134,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default LoginCover

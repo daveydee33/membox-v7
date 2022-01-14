@@ -33,7 +33,7 @@ const Home = () => {
           <CardText>
             Please read our{' '}
             <CardLink
-              href='https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/documentation/development/auth'
+              href='https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/documentation/docs/development/auth'
               target='_blank'
             >
               JWT Documentation
