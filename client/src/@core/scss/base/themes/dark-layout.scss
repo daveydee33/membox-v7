@@ -33,9 +33,9 @@
   // border color
   .border,
   .border-top,
-  .border-right,
+  .border-end,
   .border-bottom,
-  .border-left {
+  .border-start {
     border-color: $theme-dark-border-color !important;
   }
 
@@ -55,7 +55,7 @@
   }
 
   hr {
-    border-color: $theme-dark-border-color;
+    color: $theme-dark-border-color;
   }
 
   pre {
@@ -66,7 +66,6 @@
       background-color: inherit;
       text-shadow: none;
 
-      // .operator,
       .url {
         background-color: $theme-dark-body-bg;
       }
@@ -208,7 +207,7 @@
           .dropdown-menu.dropdown-menu-media {
             overflow: hidden;
 
-            .media {
+            .list-item {
               border-color: $theme-dark-border-color;
 
               .media-meta {
@@ -252,7 +251,7 @@
               color: $white;
             }
           }
-          .media {
+          .list-item {
             img {
               background-color: $theme-dark-body-bg;
             }
@@ -262,7 +261,7 @@
           }
         }
         .dropdown-notification {
-          .media-body .media-heading {
+          .list-item-body .media-heading {
             color: $theme-dark-headings-color;
           }
           .notification-text {
@@ -450,14 +449,45 @@
   }
 
   /********* COMPONENTS *********/
-  // alerts
+
+  /* Accordion */
+
+  .accordion-item:not(:last-of-type) {
+    border-color: $theme-dark-border-color;
+  }
+  .accordion-item {
+    background: $theme-dark-card-bg !important;
+  }
+  .accordion-button {
+    background: $theme-dark-card-bg !important;
+    color: $theme-dark-body-color;
+    &:after {
+      background-image: str-replace(
+        str-replace($accordion-button-icon, '#{$accordion-icon-color}', $theme-dark-body-color),
+        '#',
+        '%23'
+      );
+    }
+  }
+  // for shadow and bordered
+  .accordion-border {
+    .accordion-item {
+      border-color: $theme-dark-border-color;
+    }
+  }
+
+  // margin accordion
+  .accordion-margin {
+    .accordion-item {
+      box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.24) !important;
+    }
+  }
+
+  /* alerts */
   .alert {
     .alert-heading,
     p {
       color: inherit;
-    }
-    .close {
-      text-shadow: none;
     }
     &.alert-dark {
       .alert-heading,
@@ -465,13 +495,10 @@
       p {
         color: $gray-600;
       }
-      &.alert-dismissible .close {
-        color: $gray-600 !important;
-      }
     }
   }
 
-  // breadcrumbs
+  /* breadcrumbs */
 
   // Header breadcrumb
   .content-header-left {
@@ -516,56 +543,7 @@
     }
   }
 
-  // collapse
-
-  [class*='collapse-'] .card:not(:last-of-type) {
-    border-color: $theme-dark-border-color;
-  }
-  // for shadow and bordered
-  .collapse-border {
-    .card {
-      border-color: $theme-dark-border-color;
-    }
-  }
-
-  // Collapse shadow
-  .collapse-shadow {
-    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.24);
-  }
-
-  // margin collapse
-  .collapse-margin {
-    .card {
-      box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.24) !important;
-    }
-  }
-
-  // if there is an anchor tag inside
-  .collapse-icon {
-    .card-header {
-      a {
-        color: $theme-dark-body-color;
-      }
-    }
-    [data-toggle='collapse'] {
-      &:after {
-        background-image: url(str-replace(
-          str-replace($chevron-down, 'currentColor', $theme-dark-body-color),
-          '#',
-          '%23'
-        ));
-      }
-      &:before {
-        background-image: url(str-replace(
-          str-replace($chevron-up, 'currentColor', $theme-dark-body-color),
-          '#',
-          '%23'
-        ));
-      }
-    }
-  }
-
-  // buttons
+  /* buttons */
   .btn {
     &:not([class*='btn-']) {
       color: $theme-dark-body-color;
@@ -597,13 +575,13 @@
     }
   }
 
-  .btn-group-toggle {
+  .btn-group {
     label[class*='btn-outline-'] {
       color: $primary !important;
     }
   }
 
-  // dropdown
+  /* dropdown */
   .dropdown-menu {
     background-color: $theme-dark-card-bg;
     box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.24);
@@ -634,7 +612,7 @@
     border-color: $theme-dark-border-color;
   }
 
-  // modal
+  /* modal */
   .modal {
     .modal-header,
     .modal-header[class*='bg-'] {
@@ -644,11 +622,16 @@
     }
 
     // close button
-    .modal-header .close {
+    .modal-header .btn-close {
       text-shadow: none;
       background-color: $theme-dark-card-bg !important;
       color: $theme-dark-body-color;
       box-shadow: 0 3px 8px 0 rgba(11, 10, 25, 0.49) !important;
+      background-image: str-replace(
+        str-replace($btn-close-bg, '#{$btn-close-color}', $theme-dark-body-color),
+        '#',
+        '%23'
+      );
     }
 
     .modal-content,
@@ -659,7 +642,20 @@
     }
   }
 
-  //pagination
+  /* Close btn */
+  .btn-close {
+    background: transparent
+      escape-svg(str-replace(str-replace($btn-close-bg, '#{$btn-close-color}', $theme-dark-body-color), '#', '%23'))
+      center / $btn-close-width auto no-repeat;
+  }
+
+  /* OffCanvas */
+  .offcanvas {
+    background-color: $theme-dark-card-bg;
+    color: $theme-dark-body-color;
+  }
+
+  /* pagination */
   .pagination {
     &:not([class*='pagination-']) {
       .page-item {
@@ -721,6 +717,7 @@
 
     .page-item {
       &.prev-item,
+      &.previous,
       &.prev {
         .page-link:before {
           background-image: url(str-replace(
@@ -770,7 +767,7 @@
     }
   }
 
-  // nav tabs
+  /* nav tabs */
   .nav-tabs,
   .nav-pills,
   .nav-tabs.nav-justified {
@@ -806,17 +803,10 @@
     }
   }
 
-  // media
-  .media-bordered {
-    .media:not(:first-child) {
-      border-color: $theme-dark-border-color;
-    }
-  }
-
-  // popover
+  /* popover */
   .popover {
-    &[x-placement='top'] {
-      .arrow {
+    &.bs-popover-top {
+      .popover-arrow {
         &:before {
           border-top-color: $theme-dark-border-color;
         }
@@ -826,8 +816,8 @@
       }
     }
 
-    &[x-placement='left'] {
-      .arrow {
+    &.bs-popover-start {
+      .popover-arrow {
         &:before {
           border-left-color: $theme-dark-border-color;
         }
@@ -837,8 +827,8 @@
       }
     }
 
-    &[x-placement='right'] {
-      .arrow {
+    &.bs-popover-end {
+      .popover-arrow {
         &:before {
           border-right-color: $theme-dark-border-color;
         }
@@ -858,7 +848,7 @@
     }
   }
 
-  // BS toast
+  /* BS toast */
   .toast {
     background-color: rgba($theme-dark-card-bg, 0.85);
     box-shadow: $theme-dark-box-shadow;
@@ -868,37 +858,52 @@
       background-color: $theme-dark-card-bg;
       color: $theme-dark-body-color;
 
-      .close {
+      .btn-close {
         background-color: transparent !important;
+        background-image: str-replace(
+          str-replace($btn-close-bg, '#{$btn-close-color}', $theme-dark-body-color),
+          '#',
+          '%23'
+        );
         box-shadow: none !important;
         text-shadow: none;
       }
     }
   }
 
-  // list group
+  /* list group */
   .list-group {
     .list-group-item {
       &:not([class*='list-group-item-']),
-      &.list-group-item-action {
+      &.list-group-item-action:not(.active):not(:active) {
         background-color: $theme-dark-card-bg;
         border-color: $theme-dark-border-color;
-        color: $theme-dark-body-color;
-
-        &:hover,
-        &:focus {
-          background-color: $theme-dark-body-bg;
+        &:not(.disabled) {
+          color: $theme-dark-body-color;
+        }
+      }
+      &.list-group-item-action {
+        &:not(.active):not(:active) {
+          &:hover,
+          &:focus {
+            background-color: $theme-dark-body-bg;
+          }
         }
         &.active,
         &:active {
-          background-color: $primary;
-          color: $white;
+          &:hover,
+          &:focus {
+            color: $white;
+          }
         }
       }
 
       &.active {
         p,
         small {
+          color: $white;
+        }
+        &:hover {
           color: $white;
         }
       }
@@ -913,13 +918,13 @@
     }
   }
 
-  // spinners
+  /* spinners */
   .spinner-border {
     border-color: currentColor !important;
     border-right-color: transparent !important;
   }
 
-  // avatar
+  /* avatar */
   .avatar {
     background-color: $theme-dark-body-bg;
 
@@ -936,7 +941,7 @@
     }
   }
 
-  // divider
+  /* divider */
   .divider {
     .divider-text {
       color: $theme-dark-body-color;
@@ -957,7 +962,7 @@
     }
   }
 
-  // Timeline
+  /* Timeline */
   .timeline {
     .timeline-item {
       border-color: $theme-dark-border-color;
@@ -976,7 +981,7 @@
     }
   }
 
-  // card
+  /* card */
   .card {
     background-color: $theme-dark-card-bg;
     box-shadow: $theme-dark-box-shadow;
@@ -1082,9 +1087,17 @@
 
   /********** FORMS **********/
 
+  // Autofill style
+  input:-webkit-autofill,
+  textarea:-webkit-autofill,
+  select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px $theme-dark-card-bg inset !important;
+    -webkit-text-fill-color: $theme-dark-body-color !important;
+  }
+
   // input
   input.form-control,
-  .custom-file-label,
+  select.form-select,
   textarea.form-control {
     background-color: $theme-dark-input-bg;
     color: $theme-dark-body-color;
@@ -1102,7 +1115,24 @@
       opacity: 0.5;
     }
   }
+  // Floating textarea placeholder style
+  .form-floating {
+    textarea.form-control::placeholder {
+      color: transparent;
+    }
+  }
+  .form-control {
+    // File Input
 
+    // stylelint-disable-next-line selector-pseudo-element-no-unknown
+    &::file-selector-button {
+      @include gradient-bg($theme-dark-input-bg);
+      color: $theme-dark-label-color;
+    }
+    &:hover:not(:disabled):not([readonly])::file-selector-button {
+      background-color: tint-color($theme-dark-input-bg, 5%);
+    }
+  }
   // text area counter
   .char-textarea {
     &.active {
@@ -1114,64 +1144,37 @@
     }
   }
 
-  // file uploader default
-  .custom-file-label {
-    &:after {
-      background-color: $theme-dark-body-bg;
-      border-left: 1px solid $theme-dark-border-color;
-      color: $theme-dark-body-color;
-    }
-  }
-
   // custom control like checkbox, radio and switch
-  .custom-control-input {
+  .form-check-input {
     &:not(:checked) {
-      ~ .custom-control-label:before {
-        background-color: $theme-dark-card-bg;
+      background-color: $theme-dark-card-bg;
+      border-color: $theme-dark-input-border-color;
+    }
+    &:not(:checked):not(:indeterminate) {
+      background-color: $theme-dark-card-bg;
+      &:not(:focus) {
         border-color: $theme-dark-input-border-color;
       }
-    }
-    &:disabled {
-      ~ .custom-control-label:before {
-        background-color: $theme-dark-input-disabled-border-color;
-        border-color: $theme-dark-input-disabled-border-color;
+      &:disabled {
+        background-color: $theme-dark-input-disabled-border-color !important;
+        border-color: $theme-dark-input-disabled-border-color !important;
       }
     }
   }
-
-  .custom-switch {
-    .custom-control-input:not(:checked) {
-      ~ .custom-control-label:before {
-        background-color: $theme-dark-switch-bg;
-      }
+  .form-switch {
+    .form-check-input:not(:checked) {
+      background-color: $theme-dark-switch-bg;
     }
-    .custom-control-input:disabled {
-      ~ .custom-control-label:before {
-        background-color: $theme-dark-switch-bg-disabled;
-      }
+    .form-check-input:disabled {
+      background-color: $theme-dark-switch-bg-disabled;
+      border-color: $theme-dark-switch-bg-disabled;
     }
-  }
-
-  // select
-  select.form-control,
-  .custom-select {
-    background-color: $theme-dark-input-bg;
-    color: $theme-dark-body-color;
-    border-color: $theme-dark-border-color;
-
-    option:checked {
-      background-color: $theme-dark-card-bg;
-    }
-
-    &:disabled {
-      opacity: 0.5;
-    }
-    &:focus {
-      border-color: $primary;
+    .form-check-input:not(:checked):not(:focus) {
+      background-image: str-replace(str-replace($form-switch-bg-image, '#{$form-switch-color}', $white), '#', '%23');
     }
   }
 
-  select.form-control {
+  select.form-select {
     &:not([multiple='multiple']) {
       background-image: url(str-replace(
         str-replace($chevron-down, 'currentColor', $theme-dark-body-color),
@@ -1182,14 +1185,24 @@
   }
 
   // Added for override
-  .was-validated .form-control:invalid,
-  .form-control.is-invalid {
-    border-color: $danger !important;
-  }
+  .was-validated {
+    .form-control:invalid,
+    .form-control.is-invalid,
+    .form-check-input:invalid,
+    .form-check-input.is-invalid,
+    select.form-select:not(:focus):invalid,
+    select.form-select:not(:focus).is-valid {
+      border-color: $danger !important;
+    }
 
-  .was-validated .form-control:valid,
-  .form-control.is-valid {
-    border-color: $success !important;
+    .form-control:valid,
+    .form-control.is-valid,
+    .form-check-input:valid,
+    .form-check-input.is-valid,
+    select.form-select:not(:focus):valid,
+    select.form-select:not(:focus).is-valid {
+      border-color: $success !important;
+    }
   }
 
   // form wizard
@@ -1241,15 +1254,21 @@
   }
 
   .counter-value {
-    color: white;
+    color: $white;
   }
 
+  // custom options
+  .custom-option-item-check {
+    &:not(:checked) {
+      + .custom-option-item {
+        border-color: $theme-dark-border-color;
+      }
+    }
+  }
   /********** TABLE **********/
 
   // table
   .table {
-    background-color: $theme-dark-table-bg;
-
     td,
     th {
       color: $theme-dark-body-color;
@@ -1280,15 +1299,16 @@
           color: $theme-dark-headings-color;
         }
       }
-      &.thead-dark th {
-        background-color: $white;
-        color: $dark !important;
-      }
+    }
+
+    thead.table-dark th {
+      color: $dark;
+      background-color: $white;
     }
 
     // if table not light/dark and thead not have dark class
-    &:not(.table-dark):not(.table-light) thead:not(.thead-dark) th,
-    &:not(.table-dark):not(.table-light) tfoot:not(.thead-dark) th {
+    &:not(.table-dark):not(.table-light) thead:not(.table-dark) th,
+    &:not(.table-dark):not(.table-light) tfoot:not(.table-dark) th {
       background-color: $theme-dark-table-header-bg;
     }
 
@@ -1296,15 +1316,12 @@
     &.table-dark {
       background-color: $white;
       &.table-striped tbody tr:nth-of-type(odd) {
-        background-color: rgba($dark, 0.05);
-        td {
-          background-color: inherit;
-        }
+        --bs-table-accent-bg: #{rgba($dark, 0.05)};
       }
       td,
       th {
         border-color: #f8f9fa !important;
-        color: $dark !important;
+        // color: $dark !important;
         background-color: $white;
         .text-white {
           color: $dark !important;
@@ -1313,14 +1330,6 @@
     }
     tbody {
       tr {
-        // for contextual classes
-        &[class*='table-'] {
-          td,
-          th {
-            background-color: unset;
-          }
-        }
-
         &.table-dark {
           td,
           th {
@@ -1332,6 +1341,7 @@
           td,
           th {
             color: $theme-dark-body-color;
+            background-color: tint-color($theme-dark-table-bg, 30%);
           }
         }
       }
@@ -1347,7 +1357,7 @@
       tbody {
         tr {
           &:hover {
-            background-color: $theme-dark-table-hover-bg;
+            --bs-table-accent-bg: #{$theme-dark-table-hover-bg};
           }
 
           th,
@@ -1358,20 +1368,12 @@
       }
     }
 
-    // hover animation
-    &.table-hover-animation tbody tr {
-      background-color: $theme-dark-table-bg;
-      &:hover {
-        box-shadow: $theme-dark-box-shadow;
-      }
-    }
-
     // table striped
     &.table-striped {
       tbody {
         tr {
           &:nth-of-type(odd) {
-            background-color: $theme-dark-table-striped-bg;
+            --bs-table-accent-bg: #{$theme-dark-table-striped-bg};
           }
         }
       }
@@ -1386,7 +1388,8 @@
       .buttons-pdf,
       .buttons-print,
       .btn-secondary,
-      [class*='buttons-'] {
+      .dt-button-collection [class*='buttons-'] {
+        color: $white;
         background-color: $theme-dark-body-bg !important;
         &:active {
           background-color: $primary !important;
@@ -1455,76 +1458,14 @@
       }
     }
   }
-
-  // agGrid Page Btn
-  .ag-grid-btns {
-    .filter-btn {
-      background-color: transparent !important;
+  // Datatable Modal for responsive
+  .dtr-modal {
+    .dtr-modal-display {
+      background-color: $theme-dark-body-bg;
     }
-  }
-
-  // agGrid Main
-  .aggrid {
-    .ag-input-wrapper input {
-      color: $theme-dark-body-color;
-    }
-  }
-  .aggrid,
-  .ag-header {
-    background-color: $theme-dark-card-bg;
-    color: $theme-dark-body-color;
-    border-color: $theme-dark-border-color;
-
-    .ag-row-hover,
-    .ag-row-selected {
-      background-color: $theme-dark-table-hover-bg !important;
-    }
-
-    .ag-icon {
-      color: $theme-dark-input-border-color;
-    }
-    .ag-header-cell.ag-column-hover {
-      background: transparent !important;
-    }
-
-    .ag-header-cell,
-    .ag-cell,
-    .ag-row,
-    .ag-pinned-left-header,
-    .ag-pinned-left-cols-container,
-    .ag-horizontal-left-spacer,
-    .ag-paging-panel,
-    .ag-floating-filter-input {
-      border-color: $theme-dark-border-color !important;
-      color: $theme-dark-body-color;
-    }
-    .ag-cell.ag-cell-inline-editing {
-      border-color: $theme-dark-border-color;
-      background: $theme-dark-body-bg;
-      height: auto;
-      padding-top: 0;
-    }
-
-    .ag-paging-panel {
-      .ag-paging-button {
-        background-color: $theme-dark-body-bg;
-      }
-      .ag-disabled {
-        background: $theme-dark-card-bg;
-      }
-
-      span[ref='lbTotal'] {
-        background-color: $theme-dark-pagination-bg;
-        color: $theme-dark-body-color !important;
-      }
-    }
-
-    ::-webkit-scrollbar-track {
-      background: $theme-dark-body-bg;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: $primary;
+    div.dtr-modal-close {
+      background-color: transparent;
+      border-color: transparent;
     }
   }
 
@@ -1586,6 +1527,16 @@
     }
   }
 
+  .pricing-card {
+    .card {
+      &.basic-pricing,
+      &.enterprise-pricing,
+      &.standard-pricing {
+        border-color: $theme-dark-border-color;
+      }
+    }
+  }
+
   /********** APPLICATIONS **********/
 
   // App common sidebar and content dark style
@@ -1624,7 +1575,7 @@
         }
 
         .email-user-list {
-          .media {
+          .user-mail {
             border-color: $theme-dark-border-color;
             background-color: $theme-dark-card-bg;
 
@@ -1638,7 +1589,7 @@
             }
           }
 
-          .media {
+          .user-mail {
             .user-details,
             .mail-message {
               p,
@@ -1878,8 +1829,9 @@
       }
     }
   }
-  .kanban-item.gu-mirror {
-    background-color: $theme-dark-card-bg;
+  .kanban-board.gu-mirror,
+    .kanban-item.gu-mirror {
+    background-color: $theme-dark-card-bg !important;
   }
 
   // Todo application
@@ -1921,11 +1873,6 @@
             }
           }
         }
-      }
-    }
-    .todo-item-action {
-      .close {
-        background-color: transparent !important;
       }
     }
   }
@@ -2206,6 +2153,11 @@
         }
       }
     }
+    .fc-timegrid-event-harness-inset .fc-timegrid-event,
+    .fc-timegrid-event.fc-event-mirror,
+    .fc-timegrid-more-link {
+      box-shadow: 0 0 0 1px $theme-dark-border-color;
+    }
   }
 
   // Invoice Application
@@ -2248,11 +2200,6 @@
   .app-user-view {
     .plan-card {
       border-color: $primary !important;
-    }
-  }
-  .app-user-edit {
-    .form-control.error {
-      border-color: $danger !important;
     }
   }
 
@@ -2303,6 +2250,10 @@
                 background-image: url(str-replace(str-replace($chevron-down, 'currentColor', $white), '#', '%23'));
               }
             }
+          }
+
+          &.navbar-dark {
+            background: $theme-dark-card-bg !important;
           }
 
           .nav-link {

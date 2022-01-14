@@ -1,6 +1,6 @@
 // ================================================================================================
-//   File Name: aggrid.scss
-//   Description: SCC file for Aggrid.
+//   File Name: ecommerce.scss
+//   Description: SCC file for ecommerce.
 //   ----------------------------------------------------------------------------------------------
 //   Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
 //   Author: PIXINVENT
@@ -16,7 +16,7 @@
     padding: 2rem 2.4rem !important;
   }
 
-  @include media-breakpoint-down(md) {
+  @include media-breakpoint-down(lg) {
     .card-header,
     .statistics-body {
       padding: 1.5rem !important;

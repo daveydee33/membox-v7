@@ -2,7 +2,7 @@
 import { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 
-// ** Third Party Components
+// ** Icons Imports
 import { Disc, X, Circle } from 'react-feather'
 
 // ** Config
@@ -43,7 +43,7 @@ const VerticalMenuHeader = props => {
   return (
     <div className='navbar-header'>
       <ul className='nav navbar-nav flex-row'>
-        <li className='nav-item mr-auto'>
+        <li className='nav-item me-auto'>
           <NavLink to='/' className='navbar-brand'>
             <span className='brand-logo'>
               <img src={themeConfig.app.appLogoImage} alt='logo' />

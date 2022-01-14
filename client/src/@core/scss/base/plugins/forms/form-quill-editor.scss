@@ -40,7 +40,7 @@
 
 // Quill Editor
 .ql-toolbar {
-  border-color: $custom-control-border-color !important;
+  border-color: $input-border-color !important;
   .ql-formats {
     &:focus,
     *:focus {
@@ -91,7 +91,7 @@
   }
 }
 .ql-container {
-  border-color: $custom-control-border-color !important;
+  border-color: $input-border-color !important;
   font-family: $font-family-monospace;
 }
 .ql-editor {

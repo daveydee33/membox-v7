@@ -2,6 +2,8 @@
 import Proptypes from 'prop-types'
 import classnames from 'classnames'
 import Chart from 'react-apexcharts'
+
+// ** Reactstrap Imports
 import { Card, CardBody } from 'reactstrap'
 
 const StatisticsCards = props => {
@@ -26,7 +28,7 @@ const StatisticsCards = props => {
           </div>
         </div>
         <div className='title-section'>
-          <h2 className='font-weight-bold mt-1 mb-25'>{stat}</h2>
+          <h2 className='fw-bold mt-1 mb-25'>{stat}</h2>
           <p className='mb-0'>{statTitle}</p>
         </div>
       </CardBody>
@@ -38,15 +40,15 @@ export default StatisticsCards
 
 // ** PropTypes
 StatisticsCards.propTypes = {
-  className: Proptypes.string,
+  type: Proptypes.string,
+  series: Proptypes.array,
+  height: Proptypes.string,
+  iconBg: Proptypes.string,
+  options: Proptypes.object,
   hideChart: Proptypes.bool,
   iconRight: Proptypes.bool,
-  iconBg: Proptypes.string,
+  className: Proptypes.string,
   icon: Proptypes.node.isRequired,
   stat: Proptypes.string.isRequired,
-  statTitle: Proptypes.string.isRequired,
-  options: Proptypes.object,
-  series: Proptypes.array,
-  type: Proptypes.string,
-  height: Proptypes.string
+  statTitle: Proptypes.string.isRequired
 }

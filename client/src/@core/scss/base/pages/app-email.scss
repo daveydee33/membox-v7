@@ -72,7 +72,7 @@ $email_details_header_height: 5rem;
         height: inherit;
       }
       .app-fixed-search {
-        padding: 0.35rem 0.5rem;
+        padding: 0.4215rem 0.5rem;
         border-bottom: 1px solid $border-color;
         background-color: $white;
         border-top-right-radius: $border-radius;
@@ -122,7 +122,7 @@ $email_details_header_height: 5rem;
           animation-fill-mode: both;
           position: relative;
           background: $white;
-          &.media {
+          &.user-mail {
             padding: ($spacer + 0.5);
             &:hover {
               transform: translateY(-2px);
@@ -130,12 +130,13 @@ $email_details_header_height: 5rem;
               transition: all 0.2s;
               z-index: 1;
             }
-            .media-left {
+            .mail-left {
               display: flex;
               flex-direction: column;
             }
-            .media-body {
+            .mail-body {
               overflow: hidden;
+              width: 100%;
             }
           }
           // Email avatar style
@@ -334,12 +335,23 @@ $email_details_header_height: 5rem;
         top: 40%;
       }
       label {
-        margin-bottom: 0;
         font-size: $font-size-base;
       }
     }
-    .ql-editor {
-      min-height: 250px;
+    // On compose form full screen
+    .modal-fullscreen {
+      .compose-form {
+        height: 100%;
+      }
+      #message-editor {
+        height: calc(100% - 240px);
+      }
+      .editor {
+        height: calc(100% - 3rem);
+      }
+    }
+    .editor {
+      height: 250px;
     }
     .ql-container,
     .ql-toolbar {
@@ -359,7 +371,7 @@ $email_details_header_height: 5rem;
     }
   }
 }
-@include media-breakpoint-down(md) {
+@include media-breakpoint-down(lg) {
   .email-application {
     .content-area-wrapper {
       .sidebar-left {
@@ -394,14 +406,14 @@ $email_details_header_height: 5rem;
   }
 }
 
-@include media-breakpoint-down(sm) {
+@include media-breakpoint-down(md) {
   .email-application #compose-mail .ql-editor {
     min-height: 150px;
   }
 }
 
 // Extra small devices (portrait phones, less than 576px)
-@include media-breakpoint-down(xs) {
+@include media-breakpoint-down(sm) {
   .email-application {
     .email-detail-head .mail-meta-item {
       display: flex;

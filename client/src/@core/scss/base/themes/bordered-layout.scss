@@ -13,12 +13,14 @@
 .bordered-layout {
   .header-navbar {
     box-shadow: none;
+    border: 1px solid $border-color;
     &.floating-nav {
       border: 1px solid $border-color;
     }
     &.fixed-top {
       border-bottom: 1px solid $border-color;
       background: $body-bg;
+      box-shadow: none !important;
     }
   }
   .main-menu {

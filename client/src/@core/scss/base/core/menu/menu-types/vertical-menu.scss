@@ -99,7 +99,8 @@
           }
         }
         // fixed-top navbar when menu-collapsed
-        &.fixed-top {
+        &.fixed-top,
+        &.floating-nav {
           left: $menu-collapsed-width;
         }
       }
@@ -219,7 +220,7 @@
 }
 
 // Initially menu & content width for md and down screen
-@include media-breakpoint-down(lg) {
+@include media-breakpoint-down(xl) {
   .vertical-layout {
     &.vertical-menu-modern {
       // not using this class in below < 992
@@ -249,7 +250,7 @@
 }
 
 // Initially menu & content width for sm and down screen
-@include media-breakpoint-down(sm) {
+@include media-breakpoint-down(md) {
   .vertical-layout {
     &.vertical-menu-modern {
       // not using this class <992

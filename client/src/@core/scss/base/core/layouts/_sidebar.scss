@@ -55,8 +55,8 @@
   z-index: 1036;
 }
 
-.sidebar-detached{
-  .sidebar{
+.sidebar-detached {
+  .sidebar {
     width: $sidebar-width;
   }
 }
@@ -70,9 +70,9 @@
   }
 }
 
-@include media-breakpoint-down(md) {
-  .sidebar-detached{
-    .sidebar{
+@include media-breakpoint-down(lg) {
+  .sidebar-detached {
+    .sidebar {
       width: 100%;
     }
   }

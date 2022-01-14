@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardBody, CardTitle, CardText, CardLink } from 'reactstrap'
+import { Card, CardHeader, CardBody, CardTitle, CardText } from 'reactstrap'
 import { useContext, useEffect } from 'react'
 
 // Context - with Mongo data

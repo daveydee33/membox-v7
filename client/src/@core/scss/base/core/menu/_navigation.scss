@@ -114,7 +114,7 @@
 
     &.navigation-main {
       overflow-x: hidden;
-      padding-bottom: .75rem;
+      padding-bottom: 0.75rem;
       > li:first-child {
         margin-top: 0.5rem;
       }
@@ -181,7 +181,7 @@
 
 // Media queries for small screen devices
 // =========================================
-@include media-breakpoint-down(sm) {
+@include media-breakpoint-down(md) {
   // menu hide/open animation
   .menu-hide .main-menu,
   .menu-open .main-menu {

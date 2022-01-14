@@ -17,32 +17,32 @@ const ThemeContext = ({ children }) => {
       //** Colors obj
       const obj = {
         primary: {
-          light: getHex('--primary').concat('1a'),
-          main: getHex('--primary')
+          light: getHex('--bs-primary').concat('1a'),
+          main: getHex('--bs-primary')
         },
         secondary: {
-          light: getHex('--secondary').concat('1a'),
-          main: getHex('--secondary')
+          light: getHex('--bs-secondary').concat('1a'),
+          main: getHex('--bs-secondary')
         },
         success: {
-          light: getHex('--success').concat('1a'),
-          main: getHex('--success')
+          light: getHex('--bs-success').concat('1a'),
+          main: getHex('--bs-success')
         },
         danger: {
-          light: getHex('--danger').concat('1a'),
-          main: getHex('--danger')
+          light: getHex('--bs-danger').concat('1a'),
+          main: getHex('--bs-danger')
         },
         warning: {
-          light: getHex('--warning').concat('1a'),
-          main: getHex('--warning')
+          light: getHex('--bs-warning').concat('1a'),
+          main: getHex('--bs-warning')
         },
         info: {
-          light: getHex('--info').concat('1a'),
-          main: getHex('--info')
+          light: getHex('--bs-info').concat('1a'),
+          main: getHex('--bs-info')
         },
         dark: {
-          light: getHex('--dark').concat('1a'),
-          main: getHex('--dark')
+          light: getHex('--bs-dark').concat('1a'),
+          main: getHex('--bs-dark')
         }
       }
 

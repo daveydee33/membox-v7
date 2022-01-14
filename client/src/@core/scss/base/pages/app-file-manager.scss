@@ -11,6 +11,7 @@
 @import '../components/include'; // Components includes
 
 $file-manager-logo-height: 7.5rem;
+$file-manager-fs-xl: ($font-size-base + 0.5);
 
 // file manager app container
 .file-manager-application {
@@ -36,7 +37,7 @@ $file-manager-logo-height: 7.5rem;
         position: absolute;
         top: 0.25rem;
         right: 0.25rem;
-        font-size: $font-size-xl;
+        font-size: $file-manager-fs-xl;
         z-index: 5;
         cursor: pointer;
       }
@@ -137,7 +138,7 @@ $file-manager-logo-height: 7.5rem;
 
       // styles for searchbar
       .file-manager-content-header {
-        padding: 0.4rem 1rem;
+        padding: 0.47rem 1rem;
         border-bottom: 1px solid $border-color;
         background-color: $white;
         border-top-right-radius: $border-radius;
@@ -178,7 +179,7 @@ $file-manager-logo-height: 7.5rem;
               padding-bottom: 0.5rem;
             }
 
-            .custom-control-input:not(:checked) ~ .custom-control-label:before {
+            .form-check-input:not(:checked) {
               background-color: transparent;
             }
 
@@ -280,7 +281,7 @@ $file-manager-logo-height: 7.5rem;
                   right: 1rem;
                 }
               }
-              .custom-checkbox {
+              .form-check {
                 margin: 0 0.4rem 0 1.75rem;
               }
 
@@ -321,7 +322,7 @@ $file-manager-logo-height: 7.5rem;
                 font-size: 85%;
               }
               &:not(.selected):not(:hover) {
-                .custom-checkbox,
+                .form-check,
                 .toggle-dropdown {
                   opacity: 0;
                 }
@@ -333,7 +334,7 @@ $file-manager-logo-height: 7.5rem;
               &.folder.level-up {
                 display: none !important;
               }
-              .custom-checkbox {
+              .form-check {
                 position: absolute;
                 top: 1rem;
                 left: 1rem;
@@ -375,7 +376,7 @@ $file-manager-logo-height: 7.5rem;
   }
 }
 
-@include media-breakpoint-down(sm) {
+@include media-breakpoint-down(md) {
   .file-manager-application {
     .view-container {
       .file-manager-item {
@@ -385,7 +386,7 @@ $file-manager-logo-height: 7.5rem;
   }
 }
 
-@include media-breakpoint-down(xs) {
+@include media-breakpoint-down(sm) {
   .file-manager-application {
     .content-area-wrapper {
       .file-manager-main-content {
@@ -418,16 +419,16 @@ $file-manager-logo-height: 7.5rem;
   }
 }
 
-@include media-breakpoint-up(xs) {
-  .file-manager-application {
-    .view-container {
-      .file-manager-item {
-        flex: 0 0 47%;
-        max-width: 50%;
-      }
-    }
-  }
-}
+// @include media-breakpoint-up(sm) {
+//   .file-manager-application {
+//     .view-container {
+//       .file-manager-item {
+//         flex: 0 0 47%;
+//         max-width: 50%;
+//       }
+//     }
+//   }
+// }
 
 @include media-breakpoint-up(sm) {
   .file-manager-application {

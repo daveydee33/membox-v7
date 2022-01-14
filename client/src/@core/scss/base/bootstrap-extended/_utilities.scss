@@ -11,7 +11,7 @@
 // Sizes Variable for height and width mixins
 $sizes-px: (
   // in px
-    50: 50px,
+  50: 50px,
   100: 100px,
   150: 150px,
   200: 200px,
@@ -31,7 +31,7 @@ $sizes-px: (
 
 $sizes-per: (
   // in %
-    5: 5%,
+  5: 5%,
   10: 10%,
   15: 15%,
   20: 20%,
@@ -207,10 +207,10 @@ $sizes-per: (
 .border-bottom-2 {
   border-bottom-width: 2px !important;
 }
-.border-left-2 {
+.border-start-2 {
   border-left-width: 2px !important;
 }
-.border-right-2 {
+.border-end-2 {
   border-right-width: 2px !important;
 }
 
@@ -224,10 +224,10 @@ $sizes-per: (
 .border-bottom-3 {
   border-bottom-width: 3px !important;
 }
-.border-left-3 {
+.border-start-3 {
   border-left-width: 3px !important;
 }
-.border-right-3 {
+.border-end-3 {
   border-right-width: 3px !important;
 }
 
@@ -276,21 +276,6 @@ $sizes-per: (
   .width-#{$name}-per {
     width: $size !important;
   }
-}
-
-//------------- Position -------------
-//------------------------------------
-.position-top-0 {
-  top: 0;
-}
-.position-right-0 {
-  right: 0;
-}
-.position-bottom-0 {
-  bottom: 0;
-}
-.position-left-0 {
-  left: 0;
 }
 
 //------------- Overflow -------------

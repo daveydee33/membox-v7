@@ -26,25 +26,25 @@
       letter-spacing: 0.5px;
     }
   }
-  th,
-  td {
-    padding: $table-cell-padding 2rem;
-    vertical-align: middle;
-  }
   &.table-sm {
     th,
     td {
-      padding: $table-cell-padding-sm 0.5rem;
+      padding: $table-cell-padding-y-sm $table-cell-padding-x-sm;
       &:first-child {
         padding-left: 0.75rem;
       }
     }
   }
+  &.table-dark {
+    tr > * {
+      border-bottom-color: $theme-dark-border-color !important;
+    }
+  }
 }
 // if we are not using table-light class then also header color should apply
 .table:not(.table-dark):not(.table-light) {
-  thead:not(.thead-dark) th,
-  tfoot:not(.thead-dark) th {
+  thead:not(.table-dark) th,
+  tfoot:not(.table-dark) th {
     background-color: $table-head-bg;
   }
 }
@@ -56,34 +56,17 @@
     }
   }
 }
-// Table - hover animation
-.table-hover-animation {
-  background-color: $body-bg;
-  thead {
-    th {
-      border-bottom: 0;
-    }
-  }
-  th,
-  td {
-    border: 0;
-  }
-  tbody {
-    tr {
-      transition: all 0.25s ease;
-      background-color: $white;
-      &:hover {
-        transform: translateY(-4px);
-      }
-    }
-  }
-}
 
 // table border radius
 .card .table {
   margin-bottom: 0;
   border-bottom-left-radius: $border-radius;
   border-bottom-right-radius: $border-radius;
+  tbody {
+    tr:last-child > * {
+      border-bottom-width: 0;
+    }
+  }
   tbody {
     tr:last-child {
       td:first-child {
@@ -96,27 +79,15 @@
   }
 }
 
-// Contexual table inside card radius
-.card {
-  table {
-    tr[class*='table-']:last-child {
-      td:first-child {
-        border-bottom-left-radius: $border-radius;
-      }
-      td:last-child {
-        border-bottom-right-radius: $border-radius;
-      }
+// Flush spacing of left from first column ans right from last column
+.table.table-flush-spacing {
+  thead,
+  tbody {
+    tr > td:first-child {
+      padding-left: 0;
     }
-  }
-}
-
-// IE Specific CSS
-@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-  .table-hover-animation {
-    tr {
-      &:hover {
-        border-bottom-color: $table-border-color;
-      }
+    tr > td:last-child {
+      padding-right: 0;
     }
   }
 }

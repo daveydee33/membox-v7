@@ -69,8 +69,13 @@
     z-index: 999 !important;
     line-height: 1;
     min-height: auto;
+    &.navbar-light {
+      background: $white;
+    }
     // Navbar- Brand Center - Logo
     &.navbar-horizontal.floating-nav {
+      left: 0;
+      top: 62px;
       width: calc(100vw - (100vw - 100%) - calc(#{$content-padding} * 2));
       background: $white;
     }
@@ -288,9 +293,9 @@
         rgba($white, 0) 100%
       );
       background-repeat: repeat-x;
-      .navbar-horizontal.floating-nav {
-        margin: $floating-nav-margin $content-padding 0;
-      }
+      // .navbar-horizontal.floating-nav {
+      //   margin: $floating-nav-margin $content-padding 0;
+      // }
     }
 
     // App content area wrapper height
@@ -559,7 +564,7 @@
 }
 
 // Initially menu & content width for md and down screen
-@include media-breakpoint-down(lg) {
+@include media-breakpoint-down(xl) {
   .horizontal-layout {
     &.horizontal-menu {
       .horizontal-menu-wrapper {
@@ -578,7 +583,7 @@
   }
 }
 
-@include media-breakpoint-down(xs) {
+@include media-breakpoint-down(sm) {
   // For static navbar
   html body.horizontal-layout.navbar-static .app-content {
     padding: calc(#{$content-padding} - 0.8rem + #{$navbar-height}) calc(#{$content-padding} - 0.8rem) 0

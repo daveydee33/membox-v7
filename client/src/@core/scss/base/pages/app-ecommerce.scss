@@ -26,7 +26,7 @@ $search-bar-height: 48px;
   .sidebar-shop {
     margin-top: 0.85rem;
     width: $sidebar-width;
-    z-index: 14;
+    z-index: 998;
 
     // for heading
     .filter-heading {
@@ -224,10 +224,8 @@ $search-bar-height: 48px;
   }
 
   // margin for both views
-  // I'm adding the line for .card-columns which might get overwritten in a later version
   .grid-view,
-  .list-view,
-  .card-columns {
+  .list-view {
     &:not(.wishlist-items) {
       margin-top: 2rem;
     }
@@ -453,9 +451,6 @@ $search-bar-height: 48px;
           font-weight: $font-weight-bolder;
         }
       }
-      .input-group-append {
-        margin: 0;
-      }
       .input-group-text {
         height: auto;
         font-weight: $font-weight-bolder;
@@ -517,7 +512,7 @@ $search-bar-height: 48px;
   }
 }
 // Media queries to change grid columns in different Screens and to hide search results below 768px
-@include media-breakpoint-down(lg) {
+@include media-breakpoint-down(xl) {
   .ecommerce-application {
     // Header item area
     .ecommerce-header-items {
@@ -558,7 +553,7 @@ $search-bar-height: 48px;
   }
 }
 
-@include media-breakpoint-down(md) {
+@include media-breakpoint-down(lg) {
   .ecommerce-application {
     .sidebar-left {
       .sidebar {
@@ -600,7 +595,7 @@ $search-bar-height: 48px;
     }
   }
 }
-@include media-breakpoint-down(sm) {
+@include media-breakpoint-down(md) {
   .ecommerce-application {
     .grid-view.wishlist-items {
       grid-template-columns: 1fr 1fr;
@@ -623,7 +618,7 @@ $search-bar-height: 48px;
     }
   }
 }
-@include media-breakpoint-down(xs) {
+@include media-breakpoint-down(sm) {
   .ecommerce-application {
     // Grid View
     .grid-view,

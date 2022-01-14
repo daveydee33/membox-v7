@@ -2,12 +2,11 @@
 
 .alert {
   font-weight: 500;
-  border: none;
   padding: 0;
   // close
   &.alert-dismissible {
-    .close {
-      padding: 0.5rem $alert-padding-x 0.5rem $alert-padding-x;
+    .btn-close {
+      padding: 1rem $alert-padding-x;
       background-color: transparent !important;
       box-shadow: none !important;
     }
@@ -15,7 +14,7 @@
       padding: $alert-padding-y ($alert-padding-x * 2) $alert-padding-y $alert-padding-x;
     }
   }
-  .close:focus {
+  .btn-close:focus {
     outline: 0;
   }
 
@@ -40,11 +39,6 @@
   }
   .alert-body {
     padding: $alert-padding-y $alert-padding-x;
-    i,
-    svg {
-      position: relative;
-      top: -2px;
-    }
   }
 
   // For dark alert

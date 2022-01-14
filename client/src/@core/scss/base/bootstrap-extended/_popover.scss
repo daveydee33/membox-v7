@@ -16,28 +16,28 @@
   }
   // popover bottom arrow color like header
   &.bs-popover-bottom {
-    .arrow:after {
+    .popover-arrow:after {
       border-bottom-color: $popover-header-bg;
     }
   }
 }
 // To set arrow border as we have added border to popover-body and popover-header
 .bs-popover-top {
-  > .arrow {
+  > .popover-arrow {
     &::after {
       bottom: $popover-border-width + 1px;
     }
   }
 }
-.bs-popover-right {
-  > .arrow {
+.bs-popover-end {
+  > .popover-arrow {
     &::after {
       left: $popover-border-width + 1px;
     }
   }
 }
-.bs-popover-left {
-  > .arrow {
+.bs-popover-start {
+  > .popover-arrow {
     &::after {
       right: $popover-border-width + 1px;
     }

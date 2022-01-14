@@ -4,10 +4,12 @@ import { useState } from 'react'
 // ** Third Party Components
 import Select from 'react-select'
 import classnames from 'classnames'
-import { Settings, X } from 'react-feather'
-import { CustomInput, FormGroup } from 'reactstrap'
-import PerfectScrollbar from 'react-perfect-scrollbar'
 import { selectThemeColors } from '@utils'
+import { Settings, X } from 'react-feather'
+import PerfectScrollbar from 'react-perfect-scrollbar'
+
+// ** Reactstrap Imports
+import { Input, Label } from 'reactstrap'
 
 // ** Styles
 import '@styles/react/libs/react-select/_react-select.scss'
@@ -16,25 +18,26 @@ const Customizer = props => {
   // ** Props
   const {
     skin,
-    setSkin,
     isRtl,
-    setIsRtl,
     layout,
+    setSkin,
+    setIsRtl,
+    isHidden,
     setLayout,
     navbarType,
-    setNavbarType,
     footerType,
-    setFooterType,
+    transition,
     navbarColor,
-    setNavbarColor,
-    isHidden,
     setIsHidden,
     contentWidth,
-    setContentWidth,
     menuCollapsed,
-    setMenuCollapsed,
-    transition,
-    setTransition
+    setLastLayout,
+    setTransition,
+    setNavbarType,
+    setFooterType,
+    setNavbarColor,
+    setContentWidth,
+    setMenuCollapsed
   } = props
 
   // ** State
@@ -79,15 +82,12 @@ const Customizer = props => {
       }
 
       return (
-        <CustomInput
-          key={index}
-          type='radio'
-          id={radio.name}
-          label={radio.label}
-          checked={radio.checked}
-          onChange={() => setSkin(radio.name)}
-          className={classnames({ 'mr-1': marginCondition })}
-        />
+        <div key={index} className={classnames('form-check', { 'mb-2 me-1': marginCondition })}>
+          <Input type='radio' id={radio.name} checked={radio.checked} onChange={() => setSkin(radio.name)} />
+          <Label className='form-check-label' for={radio.name}>
+            {radio.label}
+          </Label>
+        </div>
       )
     })
   }
@@ -141,15 +141,12 @@ const Customizer = props => {
       }
 
       return (
-        <CustomInput
-          key={index}
-          type='radio'
-          id={radio.name}
-          label={radio.label}
-          checked={radio.checked}
-          onChange={() => setNavbarType(radio.name)}
-          className={classnames({ 'mr-1': marginCondition })}
-        />
+        <div key={index} className={classnames('form-check', { 'mb-2 me-1': marginCondition })}>
+          <Input type='radio' id={radio.name} checked={radio.checked} onChange={() => setNavbarType(radio.name)} />
+          <Label className='form-check-label' for={radio.name}>
+            {radio.label}
+          </Label>
+        </div>
       )
     })
   }
@@ -178,15 +175,17 @@ const Customizer = props => {
       const marginCondition = index !== footerTypeArr.length - 1
 
       return (
-        <CustomInput
-          key={index}
-          type='radio'
-          id={`footer-${radio.name}`}
-          label={radio.label}
-          checked={radio.checked}
-          onChange={() => setFooterType(radio.name)}
-          className={classnames({ 'mr-1': marginCondition })}
-        />
+        <div key={index} className={classnames('form-check', { 'mb-2 me-1': marginCondition })}>
+          <Input
+            type='radio'
+            checked={radio.checked}
+            id={`footer-${radio.name}`}
+            onChange={() => setFooterType(radio.name)}
+          />
+          <Label className='form-check-label' for={`footer-${radio.name}`}>
+            {radio.label}
+          </Label>
+        </div>
       )
     })
   }
@@ -211,7 +210,7 @@ const Customizer = props => {
       <a href='/' className='customizer-toggle d-flex align-items-center justify-content-center' onClick={handleToggle}>
         <Settings size={14} className='spinner' />
       </a>
-      <PerfectScrollbar className='customizer-content'>
+      <PerfectScrollbar className='customizer-content' options={{ wheelPropagation: false }}>
         <div className='customizer-header px-2 pt-1 pb-0 position-relative'>
           <h4 className='mb-0'>Theme Customizer</h4>
           <p className='m-0'>Customize & Preview in Real Time</p>
@@ -223,42 +222,49 @@ const Customizer = props => {
         <hr />
 
         <div className='px-2'>
-          <FormGroup className='mb-2'>
-            <p className='font-weight-bold'>Skin</p>
+          <div className='mb-2'>
+            <p className='fw-bold'>Skin</p>
             <div className='d-flex'>{renderSkinsRadio()}</div>
-          </FormGroup>
+          </div>
 
-          <FormGroup className='mb-2'>
-            <p className='font-weight-bold'>Content Width</p>
+          <div className='mb-2'>
+            <p className='fw-bold'>Content Width</p>
             <div className='d-flex'>
-              <CustomInput
-                type='radio'
-                id='full-width'
-                className='mr-1'
-                label='Full Width'
-                checked={contentWidth === 'full'}
-                onChange={() => setContentWidth('full')}
-              />
-              <CustomInput
-                type='radio'
-                id='boxes'
-                label='Boxed'
-                checked={contentWidth === 'boxed'}
-                onChange={() => setContentWidth('boxed')}
-              />
+              <div className='form-check me-1'>
+                <Input
+                  type='radio'
+                  id='full-width'
+                  checked={contentWidth === 'full'}
+                  onChange={() => setContentWidth('full')}
+                />
+                <Label className='form-check-label' for='full-width'>
+                  Full Width
+                </Label>
+              </div>
+              <div className='form-check'>
+                <Input
+                  id='boxed'
+                  type='radio'
+                  checked={contentWidth === 'boxed'}
+                  onChange={() => setContentWidth('boxed')}
+                />
+                <Label className='form-check-label' for='boxed'>
+                  Boxed
+                </Label>
+              </div>
             </div>
-          </FormGroup>
+          </div>
 
-          <FormGroup className='mb-2'>
+          <div className='form-switch mb-2 ps-0'>
             <div className='d-flex'>
-              <p className='font-weight-bold mr-auto mb-0'>RTL</p>
-              <CustomInput type='switch' id='rtl' name='RTL' checked={isRtl} onChange={() => setIsRtl(!isRtl)} />
+              <p className='fw-bold me-auto mb-0'>RTL</p>
+              <Input type='switch' id='rtl' name='RTL' checked={isRtl} onChange={() => setIsRtl(!isRtl)} />
             </div>
-          </FormGroup>
+          </div>
 
-          <FormGroup className='mb-2'>
+          <div className='mb-2'>
             <div className='d-flex justify-content-between align-items-center'>
-              <p className='font-weight-bold mb-0'>Router Transition</p>
+              <p className='fw-bold mb-0'>Router Transition</p>
               <Select
                 theme={selectThemeColors}
                 className='react-select'
@@ -270,37 +276,50 @@ const Customizer = props => {
                 onChange={({ value }) => setTransition(value)}
               />
             </div>
-          </FormGroup>
+          </div>
         </div>
 
         <hr />
 
         <div className='px-2'>
-          <p className='font-weight-bold'>Menu Layout</p>
-          <FormGroup className='mb-2'>
+          <p className='fw-bold'>Menu Layout</p>
+          <div className='mb-2'>
             <div className='d-flex align-items-center'>
-              <CustomInput
-                type='radio'
-                id='vertical-layout'
-                label='Vertical'
-                checked={layout === 'VerticalLayout'}
-                onChange={() => setLayout('vertical')}
-                className='mr-1'
-              />
-              <CustomInput
-                type='radio'
-                id='horizontal-layout'
-                label='Horizontal'
-                checked={layout === 'HorizontalLayout'}
-                onChange={() => setLayout('horizontal')}
-              />
+              <div className='form-check me-1'>
+                <Input
+                  type='radio'
+                  id='vertical-layout'
+                  checked={layout === 'VerticalLayout'}
+                  onChange={() => {
+                    setLayout('vertical')
+                    setLastLayout('vertical')
+                  }}
+                />
+                <Label className='form-check-label' for='vertical-layout'>
+                  Vertical
+                </Label>
+              </div>
+              <div className='form-check'>
+                <Input
+                  type='radio'
+                  id='horizontal-layout'
+                  checked={layout === 'HorizontalLayout'}
+                  onChange={() => {
+                    setLayout('horizontal')
+                    setLastLayout('horizontal')
+                  }}
+                />
+                <Label className='form-check-label' for='horizontal-layout'>
+                  Horizontal
+                </Label>
+              </div>
             </div>
-          </FormGroup>
+          </div>
           {layout !== 'HorizontalLayout' ? (
-            <FormGroup className='mb-2'>
+            <div className='form-switch mb-2 ps-0'>
               <div className='d-flex align-items-center'>
-                <p className='font-weight-bold mr-auto mb-0'>Menu Collapsed</p>
-                <CustomInput
+                <p className='fw-bold me-auto mb-0'>Menu Collapsed</p>
+                <Input
                   type='switch'
                   id='menu-collapsed'
                   name='menu-collapsed'
@@ -308,13 +327,13 @@ const Customizer = props => {
                   onChange={() => setMenuCollapsed(!menuCollapsed)}
                 />
               </div>
-            </FormGroup>
+            </div>
           ) : null}
 
-          <FormGroup className='mb-2'>
+          <div className='form-switch mb-2 ps-0'>
             <div className='d-flex align-items-center'>
-              <p className='font-weight-bold mr-auto mb-0'>Menu Hidden</p>
-              <CustomInput
+              <p className='fw-bold me-auto mb-0'>Menu Hidden</p>
+              <Input
                 type='switch'
                 id='menu-hidden'
                 name='menu-hidden'
@@ -322,32 +341,32 @@ const Customizer = props => {
                 onChange={() => setIsHidden(!isHidden)}
               />
             </div>
-          </FormGroup>
+          </div>
         </div>
 
         <hr />
 
         <div className='px-2'>
           {layout !== 'HorizontalLayout' ? (
-            <FormGroup className='mb-2'>
-              <p className='font-weight-bold'>Navbar Color</p>
+            <div className='mb-2'>
+              <p className='fw-bold'>Navbar Color</p>
               <ul className='list-inline unstyled-list'>{renderNavbarColors()}</ul>
-            </FormGroup>
+            </div>
           ) : null}
 
-          <FormGroup className='mb-2'>
-            <p className='font-weight-bold'>{layout === 'HorizontalLayout' ? 'Menu' : 'Navbar'} Type</p>
+          <div className='mb-2'>
+            <p className='fw-bold'>{layout === 'HorizontalLayout' ? 'Menu' : 'Navbar'} Type</p>
             <div className='d-flex'>{renderNavbarTypeRadio()}</div>
-          </FormGroup>
+          </div>
         </div>
 
         <hr />
 
         <div className='px-2'>
-          <FormGroup className='mb-2'>
-            <p className='font-weight-bold'>Footer Type</p>
+          <div className='mb-2'>
+            <p className='fw-bold'>Footer Type</p>
             <div className='d-flex'>{renderFooterTypeRadio()}</div>
-          </FormGroup>
+          </div>
         </div>
       </PerfectScrollbar>
     </div>

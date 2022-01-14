@@ -4,13 +4,13 @@
   &.show {
     z-index: 1030;
   }
-  .close:focus {
-    outline: none;
+  .btn-close:focus {
+    box-shadow: none;
   }
 }
 
-@include media-breakpoint-down(xs) {
+@media (max-width: 420.98px) {
   .toast {
-    left: 1rem;
+    width: auto;
   }
 }

@@ -5,20 +5,17 @@
 
   .modal-header {
     background-color: $body-bg;
-    border-bottom: none;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    // close button
 
-    .close {
-      padding: 0.2rem 0.62rem;
+    // close button
+    .btn-close {
+      padding: 0.8rem;
       box-shadow: 0 5px 20px 0 rgba($black, 0.1);
       border-radius: $border-radius;
-      background: $white;
+      background-color: $white;
       opacity: 1;
       transition: all 0.23s ease 0.1s;
       position: relative;
-      transform: translate(8px, -2px);
+      transform: translate(18px, -10px);
 
       // For hover effect of close btn
       &:hover,
@@ -26,14 +23,20 @@
       &:active {
         opacity: 1;
         outline: none;
-        transform: translate(5px, 3px);
+        transform: translate(15px, -2px);
         box-shadow: none;
+      }
+    }
+  }
+  .modal-fullscreen {
+    .modal-header {
+      .btn-close {
+        transform: translate(0, 0);
       }
     }
   }
   // Modal Content
   .modal-content {
-    border: none;
     // overflow: unset; updated to "visible" as close icon is not visible in IE
     overflow: visible;
     box-shadow: 0 5px 20px 0 rgba($black, 0.1);
@@ -101,8 +104,8 @@
     width: ($modal-slide-in-width-sm - 5);
 
     .modal-content {
-      padding-bottom: ($modal-title-line-height * $close-font-size) + $modal-header-padding-y;
-      padding-top: ($modal-title-line-height * $close-font-size) + $modal-header-padding-y;
+      padding-bottom: ($modal-title-line-height * $btn-close-width) + $modal-header-padding-y;
+      padding-top: ($modal-title-line-height * $btn-close-width) + $modal-header-padding-y;
       overflow: auto;
       border-radius: 0;
       height: 100%;
@@ -129,7 +132,7 @@
     }
   }
 
-  .close {
+  .btn-close {
     top: $modal-header-padding-y / 2;
     z-index: 10;
     transform: none;
@@ -160,8 +163,12 @@
 
 @media (max-width: 576px) {
   .modal {
-    padding-right: 1rem;
-    padding-left: 1rem;
+    &:not(.modal-slide-in) {
+      .modal-dialog:not(.modal-fullscreen) {
+        padding-right: 1rem;
+        padding-left: 1rem;
+      }
+    }
     .modal-xs,
     .modal-sm {
       max-width: unset;
@@ -173,3 +180,36 @@
     }
   }
 }
+
+// ------------------------------------------------
+// Modal Examples
+// ------------------------------------------------
+
+// --- refer and earn start ----- //
+
+.modal-refer-earn {
+  .modal-refer-earn-step {
+    svg {
+      height: 2.5rem;
+      width: 2.5rem;
+    }
+  }
+}
+// --- refer and earn end ----- //
+
+// --- share project start ----- //
+
+@include media-breakpoint-down(lg) {
+  #shareProject {
+    .list-group {
+      .dropdown-toggle {
+        padding: 0.5rem;
+        &::after {
+          left: 0;
+        }
+      }
+    }
+  }
+}
+
+// --- share project end ----- //

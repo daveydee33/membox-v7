@@ -25,15 +25,6 @@ export const resolveHorizontalNavMenuItemComponent = item => {
  * Check if nav-link is active
  * @param {Object} link nav-link object
  */
-// export const isNavLinkActive = (link, currentURL, match) => {
-//   // return currentURL === link || (URLParams && Object.keys(URLParams).length && currentURLFilter === item.navLink)
-//   const getFirstObjProp = obj => obj[Object.keys(obj)[0]]
-//   return (
-//     currentURL === link ||
-//     (match !== null && match !== undefined && match.url === `${link}/${getFirstObjProp(match.params)}`)
-//   )
-// }
-
 export const isNavLinkActive = (link, currentURL, routerProps) => {
   return (
     currentURL === link ||
@@ -43,101 +34,51 @@ export const isNavLinkActive = (link, currentURL, routerProps) => {
 }
 
 /**
- * Check if nav group is
- * @param {Array} children Group children
+ * Check if the given item has the given url
+ * in one of its children
+ *
+ * @param item
+ * @param activeItem
  */
-// export const isNavGroupActive = (children, currentURL, match) => {
-//   return children.some(child => {
-//     // If child have children => It's group => Go deeper(recursive)
-//     if (child.children) {
-//       return isNavGroupActive(child.children, currentURL, match)
-//     }
-//     // else it's link => Check for matched Route
-//     return isNavLinkActive(child.navLink, currentURL, match)
-//   })
-// }
-export const isNavGroupActive = (children, currentURL, routerProps) => {
-  return children.some(child => {
-    // If child have children => It's group => Go deeper(recursive)
+export const hasActiveChild = (item, currentUrl) => {
+  const { children } = item
+
+  if (!children) {
+    return false
+  }
+
+  for (const child of children) {
     if (child.children) {
-      return isNavGroupActive(child.children, currentURL, routerProps)
-    }
-    // else it's link => Check for matched Route
-    return isNavLinkActive(child.navLink, currentURL, routerProps)
-  })
-}
-
-/**
- * Search for parent object
- * @param {Array} navigation Group children
- * @param {string} currentURL current URL
- */
-// export const search = (navigation, currentURL, match) => {
-//   let result
-//   navigation.some(child => {
-//     let children
-//     // If child have children => It's group => Go deeper(recursive)
-//     if (child.children && (children = search(child.children, currentURL, match))) {
-//       return (result = {
-//         id: child.id,
-//         children
-//       })
-//     }
-
-//     // else it's link => Check for matched Route
-//     if (isNavLinkActive(child.navLink, currentURL, match)) {
-//       return (result = {
-//         id: child.id
-//       })
-//     }
-//   })
-//   return result
-// }
-
-export const search = (navigation, currentURL, routerProps) => {
-  let result
-  navigation.some(child => {
-    let children
-    // If child have children => It's group => Go deeper(recursive)
-    if (child.children && (children = search(child.children, currentURL, routerProps))) {
-      return (result = {
-        id: child.id,
-        children
-      })
-    }
-
-    // else it's link => Check for matched Route
-    if (isNavLinkActive(child.navLink, currentURL, routerProps)) {
-      return (result = {
-        id: child.id
-      })
-    }
-  })
-  return result
-}
-
-/**
- * Loop through nested object
- * @param {object} obj nested object
- */
-export const getAllParents = (obj, match) => {
-  const res = []
-  const recurse = (obj, current) => {
-    for (const key in obj) {
-      const value = obj[key]
-      if (value !== undefined) {
-        if (value && typeof value === 'object') {
-          recurse(value, key)
-        } else {
-          if (key === match) {
-            res.push(value)
-          }
-        }
+      if (hasActiveChild(child, currentUrl)) {
+        return true
       }
     }
+
+    // Check if the child has a link and is active
+    if (child && child.navLink && currentUrl && (child.navLink === currentUrl || currentUrl.includes(child.navLink))) {
+      return true
+    }
   }
-  recurse(obj)
-  return res
+
+  return false
+}
+
+/**
+ * Check if this is a children
+ * of the given item
+ *
+ * @param children
+ * @param openGroup
+ * @param currentActiveGroup
+ */
+export const removeChildren = (children, openGroup, currentActiveGroup) => {
+  children.forEach(child => {
+    if (!currentActiveGroup.includes(child.id)) {
+      const index = openGroup.indexOf(child.id)
+      if (index > -1) openGroup.splice(index, 1)
+      if (child.children) removeChildren(child.children, openGroup, currentActiveGroup)
+    }
+  })
 }
 
 export const canViewMenuGroup = item => {
@@ -155,5 +96,6 @@ export const canViewMenuGroup = item => {
 
 export const canViewMenuItem = item => {
   const ability = useContext(AbilityContext)
+  console.log('AbilityContext :>> ', AbilityContext)
   return ability.can(item.action, item.resource)
 }

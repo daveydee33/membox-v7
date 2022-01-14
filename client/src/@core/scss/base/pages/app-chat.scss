@@ -285,7 +285,7 @@ $chat-profile-sidebar-head-height: 200px;
   }
 }
 
-@include media-breakpoint-down(md) {
+@include media-breakpoint-down(lg) {
   .content-right {
     width: 100%;
   }
@@ -302,7 +302,7 @@ $chat-profile-sidebar-head-height: 200px;
     }
   }
 }
-@include media-breakpoint-down(sm) {
+@include media-breakpoint-down(md) {
   .chat-application {
     .sidebar-content {
       .sidebar-close-icon {
@@ -318,7 +318,7 @@ $chat-profile-sidebar-head-height: 200px;
     }
   }
 }
-@include media-breakpoint-down(xs) {
+@include media-breakpoint-down(sm) {
   .chat-application {
     .sidebar {
       position: unset !important;

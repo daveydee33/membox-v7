@@ -150,11 +150,11 @@ $fc-day-toggle-btn-padding: 0.55rem 1.5rem;
       padding: $fc-event-padding-y $fc-event-padding-x;
     }
     & + .fc-daygrid-event-harness {
-      margin-top: 0.3rem;
+      margin-top: 0.3rem !important;
     }
   }
   .fc-daygrid-day-bottom {
-    margin-top: 0.3rem;
+    margin-top: 0.3rem !important;
   }
   .fc-daygrid-day {
     padding: 5px;

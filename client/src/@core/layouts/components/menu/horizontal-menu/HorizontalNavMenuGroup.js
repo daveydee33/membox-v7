@@ -1,12 +1,15 @@
 // ** React Imports
+import { useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
 // ** Third Party Components
 import classnames from 'classnames'
+
+// ** Reactstrap Imports
 import { Dropdown, DropdownMenu, DropdownToggle } from 'reactstrap'
 
 // ** Utils
-import { isNavGroupActive } from '@layouts/utils'
+import { hasActiveChild } from '@layouts/utils'
 
 // ** Horizontal Menu Items Component
 import HorizontalNavMenuItems from './HorizontalNavMenuItems'
@@ -16,29 +19,46 @@ const HorizontalNavMenuGroup = props => {
   const {
     item,
     submenu,
+    activeItem,
+    routerProps,
     groupActive,
     onMouseEnter,
     onMouseLeave,
     openDropdown,
-    setGroupActive,
-    activeItem,
     setActiveItem,
-    routerProps,
+    setGroupActive,
     setOpenDropdown,
     currentActiveItem
   } = props
 
+  // ** Hooks
+  const location = useLocation()
+
   // ** URL Var
   const currentURL = useLocation().pathname
 
+  useEffect(() => {
+    if (hasActiveChild(item, currentURL)) {
+      if (!groupActive.includes(item.id)) groupActive.push(item.id)
+    } else {
+      const index = groupActive.indexOf(item.id)
+      if (index > -1) groupActive.splice(index, 1)
+    }
+    setGroupActive([...groupActive])
+  }, [location])
+
   // ** Dropdown menu modifiers
-  const menuModifiers = {
-    setMaxHeight: {
+  const menuModifiers = [
+    {
       enabled: true,
+      phase: 'write',
+      name: 'setMaxHeight',
       fn: data => {
         const pageHeight = window.innerHeight,
-          ddTop = data.instance.reference.getBoundingClientRect().top,
-          ddHeight = data.popper.height
+          popperEl = data.state.elements.popper,
+          ddTop = popperEl.getBoundingClientRect().top,
+          ddHeight = popperEl.clientHeight
+
         let maxHeight, stylesObj
 
         // ** Calculate and set height
@@ -50,49 +70,47 @@ const HorizontalNavMenuGroup = props => {
           }
         }
 
-        const ddRef = data.instance.popper.getBoundingClientRect()
+        const ddRef = popperEl.getBoundingClientRect()
 
         // ** If there is not space left to open sub menu open it to the right
         if (ddRef.left + ddRef.width - (window.innerWidth - 16) >= 0) {
-          data.instance.popper.closest('.dropdown').classList.add('openLeft')
+          popperEl.closest('.dropdown').classList.add('openLeft')
         }
 
-        return {
-          ...data,
-          styles: {
-            ...stylesObj
-          }
-        }
+        data.state.styles.popper = { ...data.state.styles.popper, ...stylesObj }
       }
     }
-  }
+  ]
   return (
     <Dropdown
       tag='li'
+      toggle={() => null}
       className={classnames({
         'nav-item': submenu === false,
         'dropdown-submenu': submenu === true,
-        'sidebar-group-active active':
-          isNavGroupActive(item.children, currentURL, routerProps) || groupActive.includes(item.id)
+        'sidebar-group-active active': groupActive.includes(item.id)
       })}
       isOpen={openDropdown.includes(item.id)}
-      toggle={() => onMouseEnter(item.id)}
       onMouseEnter={() => onMouseEnter(item.id)}
       onMouseLeave={() => onMouseLeave(item.id)}
     >
       <DropdownToggle
         to='/'
         tag={Link}
+        onClick={e => e.preventDefault()}
         className={classnames('dropdown-toggle d-flex align-items-center', {
           'dropdown-item': submenu === true,
           'nav-link': submenu === false
         })}
-        onClick={e => e.preventDefault()}
       >
         {item.icon}
         <span>{item.title}</span>
       </DropdownToggle>
-      <DropdownMenu tag='ul' modifiers={menuModifiers}>
+      <DropdownMenu
+        tag='ul'
+        modifiers={menuModifiers}
+        className={classnames({ 'first-level': submenu === false })}
+      >
         <HorizontalNavMenuItems
           submenu={true}
           parentItem={item}

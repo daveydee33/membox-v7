@@ -56,3 +56,22 @@ body {
   border-color: rgba($color: $black, $alpha: 0.5) !important;
   color: $body-color !important;
 }
+
+// style for print screen
+@media print {
+  .invoice-print {
+    padding: 0px !important;
+  }
+  .invoice-header {
+    border-bottom: 1px solid $border-color;
+    flex-direction: row !important;
+    margin-bottom: 3rem;
+    padding-right: 5rem;
+  }
+  .table-responsive {
+    overflow-x: hidden;
+  }
+  hr {
+    display: none;
+  }
+}

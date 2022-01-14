@@ -10,9 +10,12 @@ table.dataTable {
   // table width & collapse border
   width: 100% !important;
   border-collapse: collapse !important;
+  &.table-responsive:not(.datatables-ajax) {
+    display: block; // For responsive data-table of BS5
+  }
   td,
   th {
-    padding: $table-cell-padding 1.5rem;
+    padding: $table-cell-padding-y 1.5rem;
     vertical-align: middle;
   }
   thead {
@@ -47,16 +50,9 @@ table.dataTable {
       }
     }
   }
-
-  // datatables with checkbox styling
-  .dt-checkboxes-cell {
-    .custom-control {
-      padding-left: 0;
-      padding-right: 1.25rem;
-    }
-  }
 }
 
+// Export button dropdown UI
 div.dataTables_wrapper .dt-button-collection {
   background-color: $dropdown-bg;
   > div[role='menu'] {
@@ -69,10 +65,30 @@ div.dataTables_wrapper .dt-button-collection {
   }
 }
 
-// responsive '+' icon line height
+// Custom responsive style for BS5
+// Responsive table area '+' icon position
 table.dataTable.dtr-column > tbody > tr > td.control:before,
 table.dataTable.dtr-column > tbody > tr > th.control:before {
-  line-height: 16px;
+  line-height: 0.8em;
+}
+
+// To scroll within datatable area
+@media screen and (max-width: 1399.98px) {
+  table.dataTable.table-responsive {
+    display: block;
+  }
+}
+
+// Modal table style
+.modal.dtr-bs-modal {
+  .modal-body {
+    padding: 0;
+  }
+  .table {
+    tr:last-child > td {
+      border-bottom: 0;
+    }
+  }
 }
 
 // data table search, labels and
@@ -87,7 +103,7 @@ div.dataTables_wrapper {
     // for datatable length select
     select {
       background-position: calc(100% - 3px) 11px, calc(100% - 20px) 13px, 100% 0;
-      padding: 0 0.8rem;
+      // padding: 0 0.8rem;
       width: 5rem;
       margin: 0 0.5rem;
     }
@@ -114,9 +130,16 @@ div.dataTables_wrapper {
 // row grouping
 tr.group {
   // row grouping color
-  background-color: $table-accent-bg;
+  background-color: $table-row-group-bg;
 }
 
+@media only screen and (max-width: 992px) {
+  table.dataTable {
+    &.table-responsive.datatables-ajax {
+      display: block; // For responsive data-table of BS5
+    }
+  }
+}
 // pagination in center
 @media only screen and (max-width: 768px) {
   div.dataTables_wrapper {
@@ -139,7 +162,7 @@ tr.group {
     }
   }
 }
-@include media-breakpoint-down(xs) {
+@include media-breakpoint-down(sm) {
   .dtr-bs-modal {
     .modal-body {
       padding-left: 0;

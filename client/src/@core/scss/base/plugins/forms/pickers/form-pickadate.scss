@@ -93,10 +93,15 @@
                 color: $white;
                 // color: $theme-dark-body-color;
               }
+              &.picker__day--outfocus {
+                opacity: 0.65;
+              }
+              &.picker__day--today{
+                color: $white;
+              }
 
-              &:hover {
+              &:not(.picker__day--today):not(.picker__day--highlighted):hover {
                 background-color: $theme-dark-border-color;
-                // border: 1px solid #4ec6e8;
                 color: $white;
               }
 
@@ -107,7 +112,7 @@
               }
             }
 
-            .picker__day--today {
+            .picker__day--today:not(.picker__day--highlighted) {
               background-color: $theme-dark-card-bg;
             }
           }
@@ -135,8 +140,7 @@
         background-color: $theme-dark-body-bg;
 
         .picker__list-item {
-          &.picker__list-item--selected,
-          &:hover {
+          &:not(.picker__list-item--selected):hover {
             background-color: $theme-dark-card-bg;
           }
 

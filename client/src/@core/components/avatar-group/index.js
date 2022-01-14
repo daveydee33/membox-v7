@@ -4,9 +4,11 @@ import { Fragment } from 'react'
 // ** Third Party Components
 import Proptypes from 'prop-types'
 import classnames from 'classnames'
+
+// ** Reactstrap Imports
 import { UncontrolledTooltip } from 'reactstrap'
 
-// ** Custom Components
+// ** Custom Components Imports
 import Avatar from '@components/avatar'
 
 const AvatarGroup = props => {
@@ -34,12 +36,12 @@ const AvatarGroup = props => {
                 [item.className]: item.className
               })}
               {...(item.title ? { id: item.title.split(' ').join('-') } : {})}
+              {...item}
               title={undefined}
               meta={undefined}
-              {...item}
             />
           ) : null}
-          {item.meta ? <ItemTag className='d-flex align-items-center pl-1'>{item.meta}</ItemTag> : null}
+          {item.meta ? <ItemTag className='d-flex align-items-center ps-1'>{item.meta}</ItemTag> : null}
         </Fragment>
       )
     })

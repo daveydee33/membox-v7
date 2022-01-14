@@ -76,7 +76,7 @@
 }
 
 // price trial ad card in small screen
-@include media-breakpoint-down(sm) {
+@include media-breakpoint-down(md) {
   .pricing-free-trial {
     height: auto;
     .pricing-trial-content {
@@ -92,7 +92,7 @@
 }
 
 // free trial div margin change on below screen
-@include media-breakpoint-down(xs) {
+@include media-breakpoint-down(sm) {
   .pricing-free-trial {
     margin-right: -1.2rem;
     margin-left: -1.2rem;

@@ -25,3 +25,9 @@ form {
     }
   }
 }
+.was-validated .form-select:invalid:not([multiple]):not([size]),
+.was-validated .form-select:invalid:not([multiple])[size='1'],
+.form-select.is-invalid:not([multiple]):not([size]),
+.form-select.is-invalid:not([multiple])[size='1'] {
+  background-position: right 1rem center, center right 2.5rem;
+}

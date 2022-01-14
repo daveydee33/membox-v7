@@ -78,7 +78,7 @@
   );
   // responsive size height
   @if $horizontalLayout {
-    @include media-breakpoint-down(lg) {
+    @include media-breakpoint-down(xl) {
       height: calc(
         100vh - calc(calc(calc(#{$contentPadding} - 0.8rem) * #{$spacingSides}) + #{$navbarHeight} + #{$footerHeight})
       );
@@ -88,7 +88,7 @@
       );
     }
   } @else {
-    @include media-breakpoint-down(xs) {
+    @include media-breakpoint-down(sm) {
       height: calc(
         100vh -
           calc(

@@ -27,8 +27,8 @@
     &:not(.expanded) {
       .navigation {
         .sidebar-group-active {
-          a {
-            background-color: $theme-dark-body-bg;
+          > a {
+            background-color: $theme-dark-body-bg !important;
           }
         }
       }
@@ -46,14 +46,14 @@
         a {
           color: $theme-dark-body-color;
         }
-        &.open {
-          a {
+        &.open:not(.sidebar-group-active) {
+          > a {
             background-color: $theme-dark-body-bg;
           }
         }
         a:after,
         a {
-          color: $theme-dark-body-color;
+          color: $theme-dark-body-color !important;
         }
         .menu-content {
           background-color: $theme-dark-card-bg;
@@ -70,6 +70,9 @@
         }
       }
       .active {
+        > a {
+          color: $white !important;
+        }
         .menu-title,
         i {
           color: $white;
@@ -77,7 +80,6 @@
       }
       .sidebar-group-active {
         a {
-          background: $theme-dark-card-bg;
           border-radius: 4px;
         }
       }

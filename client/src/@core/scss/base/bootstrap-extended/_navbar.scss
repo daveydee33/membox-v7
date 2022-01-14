@@ -23,7 +23,8 @@
   transition: 300ms ease all, background 0s;
   z-index: 997;
 
-  &.fixed-top {
+  &.fixed-top,
+  &.floating-nav {
     left: $menu-expanded-width;
   }
 
@@ -65,7 +66,7 @@
   &.floating-nav {
     position: fixed;
     right: 0;
-    margin: #{$floating-nav-margin} #{$content-padding} 0;
+    margin: #{$floating-nav-margin} auto 0;
     width: calc(100vw - (100vw - 100%) - calc(#{$content-padding} * 2) - #{$menu-expanded-width});
     border-radius: $card-border-radius;
     z-index: 12;
@@ -149,12 +150,13 @@
           .dropdown-menu {
             .vertical-layout & {
               top: 41px !important; // Apply navbar dd position on vertical layouts only (Not for horizontal layout due to hover out issue)
+              right: 0;
             }
           }
         }
 
         &.dropdown-language {
-          .dropdown-menu.dropdown-menu-right {
+          .dropdown-menu.dropdown-menu-end {
             right: -2px;
           }
         }
@@ -167,7 +169,7 @@
               right: -3px;
             }
           }
-          .dropdown-menu.dropdown-menu-right {
+          .dropdown-menu.dropdown-menu-end {
             right: -2px;
             padding: 0;
             left: inherit;
@@ -193,7 +195,7 @@
           }
         }
         &.dropdown-notification {
-          .media-body {
+          .list-item-body {
             .media-heading {
               color: $body-color;
               margin-bottom: 0;
@@ -204,7 +206,7 @@
 
         // Cart dropdown
         &.dropdown-cart {
-          .media {
+          .list-item {
             position: relative;
             img {
               background: $body-bg;
@@ -231,7 +233,7 @@
               overflow: hidden;
             }
           }
-          .media-body {
+          .list-item-body {
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -264,7 +266,6 @@
         &.dropdown-user {
           line-height: 1 !important; // Set due to custom 2 line component in navbar
           .dropdown-menu {
-            width: 12rem;
             margin-top: 10px;
             i,
             svg {
@@ -353,7 +354,9 @@
       }
 
       .media-list {
-        .media {
+        .list-item {
+          display: flex;
+          flex-grow: 1;
           padding: 0.9rem 1.28rem;
           border: none;
           border-bottom: 1px solid $border-color;
@@ -368,7 +371,7 @@
         }
 
         a:last-of-type {
-          .media {
+          .list-item {
             border-bottom: none;
           }
         }
@@ -389,7 +392,7 @@
 // Floating Navbar
 .navbar-floating {
   // Floating nav should have same padding across all screen
-  .navbar-container {
+  .navbar-container:not(.main-menu-content) {
     padding: 0.8rem 1rem;
   }
   .header-navbar-shadow {
@@ -474,7 +477,7 @@
 
 // Media queries for device support
 // =========================================
-@include media-breakpoint-down(sm) {
+@include media-breakpoint-down(md) {
   .header-navbar {
     // generic navbar dropdown specific
     .navbar-nav {
@@ -486,10 +489,15 @@
         padding-top: 0.625rem;
       }
     }
-
+    .dropup,
+    .dropend,
+    .dropdown,
+    .dropstart {
+      position: static;
+    }
     .navbar-container {
       .show {
-        .dropdown-menu {
+        ~ .dropdown-menu {
           right: 0;
           left: 0 !important;
           float: none;
@@ -500,7 +508,7 @@
       }
 
       .dropdown-user {
-        .dropdown-menu-right {
+        .dropdown-menu-end {
           right: 0 !important;
         }
       }
@@ -558,7 +566,7 @@
 // For Medium and down: iPad support for navbr
 
 // navbar static top
-@include media-breakpoint-down(lg) {
+@include media-breakpoint-down(xl) {
   .header-navbar {
     // floating nav width
     &.floating-nav {
@@ -589,21 +597,21 @@
   }
 }
 
-@include media-breakpoint-down(md) {
+@include media-breakpoint-down(lg) {
   @include responsive_sub_nav;
 }
 @media (max-width: 767px) {
   @include responsive_sub_nav;
 }
 
-@include media-breakpoint-down(xs) {
+@include media-breakpoint-down(md) {
   .header-navbar {
     &.floating-nav {
       width: calc(
         100vw - (100vw - 100%) - calc(#{$content-padding} + 0.4rem)
       ) !important; // SM screen calc as per updated spacings
-      margin-left: 1rem;
-      margin-right: 1.2rem;
+      margin-left: calc(#{$content-padding} - 0.8rem);
+      margin-right: calc(#{$content-padding} - 0.8rem);
     }
 
     .navbar-container ul.navbar-nav li .selected-language {
@@ -644,7 +652,8 @@
 // for width of navbar in fixed-top
 @media (max-width: 1201px) {
   .header-navbar {
-    &.fixed-top {
+    &.fixed-top,
+    &.floating-nav {
       left: 0;
     }
   }

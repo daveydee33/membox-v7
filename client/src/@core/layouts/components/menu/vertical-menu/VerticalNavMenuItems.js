@@ -4,20 +4,26 @@ import VerticalNavMenuGroup from './VerticalNavMenuGroup'
 import VerticalNavMenuSectionHeader from './VerticalNavMenuSectionHeader'
 
 // ** Utils
-import { resolveVerticalNavMenuItemComponent as resolveNavItemComponent } from '@layouts/utils'
+import {
+  // canViewMenuItem,
+  // canViewMenuGroup,
+  resolveVerticalNavMenuItemComponent as resolveNavItemComponent
+} from '@layouts/utils'
 
 const VerticalMenuNavItems = props => {
   // ** Components Object
   const Components = {
-    VerticalNavMenuSectionHeader,
+    VerticalNavMenuLink,
     VerticalNavMenuGroup,
-    VerticalNavMenuLink
+    VerticalNavMenuSectionHeader
   }
 
   // ** Render Nav Menu Items
   const RenderNavItems = props.items.map((item, index) => {
     const TagName = Components[resolveNavItemComponent(item)]
-
+    if (item.children) {
+      return <TagName item={item} index={index} key={item.id} {...props} />
+    }
     return <TagName key={item.id || item.header} item={item} {...props} />
   })
 

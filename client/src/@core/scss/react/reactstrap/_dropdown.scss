@@ -1,6 +1,16 @@
 // Component Dropdown
 // ========================================================================
 
+.dropdown-menu[data-popper-placement]:not([data-popper-placement^='top-']) {
+  top: 0.5rem !important;
+  margin: unset !important;
+}
+
+.dropdown-menu[data-popper-placement^='top-'] {
+  bottom: 0.5rem !important;
+  margin: unset !important;
+}
+
 // Navbar Dropdowns
 .dropdown-notification,
 .dropdown-cart {

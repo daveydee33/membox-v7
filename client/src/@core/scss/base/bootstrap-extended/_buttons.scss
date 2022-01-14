@@ -47,13 +47,27 @@
     vertical-align: bottom;
   }
 }
-
+.btn-check {
+  &:checked,
+  &:active {
+    + [class*='btn-'] {
+      outline: none;
+      box-shadow: none;
+    }
+  }
+}
 // For Waves Input Padding
 .btn.waves-input-wrapper {
   padding: 0;
 }
 
-@include media-breakpoint-down(sm) {
+.btn-pinned {
+  position: absolute;
+  top: 1.2rem;
+  right: 0.7rem;
+}
+
+@include media-breakpoint-down(md) {
   .btn-sm-block {
     display: block;
     width: 100%;

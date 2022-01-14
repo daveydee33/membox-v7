@@ -37,10 +37,12 @@ $bs-height-xs: (floor($font-size-sm * 0.2) + $input-btn-padding-y-lg) !default;
 
 // Social button Mixin
 @mixin btn-social($color-bg, $color: #fff, $hover: $color-bg, $border-hover: $color-bg) {
-  background-color: $color-bg;
-  @include button-variant($color-bg, $color, $hover, $border-hover);
+  @include button-variant($color-bg, transparent);
   color: $white !important;
   border: none;
+  &:focus {
+    box-shadow: none !important;
+  }
 }
 
 // Social Outline Button Mixin
@@ -51,8 +53,8 @@ $bs-height-xs: (floor($font-size-sm * 0.2) + $input-btn-padding-y-lg) !default;
 
 // Social Outline Button Hover Mixin
 @mixin btn-hover-outline($color-bg) {
-  color: darken($color-bg, 20%);
-  border: 1px solid darken($color-bg, 20%) !important;
+  color: shade-color($color-bg, 20%);
+  border: 1px solid shade-color($color-bg, 20%) !important;
 }
 
 // Social button

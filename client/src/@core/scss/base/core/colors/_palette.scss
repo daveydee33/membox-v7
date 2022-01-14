@@ -33,20 +33,20 @@
 @import 'palette-variables';
 
 // Color Classes
-//   Text color: .color .lighten-* / .darken-* / .accent-*
-//   Background: .bg-color .bg-lighten-* / .bg-darken-* / .bg-accent-*
-//   border: .border-color .border-lighten-* / .border-darken-* / .border-accent-*
-//   border-top: .border-top-color .border-top-lighten-* / .border-top-darken-* / .border-top-accent-*
-//   border-bottom: .border-bottom-color .border-bottom-lighten-* / .border-bottom-darken-* / .border-bottom-accent-*
-//   border-left: .border-left-color .border-left-lighten-* / .border-left-darken-* / .border-left-accent-*
-//   border-right: .border-right-color .border-right-lighten-* / .border-right-darken-* / .border-right-accent-*
+//   Text color: .color
+//   Background: .bg-color
+//   border: .border-color
+//   border-top: .border-top-color
+//   border-bottom: .border-bottom-color
+//   border-left: .border-left-color
+//   border-right: .border-right-color
 
 @each $color_name, $color in $colors {
   @each $color_type, $color_value in $color {
     @if $color_type== 'base' {
       // background color
       .bg-#{$color_name} {
-        background-color: $color_value !important;
+        // background-color: $color_value !important;
 
         .card-header,
         .card-footer {
@@ -69,7 +69,13 @@
           }
 
           // closable alert
-          .close {
+          .btn-close {
+            background: transparent
+              str-replace(str-replace(escape-svg($btn-close-bg), 'currentColor', $color_value), '#', '%23')
+              center /
+              $btn-close-width
+              auto
+              no-repeat;
             color: $color_value !important;
           }
         }
@@ -123,18 +129,17 @@
         border-bottom: 1px solid $color_value;
       }
 
-      .border-left-#{$color_name} {
+      .border-start-#{$color_name} {
         border-left: 1px solid $color_value;
       }
 
-      .border-right-#{$color_name} {
+      .border-end-#{$color_name} {
         border-right: 1px solid $color_value;
       }
 
       // badge glow colors
       .bg-#{$color_name},
-      .border-#{$color_name},
-      .badge-#{$color-name} {
+      .border-#{$color_name} {
         &.badge-glow {
           box-shadow: 0px 0px 10px $color_value;
         }
@@ -176,6 +181,15 @@
 
           &:not(:disabled):not(.disabled):active:focus {
             box-shadow: none;
+          }
+        }
+        .btn-check {
+          &:checked,
+          &:active {
+            + .btn-#{$color_name} {
+              color: $white;
+              background-color: color-function($color_name, 'darken-1') !important;
+            }
           }
         }
       }
@@ -266,9 +280,19 @@
             background-image: url(str-replace(str-replace($chevron-down, 'currentColor', $color_value), '#', '%23'));
           }
           // split toggle have show class
-          .show > &.dropdown-toggle {
+          // .show > &.dropdown-toggle {
+          &.show.dropdown-toggle {
             background-color: rgba($color: $color_value, $alpha: 0.2);
             color: $color_value;
+          }
+        }
+        .btn-check {
+          &:checked,
+          &:active {
+            + .btn-outline-#{$color_name} {
+              color: $color_value;
+              background-color: rgba($color: $color_value, $alpha: 0.2) !important;
+            }
           }
         }
       }
@@ -308,7 +332,13 @@
               .modal-title {
                 color: $color_value;
               }
-              .close {
+              .btn-close {
+                background: $white
+                  str-replace(str-replace(escape-svg($btn-close-bg), 'currentColor', $color_value), '#', '%23')
+                  center /
+                  $btn-close-width
+                  auto
+                  no-repeat !important;
                 color: $color_value !important;
               }
             }
@@ -448,41 +478,57 @@
 
       // Custom Checkbox & Radio
       @if ($color_name != 'light' and $color_name != 'black' and $color_name != 'white') {
-        .custom-control-#{$color_name} {
-          .custom-control-input:checked ~ .custom-control-label::before,
-          .custom-control-input:active ~ .custom-control-label::before {
-            border-color: $color_value;
-            background-color: $color_value;
-          }
-          &.custom-checkbox,
-          &.custom-radio {
-            .custom-control-input:checked ~ .custom-control-label::before,
-            .custom-control-input:active ~ .custom-control-label::before,
-            .custom-control-input:focus ~ .custom-control-label::before {
-              box-shadow: 0 2px 4px 0 rgba($color_value, 0.4) !important;
+        .form-check-#{$color_name} {
+          .form-check-input {
+            &:checked {
+              border-color: $color_value;
+              background-color: $color_value;
+            }
+            &:not(:disabled) {
+              &:checked,
+              &:focus {
+                border-color: $color_value;
+                box-shadow: 0 2px 4px 0 rgba($color_value, 0.4);
+              }
             }
           }
-          .custom-control-input:disabled:checked ~ .custom-control-label::before {
-            background-color: rgba($color_value, 0.65) !important;
-            border: none;
-            box-shadow: none !important;
-          }
-          .custom-control-input:focus ~ .custom-control-label::before {
-            border-color: $color_value;
-          }
+          // For switch
+          // &.form-switch {
+          //   .form-check-input {
+          //     &:active {
+          //       background-color: $color_value;
+          //     }
+          //   }
+          // }
+          // &.custom-checkbox,
+          // &.custom-radio {
+          //   .form-check-input:checked ~ .form-check-label::before,
+          //   .form-check-input:active ~ .form-check-label::before,
+          //   .form-check-input:focus ~ .form-check-label::before {
+          //     box-shadow: 0 2px 4px 0 rgba($color_value, 0.4) !important;
+          //   }
+          // }
+          // .form-check-input:disabled:checked ~ .form-check-label::before {
+          //   background-color: rgba($color_value, 0.65) !important;
+          //   border: none;
+          //   box-shadow: none !important;
+          // }
+          // .form-check-input:focus ~ .form-check-label::before {
+          //   border-color: $color_value;
+          // }
         }
       }
 
       // Bootstrap Custom Switches
-      @if ($color_name != 'light' and $color_name != 'black' and $color_name != 'white') {
-        .custom-switch-#{$color-name} {
-          .custom-control-input:checked ~ .custom-control-label::before {
-            background-color: $color_value !important;
-            color: $white;
-            transition: all 0.2s ease-out;
-          }
-        }
-      }
+      // @if ($color_name != 'light' and $color_name != 'black' and $color_name != 'white') {
+      //   .custom-switch-#{$color-name} {
+      //     .form-check-input:checked ~ .form-check-label::before {
+      //       background-color: $color_value !important;
+      //       color: $white;
+      //       transition: all 0.2s ease-out;
+      //     }
+      //   }
+      // }
 
       // Select2
       @if ($color_name != 'light' and $color_name != 'black' and $color_name != 'white') {
@@ -496,38 +542,6 @@
             }
           }
         }
-      }
-    } @else {
-      .text-#{$color_name}.text-#{$color_type} {
-        color: $color_value !important;
-      }
-
-      .bg-#{$color_name}.bg-#{$color_type} {
-        background-color: $color_value !important;
-      }
-
-      .border-#{$color_name}.border-#{$color_type} {
-        border: 1px solid $color_value !important;
-      }
-
-      .border-top-#{$color_name}.border-top-#{$color_type} {
-        border-top: 1px solid $color_value !important;
-      }
-
-      .border-bottom-#{$color_name}.border-bottom-#{$color_type} {
-        border-bottom: 1px solid $color_value !important;
-      }
-
-      .border-left-#{$color_name}.border-left-#{$color_type} {
-        border-left: 1px solid $color_value !important;
-      }
-
-      .border-right-#{$color_name}.border-right-#{$color_type} {
-        border-right: 1px solid $color_value !important;
-      }
-
-      .overlay-#{$color_name}.overlay-#{$color_type} {
-        @include bg-opacity($color_value, 0.6);
       }
     }
   }

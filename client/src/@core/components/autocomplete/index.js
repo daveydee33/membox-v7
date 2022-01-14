@@ -1,7 +1,7 @@
 // ** React Imports
-import { Fragment, useEffect, useState, useRef } from 'react'
 import ReactDOM from 'react-dom'
 import { useHistory } from 'react-router-dom'
+import { Fragment, useEffect, useState, useRef } from 'react'
 
 // ** Third Party Components
 import PropTypes from 'prop-types'
@@ -9,10 +9,10 @@ import classnames from 'classnames'
 import { AlertCircle } from 'react-feather'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 
-// ** Custom Hooks
+// ** Hooks Imports
 import { useOnClickOutside } from '@hooks/useOnClickOutside'
 
-// ** Styles
+// ** Styles Imports
 import '@styles/base/bootstrap-extended/_include.scss'
 import './autocomplete.scss'
 
@@ -198,7 +198,7 @@ const Autocomplete = props => {
     } else {
       return (
         <li className='suggestion-item no-result'>
-          <AlertCircle size={15} /> <span className='align-middle ml-50'>No Result</span>
+          <AlertCircle size={15} /> <span className='align-middle ms-50'>No Result</span>
         </li>
       )
     }
@@ -238,7 +238,7 @@ const Autocomplete = props => {
               renderGroupedSuggestion(sortData)
             ) : (
               <li className='suggestion-item no-result'>
-                <AlertCircle size={15} /> <span className='align-middle ml-50'>No Result</span>
+                <AlertCircle size={15} /> <span className='align-middle ms-50'>No Result</span>
               </li>
             )}
           </Fragment>
@@ -336,19 +336,19 @@ export default Autocomplete
 
 // ** PropTypes
 Autocomplete.propTypes = {
-  suggestions: PropTypes.array.isRequired,
-  filterKey: PropTypes.string.isRequired,
-  defaultValue: PropTypes.string,
-  wrapperClass: PropTypes.string,
-  filterHeaderKey: PropTypes.string,
-  placeholder: PropTypes.string,
-  suggestionLimit: PropTypes.number,
   grouped: PropTypes.bool,
   autoFocus: PropTypes.bool,
   onKeyDown: PropTypes.func,
   onChange: PropTypes.func,
+  clearInput: PropTypes.func,
+  placeholder: PropTypes.string,
+  externalClick: PropTypes.func,
+  defaultValue: PropTypes.string,
+  wrapperClass: PropTypes.string,
+  filterHeaderKey: PropTypes.string,
+  suggestionLimit: PropTypes.number,
   onSuggestionsShown: PropTypes.func,
   onSuggestionItemClick: PropTypes.func,
-  clearInput: PropTypes.func,
-  externalClick: PropTypes.func
+  filterKey: PropTypes.string.isRequired,
+  suggestions: PropTypes.array.isRequired
 }

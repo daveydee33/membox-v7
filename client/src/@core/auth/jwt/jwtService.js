@@ -46,10 +46,10 @@ export default class JwtService {
               this.isAlreadyFetchingAccessToken = false
 
               // ** Update accessToken in localStorage
-              this.setToken(r.data.access.token)
-              this.setRefreshToken(r.data.refresh.token)
+              this.setToken(r.data.accessToken)
+              this.setRefreshToken(r.data.refreshToken)
 
-              this.onAccessTokenFetched(r.data.access.token)
+              this.onAccessTokenFetched(r.data.accessToken)
             })
           }
           const retryOriginalRequest = new Promise(resolve => {
@@ -58,7 +58,7 @@ export default class JwtService {
               // ** Check: https://pixinvent.ticksy.com/ticket/2413870
               // ** Change Authorization header
               originalRequest.headers.Authorization = `${this.jwtConfig.tokenType} ${accessToken}`
-              resolve(axios(originalRequest))
+              resolve(this.axios(originalRequest))
             })
           })
           return retryOriginalRequest

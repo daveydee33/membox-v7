@@ -71,38 +71,6 @@ $avatar-bg: #c3c3c3;
 $avatar-group-border: $white;
 
 //  -------------------------------
-//  Progress
-//  -------------------------------
-$progress-size-xl: 1.14rem !default;
-$progress-size-lg: 0.857rem !default;
-$progress-size-md: 0.57rem !default;
-$progress-size-sm: 0.143rem !default;
-
-//  -------------------------------
-//  Form
-//  -------------------------------
-
-// $input-height, $input-height-lg, $input-height-sm are in variables
-$font-size-xs: 0.75rem !default;
-$font-size-xl: ($font-size-base + 0.5) !default;
-$line-height-xl: 1.7 !default;
-$line-height-xs: 1.5 !default;
-$input-padding-y-xl: 0.5rem !default;
-$input-padding-x-xl: 0.5rem !default;
-
-$input-padding-y-xs: 0.2rem !default;
-$input-padding-x-xs: 0.275rem !default;
-
-$border-radius-xl: 0.35rem !default;
-$border-radius-xs: 0.12rem !default;
-$input-border-radius-xl: $border-radius-xl !default;
-$input-border-radius-xs: $border-radius-xs !default;
-
-$input-height-xl: (($font-size-xl * $line-height-xl) + ($input-padding-y-xl * 2)) !default;
-$input-height-xs: (($font-size-xs * $line-height-xs) + ($input-padding-y-xs * 2)) !default;
-$input-height-sm: (($font-size-sm * $line-height-sm) + ($input-padding-y-sm * 2)) !default;
-
-//  -------------------------------
 //  Blank Page Bg Color
 //  -------------------------------
 
@@ -111,14 +79,7 @@ $blank-bg-color: #eff2f7 !default;
 //  -------------------------------
 //  Data Tables Bg Color
 //  -------------------------------
-
 $datatable-bg-color: #f8f8f8 !default;
-
-//  -------------------------------
-//  Switch
-//  -------------------------------
-$switch-bg-color: #e2e2e2 !default;
-$switch-indicator-color: $white !default;
 
 //  -------------------------------
 //  Timeline
@@ -135,3 +96,8 @@ $timeline-item-icon-font-size: 0.85rem !default;
 
 $timeline-event-time-size: 0.85rem !default;
 $timeline-event-time-color: $text-muted !default;
+
+// ------------------------------------------------
+// custom options
+// ------------------------------------------------
+$custom-options-bg-color: rgba($secondary, 0.06);

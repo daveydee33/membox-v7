@@ -4,6 +4,11 @@ html[dir='rtl'] {
     left: 1px !important;
   }
 
+  // RTL Icons
+  .rotate-rtl {
+    transform: rotate(-180deg);
+  }
+
   // Scroll To Top
   .scroll-to-top {
     div:first-of-type {
@@ -17,11 +22,11 @@ html[dir='rtl'] {
     .main-menu .navigation {
       li.has-sub {
         > a:after {
-          transform: rotate(-90deg) !important;
+          transform: rotate(90deg) !important;
         }
         &:not(.open) {
           > a:after {
-            transform: rotate(-180deg) !important;
+            transform: rotate(180deg) !important;
           }
         }
       }
@@ -99,41 +104,34 @@ html[dir='rtl'] {
 
   // Popover
   .popover {
-    left: auto !important;
-  }
-
-  // Progress
-  .progress-bar-animated {
-    animation: progress-bar-stripes 40s linear infinite;
+    &[data-popper-placement^='left'] {
+      .popover-arrow {
+        left: unset;
+        right: -0.5rem;
+        transform: translate3d(0px, 58px, 0px) rotate(180deg) !important;
+      }
+    }
+    &[data-popper-placement^='right'] {
+      .popover-arrow {
+        right: unset;
+        left: -0.5rem;
+        transform: translate3d(0px, 58px, 0px) rotate(180deg) !important;
+      }
+    }
   }
 
   // Tooltip
-  .bs-tooltip-left .arrow::before,
-  .bs-tooltip-auto[x-placement^='left'] .arrow::before {
-    border-width: 0.4rem 0 0.4rem 0.4rem;
-    border-right-color: $tooltip-bg;
-  }
-
   .bs-tooltip-left .arrow,
-  .bs-tooltip-auto[x-placement^='left'] .arrow {
-    left: 0;
-    right: auto;
-
-    transform: rotate(180deg);
-  }
-
-  .bs-tooltip-right .arrow::before,
-  .bs-tooltip-auto[x-placement^='right'] .arrow::before {
-    border-width: 0.4rem 0.4rem 0.4rem 0;
-    border-left-color: $tooltip-bg;
+  .bs-tooltip-auto[data-popper-placement^='left'] .arrow {
+    right: -1px;
+    transform: translate3d(0px, 9px, 0px) rotate(180deg) !important;
   }
 
   .bs-tooltip-right .arrow,
-  .bs-tooltip-auto[x-placement^='right'] .arrow {
-    right: 0;
-    left: auto;
-
-    transform: rotate(180deg);
+  .bs-tooltip-auto[data-popper-placement^='right'] .arrow {
+    right: auto;
+    left: -1px;
+    transform: translate3d(0px, 9px, 0px) rotate(180deg) !important;
   }
 
   // App Email
@@ -149,7 +147,7 @@ html[dir='rtl'] {
     .fc-toolbar {
       .fc-prev-button,
       .fc-next-button {
-        transform: rotate(180deg);
+        transform: translate3d(0px, 9px, 0px) rotate(180deg) !important;
       }
     }
   }
@@ -165,7 +163,7 @@ html[dir='rtl'] {
   // Invoice List
   .invoice-list-table-header {
     select {
-      background-position: calc(100% - (100% - 45px)) 13px, calc(100% - (100% - 20px)) 13px, 0% 0 !important;
+      background-position: calc(100% - (100% - 13px)) 13px, calc(100% - (100% - 20px)) 13px, 0% 0 !important;
     }
   }
 
@@ -188,7 +186,10 @@ html[dir='rtl'] {
 
   // Context Menu
   .react-contexify {
-    z-index: 1031;
+    transform-origin: top left;
+    .react-contexify__submenu-arrow {
+      transform: rotate(180deg);
+    }
   }
 
   // Swiper

@@ -13,7 +13,7 @@
       padding: $dropdown-item-padding-y $dropdown-item-padding-x;
       color: $dropdown-color;
     }
-    &:hover {
+    &:hover:not(.react-contexify__item--disabled) {
       > .react-contexify__item__content {
         background-color: $dropdown-link-hover-bg !important;
         color: $primary;
@@ -31,6 +31,14 @@
   .react-contexify__item {
     .react-contexify__item__content {
       color: $theme-dark-body-color;
+    }
+  }
+}
+[dir='rtl'] {
+  .react-contexify {
+    .react-contexify__submenu {
+      left: 0 !important;
+      right: 100% !important;
     }
   }
 }

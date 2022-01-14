@@ -20,7 +20,15 @@
           letter-spacing: 0.5px;
           text-transform: uppercase;
           &:hover {
-            color: $body-color;
+            opacity: 1;
+          }
+          span {
+            margin-left: 0.35rem;
+          }
+        }
+        &:first-child {
+          .form-check {
+            transform: translateX(-10px);
           }
         }
       }
@@ -29,6 +37,7 @@
 
   .rdt_TableBody {
     .rdt_TableRow {
+      color: $body-color;
       .rdt_TableCell {
         height: 53px;
         padding: 0.72rem 1.5rem;
@@ -60,6 +69,23 @@
       .page-item:last-child .page-link {
         border-radius: 50%;
       }
+    }
+  }
+
+  &.roles-table {
+    .rdt_TableHead .rdt_TableHeadRow .rdt_TableCol:first-child .form-check {
+      transform: translateX(0);
+    }
+    .rdt_TableBody .rdt_TableRow .rdt_TableCell:first-child .form-check {
+      transform: translateX(10px);
+    }
+  }
+}
+
+.permission-header {
+  @media (max-width: 740px) {
+    .add-permission {
+      margin-top: 1rem !important;
     }
   }
 }
@@ -107,6 +133,11 @@
     .rdt_Table {
       background: $theme-dark-table-header-bg;
       color: $theme-dark-body-color;
+
+      & > div:first-child:not(.rdt_TableHead):not(.rdt_TableBody) {
+        color: $theme-dark-body-color;
+        background-color: $theme-dark-card-bg;
+      }
     }
     .rdt_TableHead {
       .rdt_TableHeadRow {
@@ -118,9 +149,9 @@
             color: $theme-dark-body-color;
           }
         }
-        .rdt_TableCol_Sortable,
-        .rdt_TableCol_Sortable:hover {
+        .rdt_TableCol_Sortable {
           color: $theme-dark-headings-color;
+
           svg {
             stroke: $theme-dark-headings-color;
           }
@@ -138,6 +169,11 @@
         border-color: $theme-dark-border-color;
         .rdt_TableCell {
           color: $theme-dark-body-color;
+          .column-action {
+            svg {
+              stroke: $theme-dark-body-color;
+            }
+          }
         }
         button {
           &:hover:not(:disabled) {
@@ -147,11 +183,17 @@
             color: $theme-dark-body-color;
           }
         }
+        .permissions-actions {
+          button:hover {
+            background-color: transparent;
+          }
+        }
       }
     }
     .rdt_Pagination {
-      background-color: $theme-dark-table-bg;
       color: $theme-dark-body-color;
+      border-color: $theme-dark-border-color;
+      background-color: $theme-dark-table-bg;
 
       svg {
         fill: $theme-dark-body-color;

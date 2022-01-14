@@ -6,7 +6,7 @@ import classnames from 'classnames'
 
 // ** Store & Actions
 import { useSelector, useDispatch } from 'react-redux'
-import { handleContentWidth, handleMenuCollapsed, handleMenuHidden } from '@store/actions/layout'
+import { handleContentWidth, handleMenuCollapsed, handleMenuHidden } from '@store/layout'
 
 // ** Styles
 import 'animate.css/animate.css'
@@ -18,6 +18,7 @@ const LayoutWrapper = props => {
   // ** Store Vars
   const dispatch = useDispatch()
   const store = useSelector(state => state)
+
   const navbarStore = store.navbar
   const contentWidth = store.layout.contentWidth
 
@@ -68,7 +69,7 @@ const LayoutWrapper = props => {
         className={classnames({
           'content-wrapper': !appLayout,
           'content-area-wrapper': appLayout,
-          'container p-0': contentWidth === 'boxed',
+          'container-xxl p-0': contentWidth === 'boxed',
           [`animate__animated animate__${transition}`]: transition !== 'none' && transition.length
         })}
       >

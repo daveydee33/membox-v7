@@ -1,16 +1,4 @@
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
-  CardText,
-  CardLink,
-  Col,
-  CustomInput,
-  FormGroup,
-  Input,
-  Label
-} from 'reactstrap'
+import { Card, CardHeader, CardBody, CardTitle, CardText, CardLink, Col, FormGroup, Input, Label } from 'reactstrap'
 import { selectThemeColors } from '@utils'
 import Select, { components } from 'react-select'
 
@@ -69,12 +57,7 @@ const AddWord = () => {
               Description
             </Label>
             <Col sm="9">
-              <Input
-                id="description"
-                bsSize="lg"
-                placeholder="Description"
-                type="textarea"
-              />
+              <Input id="description" bsSize="lg" placeholder="Description" type="textarea" />
             </Col>
           </FormGroup>
         </Col>
@@ -126,7 +109,7 @@ const AddWord = () => {
               Labels
             </Label>
             <Col sm="9">
-              <CustomInput
+              {/* <CustomInput
                 type="checkbox"
                 className="custom-control-Primary"
                 id="Primary"
@@ -173,7 +156,7 @@ const AddWord = () => {
                 label="Info"
                 defaultChecked
                 inline
-              />
+              /> */}
             </Col>
           </FormGroup>
         </Col>

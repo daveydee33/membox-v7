@@ -154,3 +154,14 @@ $avatar-add-new-color: rgba(108, 117, 125, 0.12);
     }
   }
 }
+// For Light Layout
+.kanban-board.gu-mirror {
+  height: fit-content !important;
+  .kanban-board-header {
+    display: flex;
+    justify-content: space-around;
+  }
+  .kanban-drag {
+    padding-right: 20px !important;
+  }
+}

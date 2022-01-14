@@ -167,7 +167,7 @@
       box-shadow: 0 0 0 2px $avatar-group-border, inset 0 0 0 1px rgba($black, 0.07);
     }
     .avatar-content {
-      background-color: lighten(theme-color('secondary'), 20%) !important;
+      background-color: tint-color($secondary, 20%) !important;
     }
     &:hover {
       transition: all 0.25s ease;

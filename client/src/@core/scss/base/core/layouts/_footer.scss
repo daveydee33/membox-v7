@@ -6,14 +6,12 @@
 //     Author: PIXINVENT
 //     Author URL: http://www.themeforest.net/user/pixinvent
 // ================================================================================================
-
 // Stick footer to the bottom of the page
 footer {
   &.footer {
     padding: 0.8rem $content-padding;
     min-height: $footer-height;
     transition: 300ms ease all;
-
     // heart icon scss
     span {
       i,
@@ -29,7 +27,6 @@ footer {
       padding: 0.81rem 0.83rem;
     }
   }
-
   //shadow & border options
   &.footer-shadow {
     box-shadow: $box-shadow;
@@ -38,7 +35,6 @@ footer {
     border-top: 1px solid $border-color;
   }
 }
-
 // Fixed Footer
 .footer-fixed {
   footer {
@@ -47,7 +43,6 @@ footer {
     right: 0;
     left: 0;
     bottom: 0;
-
     // Footer Light
     &.footer-light {
       background: $white;
@@ -60,14 +55,12 @@ footer {
     }
   }
 }
-
 //! Fix: If footer is hidden add padding fix to avail card margin bottom
 .footer-hidden {
   .app-content {
     padding-bottom: 0.1px !important;
   }
 }
-
 // scroll to Top Footer Button
 .scroll-top {
   position: fixed;

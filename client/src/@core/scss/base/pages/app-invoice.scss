@@ -125,7 +125,7 @@ $invoice-card-body-padding: 2.5rem;
     }
     .col-title {
       position: absolute;
-      top: -3.2rem;
+      top: -1.75rem;
     }
     .item-options-menu {
       min-width: 20rem;
@@ -154,13 +154,8 @@ $invoice-card-body-padding: 2.5rem;
   }
   @media (max-width: 992px) {
     .col-title {
+      position: unset !important;
       top: -1.5rem !important;
-    }
-  }
-  @media print {
-    hr {
-      margin-top: 1rem !important;
-      margin-bottom: 1rem !important;
     }
   }
 }

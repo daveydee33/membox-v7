@@ -3,27 +3,29 @@ import { forwardRef } from 'react'
 
 // ** Third Party Components
 import Proptypes from 'prop-types'
-import { Badge } from 'reactstrap'
 import classnames from 'classnames'
+
+// ** Reactstrap Imports
+import { Badge } from 'reactstrap'
 
 const Avatar = forwardRef((props, ref) => {
   // ** Props
   const {
-    color,
-    className,
-    imgClassName,
-    initials,
+    img,
     size,
+    icon,
+    color,
+    status,
     badgeUp,
     content,
-    icon,
-    badgeColor,
-    badgeText,
-    img,
-    imgHeight,
-    imgWidth,
-    status,
     tag: Tag,
+    initials,
+    imgWidth,
+    className,
+    badgeText,
+    imgHeight,
+    badgeColor,
+    imgClassName,
     contentStyles,
     ...rest
   } = props
@@ -91,19 +93,19 @@ export default Avatar
 
 // ** PropTypes
 Avatar.propTypes = {
-  imgClassName: Proptypes.string,
-  className: Proptypes.string,
+  icon: Proptypes.node,
   src: Proptypes.string,
-  tag: Proptypes.oneOfType([Proptypes.func, Proptypes.string]),
   badgeUp: Proptypes.bool,
   content: Proptypes.string,
-  icon: Proptypes.node,
-  contentStyles: Proptypes.object,
   badgeText: Proptypes.string,
+  className: Proptypes.string,
+  imgClassName: Proptypes.string,
+  contentStyles: Proptypes.object,
+  size: Proptypes.oneOf(['sm', 'lg', 'xl']),
+  tag: Proptypes.oneOfType([Proptypes.func, Proptypes.string]),
+  status: Proptypes.oneOf(['online', 'offline', 'away', 'busy']),
   imgHeight: Proptypes.oneOfType([Proptypes.string, Proptypes.number]),
   imgWidth: Proptypes.oneOfType([Proptypes.string, Proptypes.number]),
-  size: Proptypes.oneOf(['sm', 'lg', 'xl']),
-  status: Proptypes.oneOf(['online', 'offline', 'away', 'busy']),
   badgeColor: Proptypes.oneOf([
     'primary',
     'secondary',

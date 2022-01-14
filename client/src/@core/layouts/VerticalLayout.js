@@ -4,12 +4,13 @@ import { useLocation } from 'react-router-dom'
 
 // ** Store & Actions
 import { useSelector, useDispatch } from 'react-redux'
-import { handleMenuCollapsed, handleContentWidth, handleMenuHidden } from '@store/actions/layout'
+import { handleMenuCollapsed, handleContentWidth, handleMenuHidden } from '@store/layout'
 
 // ** Third Party Components
 import classnames from 'classnames'
 import { ArrowUp } from 'react-feather'
-import ScrollToTop from 'react-scroll-up'
+
+// ** Reactstrap Imports
 import { Navbar, Button } from 'reactstrap'
 
 // ** Configs
@@ -17,6 +18,7 @@ import themeConfig from '@configs/themeConfig'
 
 // ** Custom Components
 import Customizer from '@components/customizer'
+import ScrollToTop from '@components/scrolltop'
 import FooterComponent from './components/footer'
 import NavbarComponent from './components/navbar'
 import SidebarComponent from './components/menu/vertical-menu'
@@ -34,14 +36,14 @@ import '@styles/base/core/menu/menu-types/vertical-overlay-menu.scss'
 
 const VerticalLayout = props => {
   // ** Props
-  const { children, navbar, footer, menu, routerProps, currentActiveItem } = props
+  const { menu, navbar, footer, menuData, children, routerProps, setLastLayout, currentActiveItem } = props
 
   // ** Hooks
-  const [skin, setSkin] = useSkin()
   const [isRtl, setIsRtl] = useRTL()
-  const [navbarType, setNavbarType] = useNavbarType()
-  const [footerType, setFooterType] = useFooterType()
-  const [navbarColor, setNavbarColor] = useNavbarColor()
+  const { skin, setSkin } = useSkin()
+  const { navbarType, setNavbarType } = useNavbarType()
+  const { footerType, setFooterType } = useFooterType()
+  const { navbarColor, setNavbarColor } = useNavbarColor()
 
   // ** States
   const [isMounted, setIsMounted] = useState(false)
@@ -107,7 +109,7 @@ const VerticalLayout = props => {
   }
 
   const navbarClasses = {
-    floating: 'floating-nav',
+    floating: contentWidth === 'boxed' ? 'floating-nav container-xxl' : 'floating-nav',
     sticky: 'fixed-top',
     static: 'navbar-static-top',
     hidden: 'd-none'
@@ -142,17 +144,19 @@ const VerticalLayout = props => {
         <SidebarComponent
           skin={skin}
           menu={menu}
+          menuData={menuData}
+          routerProps={routerProps}
           menuCollapsed={menuCollapsed}
           menuVisibility={menuVisibility}
           setMenuCollapsed={setMenuCollapsed}
           setMenuVisibility={setMenuVisibility}
-          routerProps={routerProps}
           currentActiveItem={currentActiveItem}
         />
       ) : null}
 
       <Navbar
         expand='lg'
+        container={false}
         light={skin !== 'dark'}
         dark={skin === 'dark' || bgColorCondition}
         color={bgColorCondition ? navbarColor : undefined}
@@ -161,11 +165,7 @@ const VerticalLayout = props => {
         )}
       >
         <div className='navbar-container d-flex content'>
-          {navbar ? (
-            navbar({ setMenuVisibility, skin, setSkin })
-          ) : (
-            <NavbarComponent setMenuVisibility={setMenuVisibility} skin={skin} setSkin={setSkin} />
-          )}
+          {navbar ? navbar : <NavbarComponent setMenuVisibility={setMenuVisibility} skin={skin} setSkin={setSkin} />}
         </div>
       </Navbar>
       {children}
@@ -193,6 +193,7 @@ const VerticalLayout = props => {
           setIsRtl={setIsRtl}
           layout={props.layout}
           setLayout={props.setLayout}
+          setLastLayout={setLastLayout}
           isHidden={isHidden}
           setIsHidden={setIsHidden}
           contentWidth={contentWidth}
@@ -209,16 +210,12 @@ const VerticalLayout = props => {
           'd-none': footerType === 'hidden'
         })}
       >
-        {footer ? (
-          footer({ footerType, footerClasses })
-        ) : (
-          <FooterComponent footerType={footerType} footerClasses={footerClasses} />
-        )}
+        {footer ? footer : <FooterComponent footerType={footerType} footerClasses={footerClasses} />}
       </footer>
 
       {themeConfig.layout.scrollTop === true ? (
         <div className='scroll-to-top'>
-          <ScrollToTop showUnder={300} style={{ bottom: '5%' }}>
+          <ScrollToTop showOffset={300} className='scroll-top d-block'>
             <Button className='btn-icon' color='primary'>
               <ArrowUp size={14} />
             </Button>

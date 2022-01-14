@@ -29,6 +29,9 @@
   }
 }
 .gu-mirror {
+  .card {
+    margin: 0 1rem;
+  }
   .handle {
     padding: 0 5px;
     margin-right: 5px;
@@ -42,6 +45,7 @@
 .dark-layout {
   // Drag & drop moving element
   .gu-mirror {
+    color: $theme-dark-body-color;
     &:not(.badge):not([class*='col-']) {
       background-color: $theme-dark-card-bg;
       border-color: $theme-dark-border-color;

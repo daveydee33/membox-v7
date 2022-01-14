@@ -24,9 +24,41 @@
   .apexcharts-yaxistooltip {
     background: $body-bg;
     border-color: $border-color;
-    &:after,
+    // &:after,
+    // &:before {
+    //   border-left-color: $body-bg;
+    // }
+  }
+  .apexcharts-xaxistooltip-bottom {
     &:before {
+      border-bottom-color: $border-color;
+    }
+    &::after {
       border-bottom-color: $body-bg;
+    }
+  }
+  .apexcharts-xaxistooltip-top {
+    &:before {
+      border-top-color: $border-color;
+    }
+    &::after {
+      border-top-color: $body-bg;
+    }
+  }
+  .apexcharts-yaxistooltip-left {
+    &:before {
+      border-left-color: $border-color;
+    }
+    &:after {
+      border-left-color: $body-bg;
+    }
+  }
+  .apexcharts-yaxistooltip-right {
+    &:before {
+      border-right-color: $border-color;
+    }
+    &:after {
+      border-right-color: $body-bg;
     }
   }
   .apexcharts-text,
@@ -117,14 +149,42 @@
         color: $white;
       }
     }
+    .apexcharts-xaxistooltip-bottom {
+      &:before {
+        border-bottom-color: $theme-dark-border-color;
+      }
+      &::after {
+        border-bottom-color: $theme-dark-body-bg;
+      }
+    }
+    .apexcharts-xaxistooltip-top {
+      &:before {
+        border-top-color: $theme-dark-border-color;
+      }
+      &::after {
+        border-top-color: $theme-dark-body-bg;
+      }
+    }
+    .apexcharts-yaxistooltip-left {
+      &:before {
+        border-left-color: $theme-dark-border-color;
+      }
+      &:after {
+        border-left-color: $theme-dark-body-bg;
+      }
+    }
+    .apexcharts-yaxistooltip-right {
+      &:before {
+        border-right-color: $theme-dark-border-color;
+      }
+      &:after {
+        border-right-color: $theme-dark-body-bg;
+      }
+    }
     .apexcharts-xaxistooltip,
     .apexcharts-yaxistooltip {
       background: $theme-dark-body-bg;
       border-color: $theme-dark-border-color;
-      &:after,
-      &:before {
-        border-bottom-color: $theme-dark-border-color;
-      }
       .apexcharts-xaxistooltip-text,
       .apexcharts-yaxistooltip-text {
         color: $white;

@@ -1,13 +1,10 @@
 // ** React Imports
 import { useState } from 'react'
 
-// ** Horizontal Menu Array
-import navigation from '@src/navigation/horizontal'
-
 // ** Horizontal Menu Components
 import HorizontalNavMenuItems from './HorizontalNavMenuItems'
 
-const HorizontalMenu = ({ currentActiveItem, routerProps }) => {
+const HorizontalMenu = ({ menuData, currentActiveItem, routerProps }) => {
   // ** States
   const [activeItem, setActiveItem] = useState(null)
   const [groupActive, setGroupActive] = useState([])
@@ -32,7 +29,7 @@ const HorizontalMenu = ({ currentActiveItem, routerProps }) => {
       <ul className='nav navbar-nav' id='main-menu-navigation'>
         <HorizontalNavMenuItems
           submenu={false}
-          items={navigation}
+          items={menuData}
           activeItem={activeItem}
           groupActive={groupActive}
           routerProps={routerProps}

@@ -58,7 +58,7 @@
     background-color: $theme-dark-card-bg;
     border-radius: 5px;
     border: 1px solid $theme-dark-border-color;
-    box-shadow: 2px 2px 6px -4px #999;
+    box-shadow: $theme-dark-box-shadow;
   }
 
   // Grid Color
@@ -101,5 +101,10 @@
 html[dir='rtl'] {
   .recharts-wrapper {
     direction: rtl;
+  }
+  .recharts-yAxis {
+    .recharts-text {
+      text-anchor: start;
+    }
   }
 }

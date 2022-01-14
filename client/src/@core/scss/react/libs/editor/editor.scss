@@ -13,6 +13,7 @@
     border-top-right-radius: $border-radius;
     .rdw-option-wrapper {
       border: none;
+      padding: 13px 5px;
       &.rdw-option-active {
         box-shadow: none;
         background-color: rgba($color: $primary, $alpha: 0.2);
@@ -30,6 +31,15 @@
       }
       &:hover {
         box-shadow: none;
+        .rdw-dropdown-selectedtext {
+          color: $primary;
+        }
+      }
+      .rdw-dropdownoption-default {
+        &.rdw-dropdownoption-highlighted {
+          color: $primary;
+          background: transparent;
+        }
       }
     }
     .rdw-link-modal,
@@ -66,6 +76,56 @@
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
       order: 1;
+    }
+  }
+}
+
+.dark-layout {
+  .rdw-editor-wrapper {
+    .rdw-editor-toolbar {
+      background: $theme-dark-body-bg;
+      border-color: $theme-dark-border-color;
+      .rdw-option-wrapper {
+        background: $theme-dark-body-bg;
+        img {
+          filter: invert(100%);
+        }
+        &.rdw-option-active {
+          background-color: rgba($color: $primary, $alpha: 0.2) !important;
+        }
+      }
+      .rdw-dropdown-wrapper {
+        background: $theme-dark-body-bg;
+        border-color: $theme-dark-border-color;
+        .rdw-dropdown-carettoopen {
+          border-top-color: $theme-dark-body-color;
+        }
+        .rdw-dropdown-optionwrapper {
+          background: $theme-dark-body-bg;
+          border-color: $theme-dark-border-color;
+          .rdw-dropdownoption-active {
+            background: $theme-dark-card-bg;
+          }
+        }
+      }
+    }
+    .rdw-editor-main {
+      border-color: $theme-dark-border-color;
+    }
+    .rdw-emoji-modal,
+    .rdw-image-modal,
+    .rdw-embedded-modal,
+    .rdw-colorpicker-modal,
+    .rdw-link-modal {
+      background: $theme-dark-body-bg;
+      border-color: $theme-dark-border-color;
+      box-shadow: 3px 3px 5px $theme-dark-body-bg;
+
+      input {
+        color: $theme-dark-body-color;
+        border: $theme-dark-border-color;
+        background-color: $theme-dark-card-bg;
+      }
     }
   }
 }

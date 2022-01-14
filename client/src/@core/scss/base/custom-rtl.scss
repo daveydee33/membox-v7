@@ -13,6 +13,12 @@
 @import 'bootstrap-extended/include'; // Bootstrap includes
 @import 'components/include'; // Components includes
 
+pre,
+code,
+kbd,
+samp {
+  direction: ltr;
+}
 // Align icons position
 .main-menu {
   .navigation li > a > svg,
@@ -30,6 +36,12 @@
     display: flex;
     align-items: center;
   }
+}
+[type='tel'],
+[type='url'],
+[type='email'],
+[type='number'] {
+  direction: rtl;
 }
 
 // Transformed menu icons
@@ -53,8 +65,6 @@
 // Dropdown RTL Changes
 .header-navbar .navbar-container ul.nav li.dropdown {
   .dropdown-menu {
-    top: 41px !important;
-
     &::before {
       top: 1px;
     }
@@ -64,7 +74,7 @@
 .header-navbar {
   .dropdown,
   .dropup {
-    .dropdown-menu.dropdown-menu-right::before {
+    .dropdown-menu.dropdown-menu-end::before {
       right: auto;
       left: 0.5rem;
     }
@@ -76,10 +86,9 @@
 .btn-group {
   .dropdown-menu {
     right: auto !important;
-    top: 0 !important;
     left: auto !important;
 
-    &.dropdown-menu-right {
+    &.dropdown-menu-end {
       left: 0 !important;
 
       &::before {
@@ -90,20 +99,18 @@
   }
 }
 
-.dropleft {
+.dropstart {
   .dropdown-toggle {
     &::before {
       background-image: url(str-replace(str-replace($chevron-right, 'currentColor', $white), '#', '%23')) !important;
     }
   }
   .dropdown-menu {
-    left: 0 !important;
-    margin-left: 0;
-    margin-right: 0.5rem;
+    margin-right: $dropdown_spacing !important;
   }
 }
 
-.dropright {
+.dropend {
   .dropdown-toggle {
     &::after {
       background-image: url(str-replace(str-replace($chevron-left, 'currentColor', $white), '#', '%23')) !important;
@@ -111,23 +118,13 @@
   }
   .dropdown-menu {
     left: 0 !important;
-    margin-right: 0;
-    margin-left: 0.5rem;
-  }
-}
-
-// Input Group dropdown
-.input-group {
-  .dropdown-menu.show {
-    top: 0 !important;
-    right: auto !important;
-    left: 0px !important;
+    margin-left: $dropdown_spacing !important;
   }
 }
 
 // BS Toast
 .toast {
-  right: 1rem;
+  right: auto;
 }
 
 // Select2
@@ -139,6 +136,14 @@
 }
 .select2-search__field {
   direction: rtl;
+}
+.select2,
+.select2-container {
+  text-align: right;
+}
+
+.apexcharts-canvas .apexcharts-text.apexcharts-yaxis-label {
+  transform: translate(14px, 0);
 }
 
 // Chartist
@@ -154,6 +159,12 @@ table.dataTable thead .sorting:before,
 table.dataTable thead .sorting_asc:before,
 table.dataTable thead .sorting_desc:before {
   right: 0.45rem;
+}
+
+// Datatable responsive modal
+.dtr-modal .dtr-modal-close {
+  left: 6px;
+  right: auto !important;
 }
 
 // Avatar group
@@ -253,50 +264,51 @@ pre[class*='language-'] {
   left: -3px !important;
 }
 
-// carousel changes
-.carousel-control-next {
-  left: auto;
-  right: 0;
-}
-
-.carousel-control-prev {
-  left: 0;
-  right: auto;
-}
-
-// Tooltip
-.bs-tooltip-left .arrow::before,
-.bs-tooltip-auto[x-placement^='left'] .arrow::before {
+// Popover & Tooltip
+.bs-popover-start .popover-arrow::before,
+.bs-tooltip-start .tooltip-arrow::before,
+.bs-popover-auto[data-popper-placement^='left'] .popover-arrow::before {
   border-width: 0.4rem 0 0.4rem 0.4rem;
   border-left-color: $tooltip-bg;
+  left: -1px;
+}
+.bs-tooltip-start .tooltip-arrow::before {
+  left: -6px;
+}
+.bs-popover-start > .popover-arrow::after,
+.bs-tooltip-start > .tooltip-arrow::after {
+  left: -1px;
+  border-width: 0.4rem 0 0.4rem 0.4rem;
+  border-left-color: $tooltip-color;
+}
+.bs-popover-start .popover-arrow,
+.bs-tooltip-start .tooltip-arrow,
+.bs-popover-auto[data-popper-placement^='left'] .popover-arrow {
+  right: auto;
+  left: 100%;
 }
 
-.bs-tooltip-left .arrow,
-.bs-tooltip-auto[x-placement^='left'] .arrow {
-  right: 0;
-  left: auto;
-}
-
-.bs-tooltip-right .arrow::before,
-.bs-tooltip-auto[x-placement^='right'] .arrow::before {
+.bs-popover-end .popover-arrow::before,
+.bs-tooltip-end .tooltip-arrow::before,
+.bs-popover-auto[data-popper-placement^='right'] .popover-arrow::before {
   border-width: 0.4rem 0.4rem 0.4rem 0;
   border-right-color: $tooltip-bg;
+  right: -1px;
 }
-
-.bs-tooltip-right .arrow,
-.bs-tooltip-auto[x-placement^='right'] .arrow {
-  left: 0;
-  right: auto;
+.bs-tooltip-end .tooltip-arrow::before {
+  right: -6px;
 }
-
-// Popover Style
-.popover {
-  right: auto !important;
+.bs-popover-end > .popover-arrow::after,
+.bs-tooltip-end > .tooltip-arrow::after {
+  right: -1px;
+  border-width: 0.4rem 0.4rem 0.4rem 0;
+  border-right-color: $tooltip-color;
 }
-
-// Progress
-.progress-bar-animated {
-  animation: progress-bar-stripes 40s linear infinite;
+.bs-popover-end .popover-arrow,
+.bs-tooltip-end .tooltip-arrow,
+.bs-popover-auto[data-popper-placement^='right'] .popover-arrow {
+  left: auto;
+  right: 100%;
 }
 
 // Perfect scrollbar RTL fix
@@ -338,7 +350,7 @@ body .ps__rail-y {
     }
   }
 
-  .dropdown .dropdown-menu.dropdown-menu-right {
+  .dropdown .dropdown-menu.dropdown-menu-end {
     left: 2rem !important;
   }
 }

@@ -2,7 +2,7 @@
 import { useEffect } from 'react'
 
 // ** Store & Actions
-import { handleRTL } from '@store/actions/layout'
+import { handleRTL } from '@store/layout'
 import { useDispatch, useSelector } from 'react-redux'
 
 export const useRTL = () => {
@@ -12,14 +12,7 @@ export const useRTL = () => {
 
   // ** Return a wrapped version of useState's setter function
   const setValue = value => {
-    try {
-      // ** Allow value to be a function so we have same API as useState
-      const valueToStore = value instanceof Function ? value(isRtl) : value
-      dispatch(handleRTL(valueToStore))
-    } catch (error) {
-      // ** A more advanced implementation would handle the error case
-      console.log(error)
-    }
+    dispatch(handleRTL(value))
   }
 
   useEffect(() => {

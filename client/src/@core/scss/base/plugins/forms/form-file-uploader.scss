@@ -51,6 +51,9 @@
     .dz-image {
       border-radius: $border-radius;
     }
+    &.dz-image-preview{
+      background: transparent !important;
+    }
 
     .dz-error-message {
       background: $danger;
@@ -88,8 +91,11 @@
 @media (max-width: 576px) {
   .dropzone {
     .dz-message {
+      font-size: 1.5rem;
       &:before {
         top: 15rem;
+        width: 50px;
+        height: 50px;
       }
     }
   }

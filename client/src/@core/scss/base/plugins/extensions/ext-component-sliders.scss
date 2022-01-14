@@ -21,7 +21,7 @@ $handle-size: 1rem;
     width: $handle-size;
     height: $handle-size;
     cursor: pointer;
-    right: -($handle-size - ($handle-size/7));
+    right: -($handle-size - ($handle-size/2));
     top: -4px;
   }
   .noUi-tooltip {

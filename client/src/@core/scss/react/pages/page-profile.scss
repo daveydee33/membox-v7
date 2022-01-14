@@ -13,12 +13,21 @@
         left: 0;
       }
       .loader {
-        top: 60%;
+        top: 62%;
       }
       .spinner-border {
         width: 20px;
         height: 20px;
       }
+    }
+  }
+}
+
+@include media-breakpoint-up(md) {
+  // navbar tabs pills
+  .profile-header-nav {
+    .profile-tabs {
+      margin-left: 11.1rem;
     }
   }
 }

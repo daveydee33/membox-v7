@@ -1,8 +1,7 @@
 // Badge
 
 .badge {
-  color: $white;
-  &[class*='badge-'] {
+  &[class*='bg-'] {
     [class*='icon-'] {
       line-height: 1;
     }

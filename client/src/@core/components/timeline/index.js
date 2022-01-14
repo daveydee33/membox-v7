@@ -70,7 +70,7 @@ export default Timeline
 
 // ** PropTypes
 Timeline.propTypes = {
-  data: Proptypes.array.isRequired,
+  tag: Proptypes.string,
   className: Proptypes.string,
-  tag: Proptypes.string
+  data: Proptypes.array.isRequired
 }

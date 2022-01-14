@@ -4,7 +4,7 @@
 .swal2-container {
   .swal2-popup {
     border-radius: $card-border-radius;
-    padding: 2rem;
+    padding-bottom: 1.5rem;
 
     // close button
     .swal2-close:focus {
@@ -35,7 +35,7 @@
       font-size: $font-size-base;
       padding: $input-padding-y $input-padding-x;
       color: $body-color;
-      border-color: $custom-control-border-color;
+      border-color: $input-border-color;
       border-radius: $border-radius;
       line-height: $line-height-base;
       &:focus {
@@ -51,7 +51,7 @@
         &.swal2-active-progress-step {
           ~ .swal2-progress-step-line,
           ~ .swal2-progress-step {
-            background-color: lighten(theme-color('primary'), 15%);
+            background-color: tint-color($primary, 15%);
           }
         }
       }
@@ -77,6 +77,10 @@
 // Dark Layout
 .dark-layout {
   .swal2-container {
+    .swal2-popup .swal2-title {
+      color: $theme-dark-headings-color;
+    }
+
     .swal2-modal {
       background-color: $theme-dark-card-bg;
 
@@ -101,8 +105,8 @@
         border-color: $theme-dark-border-color;
         color: $theme-dark-body-color;
       }
-
-      .swal2-content {
+      .swal2-content,
+      .swal2-html-container {
         color: $theme-dark-body-color;
       }
 
@@ -119,6 +123,10 @@
         border-color: $theme-dark-border-color;
         color: $theme-dark-body-color;
       }
+    }
+    .swal2-validation-message {
+      background-color: $theme-dark-body-bg;
+      color: $theme-dark-body-color;
     }
   }
 }
