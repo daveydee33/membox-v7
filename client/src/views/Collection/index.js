@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState, useContext } from 'react'
-import { Card, CardBody, CardText, CardTitle, Button, Row, Col, Progress } from 'reactstrap'
+import { Card, CardBody, CardText, CardTitle, Button, Progress } from 'reactstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   getCollections,
