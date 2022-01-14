@@ -51,7 +51,6 @@ const FormPanel = (props) => {
   }
 
   const getTagObjects = () => {
-    console.log(store.tags)
     const tagOptions = store.tags.filter((tag) => tag).map((tag) => ({ value: tag, label: tag }))
     return tagOptions
   }

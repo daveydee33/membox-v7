@@ -1,5 +1,5 @@
-import { Fragment, useEffect, useState } from 'react'
-import { Card, CardBody, CardText, CardTitle, Button } from 'reactstrap'
+import { Fragment, useEffect, useState, useContext } from 'react'
+import { Card, CardBody, CardText, CardTitle, Button, Progress } from 'reactstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   getCollections,
@@ -8,12 +8,14 @@ import {
   deleteCollection
 } from '../../redux/actions/collections'
 import FormPanel from './FormPanel'
+import { UserContextFirebase } from '../../utility/context/UserContextFirebase'
 
 const Collection = () => {
   const dispatch = useDispatch()
   const store = useSelector((state) => state.collections)
   const [selectedCollection, setSelectedCollection] = useState({})
   const [openFormPanel, setOpenFormPanel] = useState(false)
+  const { progress } = useContext(UserContextFirebase)
 
   useEffect(() => {
     dispatch(getCollections({ limit: 999 }))
@@ -33,9 +35,10 @@ const Collection = () => {
           <CardBody>
             <CardTitle>{collection.title}</CardTitle>
             <CardText>{collection.description}</CardText>
-            <CardText>
-              <i>{collection.items.join(', ')}</i>
-            </CardText>
+            <Progress
+              value={(collection.items.filter((item) => progress[item] > 0).length / collection.items.length) * 100}
+            />
+            <CardText>{/* <i>{collection.items.join(', ')}</i> */}</CardText>
           </CardBody>
         </Card>
       )
