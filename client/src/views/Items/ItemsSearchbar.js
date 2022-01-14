@@ -1,12 +1,5 @@
 import { Search } from 'react-feather'
-import {
-  Row,
-  Col,
-  InputGroup,
-  InputGroupAddon,
-  Input,
-  InputGroupText
-} from 'reactstrap'
+import { Row, Col, InputGroup, Input, InputGroupText } from 'reactstrap'
 
 const ItemsSearchbar = (props) => {
   const { dispatch, getItems, store } = props
@@ -21,11 +14,11 @@ const ItemsSearchbar = (props) => {
               placeholder="Search"
               onChange={(e) => dispatch(getItems({ ...store.params, q: e.target.value }))}
             />
-            <InputGroupAddon addonType="append">
+            <InputGroup addonType="append">
               <InputGroupText>
                 <Search className="text-muted" size={14} />
               </InputGroupText>
-            </InputGroupAddon>
+            </InputGroup>
           </InputGroup>
         </Col>
       </Row>

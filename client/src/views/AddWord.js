@@ -109,7 +109,7 @@ const AddWord = () => {
               Labels
             </Label>
             <Col sm="9">
-              {/* <CustomInput
+              <Input
                 type="checkbox"
                 className="custom-control-Primary"
                 id="Primary"
@@ -117,7 +117,7 @@ const AddWord = () => {
                 defaultChecked
                 inline
               />
-              <CustomInput
+              <Input
                 type="checkbox"
                 className="custom-control-secondary"
                 id="secondary"
@@ -125,7 +125,7 @@ const AddWord = () => {
                 defaultChecked
                 inline
               />
-              <CustomInput
+              <Input
                 type="checkbox"
                 className="custom-control-success"
                 id="success"
@@ -133,7 +133,7 @@ const AddWord = () => {
                 defaultChecked
                 inline
               />
-              <CustomInput
+              <Input
                 type="checkbox"
                 className="custom-control-danger"
                 id="danger"
@@ -141,7 +141,7 @@ const AddWord = () => {
                 defaultChecked
                 inline
               />
-              <CustomInput
+              <Input
                 type="checkbox"
                 className="custom-control-warning"
                 id="warning"
@@ -149,14 +149,7 @@ const AddWord = () => {
                 defaultChecked
                 inline
               />
-              <CustomInput
-                type="checkbox"
-                className="custom-control-info"
-                id="info"
-                label="Info"
-                defaultChecked
-                inline
-              /> */}
+              <Input type="checkbox" className="custom-control-info" id="info" label="Info" defaultChecked inline />
             </Col>
           </FormGroup>
         </Col>

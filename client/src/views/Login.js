@@ -2,7 +2,7 @@ import { useSkin } from '@hooks/useSkin'
 import { Link, Redirect } from 'react-router-dom'
 import { Facebook, Twitter, Mail, GitHub } from 'react-feather'
 import InputPasswordToggle from '@components/input-password-toggle'
-import { Row, Col, CardTitle, CardText, Form, FormGroup, Label, Input, CustomInput, Button } from 'reactstrap'
+import { Row, Col, CardTitle, CardText, Form, FormGroup, Label, Input, Button } from 'reactstrap'
 import '@styles/base/pages/page-auth.scss'
 
 const Login = () => {
@@ -95,7 +95,7 @@ const Login = () => {
                 <InputPasswordToggle className='input-group-merge' id='login-password' />
               </FormGroup>
               <FormGroup>
-                <CustomInput type='checkbox' className='custom-control-Primary' id='remember-me' label='Remember Me' />
+                <Input type='checkbox' className='custom-control-Primary' id='remember-me' label='Remember Me' />
               </FormGroup>
               <Button.Ripple tag={Link} to='/' color='primary' block>
                 Sign in

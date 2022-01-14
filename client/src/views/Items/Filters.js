@@ -3,7 +3,7 @@ import { useRTL } from '@hooks/useRTL'
 
 // ** Third Party Components
 import classnames from 'classnames'
-import { Card, CardBody, Row, Col, CustomInput, Button } from 'reactstrap'
+import { Card, CardBody, Row, Col, Input, Button } from 'reactstrap'
 
 // ** Styles
 import '@styles/react/libs/noui-slider/noui-slider.scss'
@@ -127,7 +127,7 @@ const Filters = (props) => {
                   {categories.map((category) => {
                     return (
                       <li key={category.title}>
-                        <CustomInput
+                        <Input
                           type="checkbox"
                           id={category.title}
                           label={category.title}
