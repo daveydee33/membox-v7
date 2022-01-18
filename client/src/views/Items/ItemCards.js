@@ -77,7 +77,11 @@ const ItemCards = (props) => {
               {item.examples?.map((example) => {
                 const regexTitle = new RegExp(item.title, 'gi')
                 const titleWithBold = example.title.replace(regexTitle, `<b>$&</b>`)
-                const regexDescription = new RegExp(`\\b(${item.description.split('; ').join('|')})\\b`, 'gi')
+                const regexDescription = new RegExp(
+                  `\\b(${item.description.split(/\s*,\s*|\s*;\s*/).join('|')})\\b`,
+                  'gi'
+                )
+                console.log(`regexDescription`, regexDescription)
                 const descriptionWithBold = example.description.replace(regexDescription, `<b>$&</b>`)
                 return (
                   <div key={example.title} className="mt-1" align="right">
