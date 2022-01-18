@@ -55,7 +55,6 @@ const ItemCards = (props) => {
   const renderItems = () => {
     if (items.length) {
       return items.map((item) => {
-        console.log(progress[item.title])
         const progressIcon = () => {
           if (progress[item.title] && progress[item.title] === 1) return <CheckSquare color={'orange'} />
           if (progress[item.title] && progress[item.title] === 2) return <CheckSquare color={'green'} />
@@ -64,7 +63,7 @@ const ItemCards = (props) => {
 
         return (
           <Card key={item.id} className="ecommerce-card">
-            <CardImg src={img1} />
+            {/* <CardImg src={img1} /> */}
             <CardBody onClick={() => history.push(`/item/${item.id}`)}>
               <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '1rem' }}>
                 <div>
