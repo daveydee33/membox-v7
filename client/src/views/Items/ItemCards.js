@@ -81,7 +81,6 @@ const ItemCards = (props) => {
                   `\\b(${item.description.split(/\s*,\s*|\s*;\s*/).join('|')})\\b`,
                   'gi'
                 )
-                console.log(`regexDescription`, regexDescription)
                 const descriptionWithBold = example.description.replace(regexDescription, `<b>$&</b>`)
                 return (
                   <div key={example.title} className="mt-1" align="right">
