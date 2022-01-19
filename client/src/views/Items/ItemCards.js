@@ -64,7 +64,11 @@ const ItemCards = (props) => {
         return (
           <Card key={item.id} className="ecommerce-card">
             {/* <CardImg src={img1} /> */}
-            <CardBody onClick={() => history.push(`/item/${item.id}`)}>
+            <CardBody
+            // onClick={() => {
+            //   history.push(`/item/${item.id}`)
+            // }}
+            >
               <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '1rem' }}>
                 <div>
                   <CardText tag="h2">{item.title}</CardText>
