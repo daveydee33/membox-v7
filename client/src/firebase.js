@@ -168,6 +168,7 @@ export function useUserDataFirebase() {
   const [currentUserFirebase, setCurrentUserFirebase] = useState()
   const [favorites, setFavorites] = useState([])
   const [progress, setProgress] = useState({})
+  const [role, setRole] = useState()
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -208,7 +209,23 @@ export function useUserDataFirebase() {
     return unsubscribe
   }, [currentUserFirebase])
 
-  return { currentUserFirebase, favorites, progress }
+  useEffect(() => {
+    if (!currentUserFirebase) {
+      setRole()
+      return
+    }
+    const unsubscribe = onSnapshot(doc(firestore, 'users', currentUserFirebase.uid), (doc) => {
+      try {
+        const role = doc?.data()?.role
+        setRole(role)
+      } catch (error) {
+        setRole()
+      }
+    })
+    return unsubscribe
+  }, [currentUserFirebase])
+
+  return { currentUserFirebase, favorites, progress, role }
 }
 
 export async function setFavorite(item, userId) {
@@ -226,9 +243,8 @@ export async function unsetFavorite(item, userId) {
 }
 
 export async function setProgress(item, userId, progress) {
-  console.log(item, userId, progress)
   const ref = doc(firestore, 'user-data', userId)
-  if (progress === 0) {
+  if (!progress || progress === 0) {
     progress = 1
   } else if (progress === 1) {
     progress = 2

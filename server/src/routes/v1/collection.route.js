@@ -8,18 +8,15 @@ const router = express.Router();
 
 router
   .route('/')
-  // .post(auth('manageCollections'), validate(collectionValidation.createCollection), collectionController.createCollection)
-  .post(validate(collectionValidation.createCollection), collectionController.createCollection)
+  .post(auth('manageCollections'), validate(collectionValidation.createCollection), collectionController.createCollection)
   .get(validate(collectionValidation.getCollections), collectionController.getCollections);
 
 // TODO: re-add the auth() to each of these routes
 router
   .route('/:collectionId')
   .get(validate(collectionValidation.getCollection), collectionController.getCollection)
-  // .patch(auth('manageCollections'), validate(collectionValidation.updateCollection), collectionController.updateCollection)
-  .patch(validate(collectionValidation.updateCollection), collectionController.updateCollection)
-  // .delete(auth('manageCollections'), validate(collectionValidation.deleteCollection), collectionController.deleteCollection);
-  .delete(validate(collectionValidation.deleteCollection), collectionController.deleteCollection);
+  .patch(auth('manageCollections'), validate(collectionValidation.updateCollection), collectionController.updateCollection)
+  .delete(auth('manageCollections'), validate(collectionValidation.deleteCollection), collectionController.deleteCollection);
 
 module.exports = router;
 

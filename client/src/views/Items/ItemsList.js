@@ -35,6 +35,7 @@ const ItemsList = (props) => {
           activeView={activeView}
           setActiveView={setActiveView}
           setFiltersOpen={setFiltersOpen}
+          handleFormPanel={handleFormPanel}
         />
 
         {/* Hamburger menu on small screens */}

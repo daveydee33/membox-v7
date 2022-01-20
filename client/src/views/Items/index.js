@@ -51,7 +51,7 @@ const ItemsPage = () => {
         //
       ></ItemsList>
 
-      <Filters filtersOpen={filtersOpen} handleFormPanel={handleFormPanel} />
+      <Filters filtersOpen={filtersOpen} />
 
       <FormPanel
         store={store}

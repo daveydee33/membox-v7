@@ -16,7 +16,7 @@ const ItemCards = (props) => {
   // ** Props
   const { dispatch, items, activeView, selectItem, handleFormPanel, userDataRedux } = props
   // Context-Firebase
-  const { currentUserFirebase, favorites, progress } = useContext(UserContextFirebase)
+  const { currentUserFirebase, favorites, progress, role } = useContext(UserContextFirebase)
   const history = useHistory()
 
   const handleFavoriteClick = (e, item) => {
@@ -55,7 +55,6 @@ const ItemCards = (props) => {
   const renderItems = () => {
     if (items.length) {
       return items.map((item) => {
-        console.log(progress[item.title])
         const progressIcon = () => {
           if (progress[item.title] && progress[item.title] === 1) return <CheckSquare color={'orange'} />
           if (progress[item.title] && progress[item.title] === 2) return <CheckSquare color={'green'} />
@@ -64,8 +63,12 @@ const ItemCards = (props) => {
 
         return (
           <Card key={item.id} className="ecommerce-card">
-            <CardImg src={img1} />
-            <CardBody onClick={() => history.push(`/item/${item.id}`)}>
+            {/* <CardImg src={img1} /> */}
+            <CardBody
+            // onClick={() => {
+            //   history.push(`/item/${item.id}`)
+            // }}
+            >
               <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '1rem' }}>
                 <div>
                   <CardText tag="h2">{item.title}</CardText>
@@ -81,7 +84,6 @@ const ItemCards = (props) => {
                   `\\b(${item.description.split(/\s*,\s*|\s*;\s*/).join('|')})\\b`,
                   'gi'
                 )
-                console.log(`regexDescription`, regexDescription)
                 const descriptionWithBold = example.description.replace(regexDescription, `<b>$&</b>`)
                 return (
                   <div key={example.title} className="mt-1" align="right">
@@ -102,9 +104,11 @@ const ItemCards = (props) => {
               className="text-center"
               style={{ display: 'flex', justifyContent: 'space-around', paddingBottom: '1rem' }}
             >
-              <Link onClick={(e) => handleEditClick(e, item)} to="#">
-                <Edit2 color="gray" />
-              </Link>
+              {role === 'admin' && (
+                <Link onClick={(e) => handleEditClick(e, item)} to="#">
+                  <Edit2 color="gray" />
+                </Link>
+              )}
               <Link onClick={(e) => handleFavoriteClick(e, item)} to="#">
                 <Heart color={favorites.includes(item.title) ? 'red' : 'gray'} />
               </Link>

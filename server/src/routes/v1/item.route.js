@@ -9,18 +9,14 @@ const router = express.Router();
 
 router
   .route('/')
-  // .post(auth('manageItems'), validate(itemValidation.createItem), itemController.createItem)
-  .post(validate(itemValidation.createItem), itemController.createItem)
-  .get(validate(itemValidation.getItems), itemController.getItems);
+  .get(validate(itemValidation.getItems), itemController.getItems)
+  .post(auth('manageItems'), validate(itemValidation.createItem), itemController.createItem);
 
-// TODO: re-add the auth() to each of these routes
 router
   .route('/:itemId')
   .get(validate(itemValidation.getItem), itemController.getItem)
-  // .patch(auth('manageItems'), validate(itemValidation.updateItem), itemController.updateItem)
-  .patch(validate(itemValidation.updateItem), itemController.updateItem)
-  // .delete(auth('manageItems'), validate(itemValidation.deleteItem), itemController.deleteItem);
-  .delete(validate(itemValidation.deleteItem), itemController.deleteItem);
+  .patch(auth('manageItems'), validate(itemValidation.updateItem), itemController.updateItem)
+  .delete(auth('manageItems'), validate(itemValidation.deleteItem), itemController.deleteItem);
 
 module.exports = router;
 
