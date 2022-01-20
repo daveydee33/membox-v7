@@ -15,7 +15,7 @@ const Collection = () => {
   const store = useSelector((state) => state.collections)
   const [selectedCollection, setSelectedCollection] = useState({})
   const [openFormPanel, setOpenFormPanel] = useState(false)
-  const { progress } = useContext(UserContextFirebase)
+  const { progress, role } = useContext(UserContextFirebase)
 
   useEffect(() => {
     dispatch(getCollections({ limit: 999 }))
@@ -54,10 +54,12 @@ const Collection = () => {
     <Fragment>
       <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '1rem' }}>
         <h1>Collections</h1>
+        {role === 'admin' && (
+          <Button.Ripple color="flat-primary" onClick={handleAddNew}>
+            Add Collection
+          </Button.Ripple>
+        )}
         <p>[{store.collections.length}]</p>
-        <Button.Ripple color="primary" onClick={handleAddNew}>
-          Add Collection
-        </Button.Ripple>
       </div>
 
       {store.collections.length ? (
