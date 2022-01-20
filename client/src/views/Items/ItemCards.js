@@ -16,7 +16,7 @@ const ItemCards = (props) => {
   // ** Props
   const { dispatch, items, activeView, selectItem, handleFormPanel, userDataRedux } = props
   // Context-Firebase
-  const { currentUserFirebase, favorites, progress } = useContext(UserContextFirebase)
+  const { currentUserFirebase, favorites, progress, role } = useContext(UserContextFirebase)
   const history = useHistory()
 
   const handleFavoriteClick = (e, item) => {
@@ -104,9 +104,11 @@ const ItemCards = (props) => {
               className="text-center"
               style={{ display: 'flex', justifyContent: 'space-around', paddingBottom: '1rem' }}
             >
-              <Link onClick={(e) => handleEditClick(e, item)} to="#">
-                <Edit2 color="gray" />
-              </Link>
+              {role === 'admin' && (
+                <Link onClick={(e) => handleEditClick(e, item)} to="#">
+                  <Edit2 color="gray" />
+                </Link>
+              )}
               <Link onClick={(e) => handleFavoriteClick(e, item)} to="#">
                 <Heart color={favorites.includes(item.title) ? 'red' : 'gray'} />
               </Link>
