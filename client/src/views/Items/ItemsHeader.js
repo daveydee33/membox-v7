@@ -1,4 +1,5 @@
-// ** Third Party Components
+import { useContext } from 'react'
+import { UserContextFirebase } from '../../utility/context/UserContextFirebase'
 import classnames from 'classnames'
 import { Menu, Grid, List, Columns } from 'react-feather'
 import {
@@ -14,7 +15,8 @@ import {
 
 const ItemsHeader = props => {
   // ** Props
-  const { activeView, setActiveView, dispatch, getItems, store, setSidebarOpen } = props
+  const { activeView, setActiveView, dispatch, getItems, store, setSidebarOpen, handleFormPanel } = props
+  const { role } = useContext(UserContextFirebase)
 
   // ** Sorting obj
   const sortToggleText = {
@@ -36,6 +38,13 @@ const ItemsHeader = props => {
               </button>
               <span className='search-results'>{store.totalItems} Results Found</span>
             </div>
+
+            {role === 'admin' && (
+              <Button.Ripple color='flat-primary' onClick={handleFormPanel}>
+                Add Item
+              </Button.Ripple>
+            )}
+
             <div className='view-options d-flex'>
               <UncontrolledButtonDropdown className='dropdown-sort'>
                 <DropdownToggle className='text-capitalize mr-1' color='primary' outline caret>
