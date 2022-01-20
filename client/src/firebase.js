@@ -244,7 +244,7 @@ export async function unsetFavorite(item, userId) {
 
 export async function setProgress(item, userId, progress) {
   const ref = doc(firestore, 'user-data', userId)
-  if (progress === 0) {
+  if (!progress || progress === 0) {
     progress = 1
   } else if (progress === 1) {
     progress = 2
