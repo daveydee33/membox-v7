@@ -36,5 +36,11 @@ export default [
     title: 'Second Page',
     icon: <Mail size={20} />,
     navLink: '/second-page'
+  },
+  {
+    id: 'speech',
+    title: 'Speech Recognition',
+    icon: <Plus size={20} />,
+    navLink: '/speech'
   }
 ]

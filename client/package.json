@@ -71,6 +71,7 @@
     "react-shepherd": "3.3.0",
     "react-slidedown": "2.4.5",
     "react-sortablejs": "6.0.0",
+    "react-speech-recognition": "^3.9.0",
     "react-toastify": "7.0.3",
     "reactstrap": "8.6.0",
     "recharts": "2.0.4",
