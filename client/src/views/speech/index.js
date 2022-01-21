@@ -19,7 +19,7 @@ const SpeechPage = () => {
     SpeechRecognition.startListening({ continuous: true })
   }
 
-  const fragments = ['hey', 'good', "what's up"]
+  const fragments = ['hey', 'fine|well|good', "what's up"]
   const transcriptLowerCase = transcript.toLowerCase()
   const tests = fragments.map((fragment) => {
     const regex = new RegExp(`\\b(${fragment})\\b`)
@@ -29,7 +29,7 @@ const SpeechPage = () => {
 
   return (
     <Card>
-      <p>Microphone: {listening ? 'on' : 'off'}</p>
+      <p>Microphone: {listening ? <span style={{ color: 'red' }}>on</span> : 'off'}</p>
       <button
         onTouchStart={startListening}
         onMouseDown={startListening}
@@ -41,7 +41,6 @@ const SpeechPage = () => {
       <button onClick={resetTranscript}>Reset</button>
       <p>Transcript: {transcript}</p>
       {fragments.map((fragment, index) => {
-        console.log(tests[index])
         return (
           <p key={fragment}>
             Looking for: {fragment} : {tests[index] && 'YES!'}
