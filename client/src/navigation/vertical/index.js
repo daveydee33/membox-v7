@@ -1,4 +1,4 @@
-import { Mail, Home, Plus, Package, Book, BookOpen, Mic, Settings } from 'react-feather'
+import { Mail, Home, Plus, Package, Book, BookOpen, Mic, Settings, Image } from 'react-feather'
 
 export default [
   {
@@ -42,5 +42,11 @@ export default [
     title: 'Speech Recognition',
     icon: <Mic size={20} />,
     navLink: '/speech'
+  },
+  {
+    id: 'image-search',
+    title: 'Image Search',
+    icon: <Image size={20} />,
+    navLink: '/image-search'
   }
 ]

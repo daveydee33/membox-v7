@@ -21,6 +21,10 @@ const Routes = [
     component: lazy(() => import('../../views/Speech'))
   },
   {
+    path: '/image-search',
+    component: lazy(() => import('../../views/ImageSearch'))
+  },
+  {
     path: '/add-word',
     component: lazy(() => import('../../views/AddWord'))
   },
