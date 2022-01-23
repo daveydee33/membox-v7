@@ -1,4 +1,4 @@
-import { Mail, Home, Plus, Package, Book, BookOpen } from 'react-feather'
+import { Mail, Home, Plus, Package, Book, BookOpen, Mic, Settings } from 'react-feather'
 
 export default [
   {
@@ -34,13 +34,13 @@ export default [
   {
     id: 'secondPage',
     title: 'Second Page',
-    icon: <Mail size={20} />,
+    icon: <Settings size={20} />,
     navLink: '/second-page'
   },
   {
     id: 'speech',
     title: 'Speech Recognition',
-    icon: <Plus size={20} />,
+    icon: <Mic size={20} />,
     navLink: '/speech'
   }
 ]
