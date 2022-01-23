@@ -14,6 +14,7 @@
     "@fullcalendar/timegrid": "5.7.2",
     "@fullcalendar/timeline": "5.7.2",
     "@hookform/resolvers": "1.3.4",
+    "@speechly/speech-recognition-polyfill": "^1.1.0",
     "@uppy/react": "1.10.8",
     "animate.css": "4.1.1",
     "apexcharts": "3.23.0",
