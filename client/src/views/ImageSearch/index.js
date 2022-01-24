@@ -1,4 +1,4 @@
-import { CardColumns, Card, CardBody, CardTitle, CardText, CardImg, Button } from 'reactstrap'
+import { CardColumns, Card, CardBody, CardTitle, CardText, CardImg, Button, Input } from 'reactstrap'
 import axios from 'axios'
 import cheerio from 'cheerio'
 import { useState, useEffect } from 'react'
@@ -19,6 +19,7 @@ const ImageSearchPage = () => {
   const [data, setData] = useState()
   const [dataGoogle, setDataGoogle] = useState()
   // to override/ignore my main axios interceptor used for auth to my server
+  const [query, setQuery] = useState()
   const uninterceptedAxiosInstance = axios.create()
 
   useEffect(async () => {
@@ -46,8 +47,7 @@ const ImageSearchPage = () => {
   }, [])
 
   async function doScrape() {
-    const url =
-      'https://cse.google.com/cse?q=tacos&imgSize=medium&searchType=image&cx=d0abe669a69524aba&num=20&key=AIzaSyATn174KMuaB_ICmHwnINoH5-0PMjEhkBE#gsc.tab=1&gsc.q=tacos'
+    const url = `https://cse.google.com/cse?q=tacos&imgSize=medium&searchType=image&cx=d0abe669a69524aba&num=20&key=AIzaSyATn174KMuaB_ICmHwnINoH5-0PMjEhkBE#gsc.tab=1&gsc.q=${query}`
     const encodedUrl = encodeURIComponent(url).replace(/%2520/g, '%2B')
     const proxiedUrl = `https://api.webscrapingapi.com/v1?api_key=${WEBSCRAPINGAPI_API_KEY}&method=GET&device=desktop&proxy_type=datacenter&render_js=1&wait_until=load&url=${encodedUrl}`
     const res = await uninterceptedAxiosInstance.get(proxiedUrl)
@@ -106,7 +106,9 @@ const ImageSearchPage = () => {
       <Card>
         <CardBody>
           <CardText>Google CSE + Proxy + Scrape</CardText>
+          <Input placeholder="Search" onChange={(e) => setQuery(e.target.value)} />
           <Button onClick={doScrape}>Fetch Google Images from CSE (wait 10 seconds)</Button>
+          <Input value={JSON.stringify(dataGoogle, null, 2)} type="textarea"></Input>
           <CardColumns>
             {dataGoogle &&
               dataGoogle.map((imgUrl) => {
