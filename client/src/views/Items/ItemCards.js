@@ -21,7 +21,8 @@ import SwiperCore, {
 import '@styles/react/libs/swiper/swiper.scss'
 SwiperCore.use([Navigation, Pagination, EffectCube, EffectCoverflow, Lazy, Virtual])
 const swiperParams = {
-  // navigation: true,
+  // effect: 'cube',
+  // className: 'swiper-cube-effect',
   // pagination: {
   //   clickable: true
   // }
@@ -131,16 +132,17 @@ const ItemCards = (props) => {
             // }}
             >
               {/* TODO: verify that this is a valid URL */}
-              <Swiper {...swiperParams} className="mb-1">
-                {item?.images?.length > 0 &&
-                  item.images.map((image) => (
-                    <SwiperSlide>
+              {item?.images?.length > 0 && (
+                <Swiper {...swiperParams} className="mb-1">
+                  {item.images.map((image) => (
+                    <SwiperSlide key={image}>
                       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '0rem' }}>
-                        <img src={image} alt="swiper 1" className="img-fluid" style={{ maxHeight: '200px' }} />
+                        <img src={image} className="img-fluid" style={{ maxHeight: '200px' }} />
                       </div>
                     </SwiperSlide>
                   ))}
-              </Swiper>
+                </Swiper>
+              )}
 
               <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '1rem' }}>
                 <div>

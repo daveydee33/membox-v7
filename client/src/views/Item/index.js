@@ -59,16 +59,17 @@ const ItemPage = () => {
     <Card className="card">
       <CardBody>
         {/* TODO: verify that this is a valid URL */}
-        <Swiper {...swiperParams}>
-          {item?.images?.length > 0 &&
-            item.images.map((image) => (
-              <SwiperSlide>
+        {item?.images?.length > 0 && (
+          <Swiper {...swiperParams}>
+            {item.images.map((image) => (
+              <SwiperSlide key={image}>
                 {/* <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '0rem' }}> */}
                 <img src={image} alt="image" className="img-fluid" />
                 {/* </div> */}
               </SwiperSlide>
             ))}
-        </Swiper>
+          </Swiper>
+        )}
         <CardText tag="h2">{item.title}</CardText>
         <CardText tag="h5">{item.description}</CardText>
         <CardText>{item.details}</CardText>
