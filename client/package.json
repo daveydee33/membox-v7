@@ -25,6 +25,7 @@
     "bootstrap": "4.5.2",
     "bs-stepper": "1.7.0",
     "chart.js": "2.9.4",
+    "cheerio": "^1.0.0-rc.10",
     "chroma-js": "2.1.0",
     "classnames": "2.2.6",
     "cleave.js": "1.6.0",
