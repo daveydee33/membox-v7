@@ -43,10 +43,13 @@ const updateItem = {
   }),
   body: Joi.object()
     .keys({
-      title: Joi.string().required(),
+      title: Joi.string(),
       description: Joi.string().allow(''),
       details: Joi.string().allow(''),
       tags: Joi.array().items(Joi.string()),
+      related: Joi.array().items(Joi.string().allow('')),
+      audios: Joi.array().items(Joi.string().allow('')),
+      images: Joi.array().items(Joi.string().allow('')),
       examples: Joi.array().items(
         Joi.object().keys({
           title: Joi.string().allow(''),
