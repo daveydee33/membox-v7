@@ -20,6 +20,12 @@ export default [
     navLink: '/collections'
   },
   {
+    id: 'speech',
+    title: 'Speech Recognition',
+    icon: <Mic size={20} />,
+    navLink: '/speech'
+  },
+  {
     id: 'addWord',
     title: 'Add a Word',
     icon: <Plus size={20} />,
@@ -36,11 +42,5 @@ export default [
     title: 'Second Page',
     icon: <Settings size={20} />,
     navLink: '/second-page'
-  },
-  {
-    id: 'speech',
-    title: 'Speech Recognition',
-    icon: <Mic size={20} />,
-    navLink: '/speech'
   }
 ]
