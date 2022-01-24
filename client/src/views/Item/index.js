@@ -1,23 +1,42 @@
 import { useState, useEffect } from 'react'
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-  CardText,
-  CardLink,
-  Col,
-  CustomInput,
-  FormGroup,
-  Input,
-  Label,
-  Badge
-} from 'reactstrap'
+import { Card, CardBody, CardTitle, CardText, CardLink, Badge } from 'reactstrap'
 import { selectThemeColors } from '@utils'
-import Select, { components } from 'react-select'
 import { useParams, Link } from 'react-router-dom'
 import axios from 'axios'
+
+import { Swiper, SwiperSlide } from 'swiper/react'
+import SwiperCore, {
+  Navigation,
+  Pagination,
+  EffectFade,
+  EffectCube,
+  EffectCoverflow,
+  Autoplay,
+  Lazy,
+  Virtual
+} from 'swiper'
+
+import '@styles/react/libs/swiper/swiper.scss'
+
+SwiperCore.use([Navigation, Pagination, EffectFade, EffectCube, EffectCoverflow, Autoplay, Lazy, Virtual])
+
+const swiperParams = {
+  effect: 'coverflow',
+  className: 'swiper-coverflow',
+  slidesPerView: 'auto',
+  // centeredSlides: true,
+  pagination: {
+    clickable: true
+  },
+  coverflowEffect: {
+    rotate: 50,
+    stretch: 0,
+    depth: 100,
+    modifier: 1,
+    slideShadows: true
+  },
+  navigation: true
+}
 
 // For inspiration on this page, see:
 // Blog Edit:  https://pixinvent.com/demo/vuexy-react-admin-dashboard-template/demo-1/pages/blog/edit/1
@@ -39,6 +58,18 @@ const ItemPage = () => {
   return (
     <Card className="card">
       <CardBody>
+        {/* TODO: verify that this is a valid URL */}
+        {item?.images?.length > 0 && (
+          <Swiper {...swiperParams}>
+            {item.images.map((image) => (
+              <SwiperSlide key={image}>
+                {/* <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '0rem' }}> */}
+                <img src={image} alt="image" className="img-fluid" />
+                {/* </div> */}
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        )}
         <CardText tag="h2">{item.title}</CardText>
         <CardText tag="h5">{item.description}</CardText>
         <CardText>{item.details}</CardText>
