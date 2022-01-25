@@ -36,7 +36,7 @@ app.use(
       ],
       'script-src': ["'self'", 'https://apis.google.com'],
       'default-src': ["'self'", 'https://membox-v7-firebase.firebaseapp.com'],
-      'img-src': ["'self'", 'https://*.googleusercontent.com'],
+      'img-src': ["'self'", 'https://*.googleusercontent.com', '*'], // setting * to allow images for all sources (because I'm using card images form a variety of sources)
     },
   })
 );
