@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import AudioPlayer from '../../components/AudioPlayer'
 import classnames from 'classnames'
 import { Star, Heart, CheckSquare, Square, Edit2 } from 'react-feather'
@@ -35,10 +35,29 @@ import img4 from '@src/assets/images/pages/content-img-4.jpg'
 
 const ItemCards = (props) => {
   // ** Props
-  const { dispatch, items, activeView, selectItem, handleFormPanel, userDataRedux } = props
+  const { dispatch, items, activeView, selectItem, handleFormPanel, userDataRedux, filters } = props
+
   // Context-Firebase
   const { currentUserFirebase, favorites, progress, role } = useContext(UserContextFirebase)
   const history = useHistory()
+
+  const [itemsFiltered, setItemsFiltered] = useState([])
+
+  useEffect(() => {
+    let itemsFiltered = items || []
+
+    if (!filters.favorites) itemsFiltered = itemsFiltered.filter((item) => favorites.includes(item.title))
+
+    if (!filters.learning) itemsFiltered = itemsFiltered.filter((item) => {
+        return progress[item.title] && progress[item.title] === 1
+      })
+
+    setItemsFiltered(itemsFiltered)
+
+    return () => {
+      setItemsFiltered()
+    }
+  }, [items, filters])
 
   const handleFavoriteClick = (e, item) => {
     e.stopPropagation()
@@ -115,6 +134,7 @@ const ItemCards = (props) => {
 
   // ** Renders items
   const renderItems = () => {
+    const items = itemsFiltered
     if (items.length) {
       return items.map((item) => {
         const progressIcon = () => {
