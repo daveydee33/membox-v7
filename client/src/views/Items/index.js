@@ -13,10 +13,9 @@ const ItemsPage = () => {
   const [filtersOpen, setFiltersOpen] = useState(false)
   const [openFormPanel, setOpenFormPanel] = useState(false)
   const [filters, setFilters] = useState({
-    favorites: true,
-    learning: true,
-    complete: true,
-    everything: true
+    favorites: false,
+    learning: false,
+    complete: false
   })
 
   // ** Store Vars

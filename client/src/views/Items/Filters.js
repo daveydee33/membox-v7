@@ -24,8 +24,7 @@ const Filters = (props) => {
     setFilters({
       favorites: false,
       learning: false,
-      complete: false,
-      everything: false
+      complete: false
     })
   }
 
@@ -46,7 +45,7 @@ const Filters = (props) => {
             <CardBody>
               {/* Categories */}
               <div className="categories">
-                <h6 className="filter-title mt-0">Categories</h6>
+                <h6 className="filter-title mt-0">Show Only</h6>
                 <ul className="list-unstyled brand-list">
                   <li>
                     <CustomInput
@@ -72,15 +71,6 @@ const Filters = (props) => {
                       type="checkbox"
                       label="Completed"
                       checked={filters.complete}
-                      onChange={(e) => handleChange(e)}
-                    />
-                  </li>
-                  <li>
-                    <CustomInput
-                      id="everything"
-                      type="checkbox"
-                      label="Everything Else"
-                      checked={filters.everything}
                       onChange={(e) => handleChange(e)}
                     />
                   </li>
