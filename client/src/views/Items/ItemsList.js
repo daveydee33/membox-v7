@@ -21,8 +21,11 @@ const ItemsList = (props) => {
     selectItem,
     handleFormPanel,
     getUserData,
-    userDataRedux
+    userDataRedux,
+    filters
   } = props
+
+  console.log('store', store)
 
   return (
     <div className="content-detached content-right">
@@ -65,6 +68,7 @@ const ItemsList = (props) => {
             getUserData={getUserData}
             getItems={getItems}
             userDataRedux={userDataRedux}
+            filters={filters}
           />
         ) : (
           <div className="d-flex justify-content-center mt-2">

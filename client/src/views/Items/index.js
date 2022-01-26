@@ -12,6 +12,11 @@ const ItemsPage = () => {
   const [activeView, setActiveView] = useState('grid')
   const [filtersOpen, setFiltersOpen] = useState(false)
   const [openFormPanel, setOpenFormPanel] = useState(false)
+  const [filters, setFilters] = useState({
+    favorites: false,
+    learning: false,
+    complete: false
+  })
 
   // ** Store Vars
   const dispatch = useDispatch()
@@ -48,10 +53,10 @@ const ItemsPage = () => {
         handleFormPanel={handleFormPanel}
         getUserData={getUserData}
         userDataRedux={userDataRedux}
-        //
+        filters={filters}
       ></ItemsList>
 
-      <Filters filtersOpen={filtersOpen} />
+      <Filters filtersOpen={filtersOpen} filters={filters} setFilters={setFilters} />
 
       <FormPanel
         store={store}
