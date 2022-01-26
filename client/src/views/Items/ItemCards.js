@@ -45,15 +45,10 @@ const ItemCards = (props) => {
 
   useEffect(() => {
     let itemsFiltered = items || []
-
     if (filters.favorites) itemsFiltered = itemsFiltered.filter((item) => favorites.includes(item.title))
-
     if (filters.complete) itemsFiltered = itemsFiltered.filter((item) => progress[item.title] === 2)
-
     if (filters.learning) itemsFiltered = itemsFiltered.filter((item) => progress[item.title] === 1)
-
     setItemsFiltered(itemsFiltered)
-
     return () => {
       setItemsFiltered()
     }
