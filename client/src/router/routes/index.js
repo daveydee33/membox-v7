@@ -4,7 +4,7 @@ import { lazy } from 'react'
 const TemplateTitle = '%s - MemBox'
 
 // ** Default Route
-const DefaultRoute = '/home'
+const DefaultRoute = '/items'
 
 // ** Merge Routes
 const Routes = [
