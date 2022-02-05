@@ -6,7 +6,7 @@ const createCollection = {
     title: Joi.string().required(),
     description: Joi.string().allow(''),
     details: Joi.string().allow(''),
-    // tags: Joi.array().items(Joi.string()),
+    tags: Joi.array().items(Joi.string().allow('')),
     items: Joi.array().items(Joi.string()).unique(),
   }),
 };
@@ -35,10 +35,10 @@ const updateCollection = {
   }),
   body: Joi.object()
     .keys({
-      title: Joi.string().required(),
+      title: Joi.string(),
       description: Joi.string().allow(''),
       details: Joi.string().allow(''),
-      // tags: Joi.array().items(Joi.string()),
+      tags: Joi.array().items(Joi.string().allow('')),
       items: Joi.array().items(Joi.string()).unique(),
     })
     .min(1),

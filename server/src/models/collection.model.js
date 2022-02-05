@@ -18,6 +18,9 @@ const collectionSchema = mongoose.Schema(
       required: false,
       trim: true,
     },
+    tags: {
+      type: [String],
+    },
     items: {
       type: [{ type: String, required: true, trim: true }],
       required: false,

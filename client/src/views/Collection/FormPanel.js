@@ -102,8 +102,8 @@ const FormPanel = (props) => {
       title,
       description,
       details,
-      items: items?.split('\n').filter(String)
-      // tags: newTags // TODO: add these when server supports it
+      items: items?.split('\n').filter(String),
+      tags: newTags
     }
 
     if (!isObjEmpty(selectedCollection)) {

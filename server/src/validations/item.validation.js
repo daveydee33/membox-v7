@@ -46,7 +46,7 @@ const updateItem = {
       title: Joi.string(),
       description: Joi.string().allow(''),
       details: Joi.string().allow(''),
-      tags: Joi.array().items(Joi.string()),
+      tags: Joi.array().items(Joi.string().allow('')),
       related: Joi.array().items(Joi.string().allow('')),
       audios: Joi.array().items(Joi.string().allow('')),
       images: Joi.array().items(Joi.string().allow('')),
