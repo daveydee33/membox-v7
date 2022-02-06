@@ -184,8 +184,15 @@ const ItemCards = (props) => {
               })}
               <CardText>
                 {item.tags.map((tag) => (
-                  <Badge color="light-secondary" className="mr-1 mt-1" pill key={tag}>
+                  <Badge color="secondary" className="mr-1 mt-1" pill key={tag}>
                     {tag}
+                  </Badge>
+                ))}
+              </CardText>
+              <CardText>
+                {item.seeAlso.map((word) => (
+                  <Badge color="light-secondary" className="mr-1 mt-1" pill key={word}>
+                    {word}
                   </Badge>
                 ))}
               </CardText>
