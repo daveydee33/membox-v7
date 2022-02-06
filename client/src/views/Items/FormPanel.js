@@ -37,6 +37,7 @@ const FormPanel = (props) => {
   const [description, setDescription] = useState('')
   const [details, setDetails] = useState('')
   const [tags, setTags] = useState([])
+  const [seeAlso, setSeeAlso] = useState([])
   const [examples, setExamples] = useState([])
   const [tagOptions, setTagOptions] = useState([])
   const [repeaterCount, setRepeaterCount] = useState(1)
@@ -70,19 +71,29 @@ const FormPanel = (props) => {
 
   // ** Function to reset fileds with selectedItem values
   const handleResetFields = () => {
-    const { title, description, details, examples, tags } = store.selectedItem
+    const { title, description, details, examples, tags, seeAlso } = store.selectedItem
     setTitle(title)
     setDescription(description)
     setDetails(details)
+    setSeeAlso(seeAlso)
     setExamples(_cloneDeep(examples))
     if (tags && tags.length) {
-      const tagsTrimmed = tags.map((tag) => tag.trim()).filter((tag) => tag)
-      const tagsUnique = [...new Set(tagsTrimmed)]
-      const tagObjects = tagsUnique.map((tag) => ({
+      const trimmed = tags.map((tag) => tag.trim()).filter((tag) => tag)
+      const unique = [...new Set(trimmed)]
+      const objects = unique.map((tag) => ({
         value: tag,
         label: tag
       }))
-      setTags(tagObjects)
+      setTags(objects)
+    }
+    if (seeAlso && seeAlso.length) {
+      const trimmed = seeAlso.map((tag) => tag.trim()).filter((tag) => tag)
+      const unique = [...new Set(trimmed)]
+      const objects = unique.map((tag) => ({
+        value: tag,
+        label: tag
+      }))
+      setSeeAlso(objects)
     }
   }
 
@@ -101,17 +112,13 @@ const FormPanel = (props) => {
     setDetails('')
     setExamples([])
     setTags([])
+    setSeeAlso([])
     dispatch(selectItem({}))
     setRepeaterCount(1)
   }
 
   // ** Renders Footer Buttons
   const renderFooterButtons = () => {
-    const newItemTag = []
-    if (tags.length) {
-      tags.map((tag) => newItemTag.push(tag.value))
-    }
-
     const examplesWithEmptyObjectsRemoved = examples.filter((example) => example.title || example.description)
 
     const payload = {
@@ -119,7 +126,8 @@ const FormPanel = (props) => {
       description,
       details,
       examples: examplesWithEmptyObjectsRemoved,
-      tags: newItemTag
+      tags: tags.map((tag) => tag.value),
+      seeAlso: seeAlso.map((tag) => tag.value)
     }
 
     if (store && !isObjEmpty(store.selectedItem)) {
@@ -271,6 +279,25 @@ const FormPanel = (props) => {
               theme={selectThemeColors}
               onChange={(data, actionMeta) => {
                 setTags(data !== null ? [...data] : [])
+              }}
+            />
+          </FormGroup>
+
+          <FormGroup>
+            <Label for="seeAlso" className="form-label">
+              See Also
+            </Label>
+            <CreatableSelect
+              isMulti
+              value={seeAlso}
+              id="seeAlso"
+              isClearable={false}
+              // options={tagOptions}
+              className="react-select"
+              classNamePrefix="select"
+              theme={selectThemeColors}
+              onChange={(data, actionMeta) => {
+                setSeeAlso(data !== null ? [...data] : [])
               }}
             />
           </FormGroup>

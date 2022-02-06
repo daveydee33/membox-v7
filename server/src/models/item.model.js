@@ -19,6 +19,9 @@ const itemSchema = mongoose.Schema(
     related: {
       type: [String],
     },
+    seeAlso: {
+      type: [String],
+    },
     tags: {
       type: [String],
     },
