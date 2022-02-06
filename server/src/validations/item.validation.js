@@ -8,6 +8,7 @@ const createItem = {
     details: Joi.string().allow(''),
     tags: Joi.array().items(Joi.string().allow('')),
     related: Joi.array().items(Joi.string().allow('')),
+    seeAlso: Joi.array().items(Joi.string().allow('')),
     audios: Joi.array().items(Joi.string().allow('')),
     images: Joi.array().items(Joi.string().allow('')),
     examples: Joi.array().items(
@@ -48,6 +49,7 @@ const updateItem = {
       details: Joi.string().allow(''),
       tags: Joi.array().items(Joi.string().allow('')),
       related: Joi.array().items(Joi.string().allow('')),
+      seeAlso: Joi.array().items(Joi.string().allow('')),
       audios: Joi.array().items(Joi.string().allow('')),
       images: Joi.array().items(Joi.string().allow('')),
       examples: Joi.array().items(

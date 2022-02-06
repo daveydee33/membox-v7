@@ -25,8 +25,6 @@ const ItemsList = (props) => {
     filters
   } = props
 
-  console.log('store', store)
-
   return (
     <div className="content-detached content-right">
       <div className="content-body">
