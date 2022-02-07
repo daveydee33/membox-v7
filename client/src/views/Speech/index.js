@@ -15,12 +15,40 @@ const lessons = [
     fragments: ['hola', 'cómo estás|cómo está usted']
   },
   {
-    title: "I'm fine, thanks!",
+    title: "I'm fine, thanks",
     fragments: ['yo estoy|estoy', 'bien|muy bien', 'gracias']
   },
   {
-    title: 'Spanish is Easy',
-    fragments: ['espanol', 'es', 'facil']
+    title: 'Spanish is Easy to learn',
+    fragments: ['español', 'es', 'fácil', 'aprender']
+  },
+  {
+    title: 'Spanish is not Difficult',
+    fragments: ['español', 'no es', 'difícil']
+  },
+  {
+    title: 'I want to learn Spanish',
+    fragments: ['yo quiero|quiero', 'aprender', 'español']
+  },
+  {
+    title: 'I can learn Spanish',
+    fragments: ['yo puedo|puedo', 'aprender', 'español']
+  },
+  {
+    title: 'I am going to learn Spanish',
+    fragments: ['voy a|yo voy a', 'aprender', 'español']
+  },
+  {
+    title: 'But I need to practice',
+    fragments: ['pero', 'necesito|yo necesito', 'practicar']
+  },
+  {
+    title: 'I have time',
+    fragments: ['tengo|yo tengo', 'tiempo']
+  },
+  {
+    title: 'And I can practice everyday',
+    fragments: ['y', 'puedo|yo puedo', 'practicar', 'todos los días']
   }
 ]
 
@@ -60,6 +88,7 @@ const SpeechPage = () => {
   function resetResults() {
     tests.length = 0
     resetTranscript()
+    setShowHints(false)
   }
 
   function nextLesson() {
