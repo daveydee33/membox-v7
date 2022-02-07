@@ -1,7 +1,9 @@
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
 import { createSpeechlySpeechRecognition } from '@speechly/speech-recognition-polyfill'
 import { Card, CardBody, CardHeader, CardText, Button } from 'reactstrap'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import clickSound from '@src/assets/audio/mixkit-message-pop-alert-2354.mp3'
+import successSound from '@src/assets/audio/mixkit-positive-notification-951.wav'
 
 /// Enable these 2 lines to use the Speechly Polyfill so that it works on Firefox and other browsers.
 ///  But the problem is that it currently only supports English.  Keep watching the notes on react-speech-recognition and '@speechly/speech-recognition-polyfill' to see if it supports other languages later.
@@ -27,8 +29,8 @@ const lessons = [
     fragments: ['español', 'no es', 'difícil']
   },
   {
-    title: 'I want to learn Spanish',
-    fragments: ['yo quiero|quiero', 'aprender', 'español']
+    title: 'I want to speak Spanish with my friends',
+    fragments: ['quiero|yo quiero', 'hablar', 'español', 'con', 'mis', 'amigos|amigas']
   },
   {
     title: 'I can learn Spanish',
@@ -39,12 +41,16 @@ const lessons = [
     fragments: ['voy a|yo voy a', 'aprender', 'español']
   },
   {
+    title: 'I like to learn Spanish',
+    fragments: ['me gusta|yo me gusta', 'aprender', 'español']
+  },
+  {
     title: 'But I need to practice',
     fragments: ['pero', 'necesito|yo necesito', 'practicar']
   },
   {
-    title: 'I have time',
-    fragments: ['tengo|yo tengo', 'tiempo']
+    title: 'I have time to practice',
+    fragments: ['tengo|yo tengo', 'tiempo', 'para', 'practicar']
   },
   {
     title: 'And I can practice everyday',
@@ -57,6 +63,8 @@ const SpeechPage = () => {
     useSpeechRecognition()
   const [number, setNumber] = useState(0)
   const [showHints, setShowHints] = useState(false)
+  const audioClick = new Audio(clickSound)
+  const audioSuccess = new Audio(successSound)
 
   if (!browserSupportsSpeechRecognition) {
     return <span>Browser doesn't support speech recognition.</span>
@@ -66,29 +74,18 @@ const SpeechPage = () => {
     return <span>Microphone is not enabled.</span>
   }
 
-  const startListening = () => {
-    resetTranscript()
-    SpeechRecognition.startListening({
-      continuous: true,
-      language: 'es-US' // 'en-US', 'id', 'es-US', etc.
-    })
-  }
-
-  // const fragments = ['hola', 'cómo estás|cómo está usted']
-  // const fragments = ['halo|hai', 'kamboja|amerik', 'terima kasih|makasih']
   const transcriptLowerCase = transcript.toLowerCase()
   const tests = lessons[number].fragments.map((fragment) => {
     const regex = new RegExp(`\\b(${fragment})\\b`)
     return regex.test(transcriptLowerCase)
   })
-  const isAllTrue = tests.every((v) => v === true)
-
-  const listeningColor = listening ? 'red' : ''
 
   function resetResults() {
+    audioClick.play()
+
     tests.length = 0
     resetTranscript()
-    setShowHints(false)
+    // setShowHints(false)
   }
 
   function nextLesson() {
@@ -104,6 +101,26 @@ const SpeechPage = () => {
     }
   }
 
+  const startListening = () => {
+    resetResults()
+    SpeechRecognition.startListening({
+      continuous: true,
+      language: 'es-US' // 'en-US', 'id', 'es-US', etc.
+    })
+  }
+
+  const isAllTrue = tests.every((v) => v === true)
+
+  const listeningColor = listening ? 'red' : ''
+
+  useEffect(() => {
+    if (isAllTrue) audioSuccess.play()
+
+    // return () => {
+    //   second;
+    // };
+  }, [isAllTrue])
+
   return (
     <>
       <Card>
@@ -111,7 +128,7 @@ const SpeechPage = () => {
           <h1>Spanish</h1> Lesson {number}
         </CardHeader>
       </Card>
-      <Card>
+      <Card style={{ minHeight: '400px' }}>
         <CardBody>
           {/* <h3>Hint:</h3> */}
           <h3>
@@ -137,6 +154,7 @@ const SpeechPage = () => {
           >
             Hold to talk
           </Button>
+
           <h4>
             <b>Transcript:</b> {transcript}
           </h4>
