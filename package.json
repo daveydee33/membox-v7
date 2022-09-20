@@ -10,7 +10,8 @@
     "install-client": "npm install --prefix client",
     "install-server": "npm install --prefix server",
     "start": "npm run start --prefix server",
-    "build": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client && npm install --prefix server && npm run build --prefix server"
+    "write-google-credentials-file": "node -e \"const fs = require('fs'); const fp = './google-credentials.json'; fs.writeFileSync(fp, process.env.GOOGLE_CREDENTIALS || 'dave');\"",
+    "build": "npm run write-google-credentials-file && NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client && npm install --prefix server && npm run build --prefix server"
   },
   "author": "",
   "license": "ISC",
